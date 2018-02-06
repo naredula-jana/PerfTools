@@ -1,10 +1,10 @@
 ## Perf Tools for Java and C applications
 Perf tool Measures the following :
 1. **IPC (Instruction Per Cycle)** : more details ipc in this [paper](../master/docs/Perf_IPC.pdf).
-2. **lock contention ** : lock contention from system or OS view. contention is measured using fadvise system call.
-3. **Cpu cache  Usage ** : L1 cache misses.
-4. **context switches  ** : context switches for each thread in the app.
-5. ** pagefaults, TLB misses,.. etc ** :  All these values for each thread.
+2. **lock contention** : lock contention from system or OS view. contention is measured using fadvise system call.
+3. **Cpu cache  Usage** : L1 cache misses.
+4. **context switches** : context switches for each thread in the app.
+5. **pagefaults, TLB misses** :  All these values are captured for each thread.
 
 
 ## Papers:

@@ -1,4 +1,4 @@
 #!/bin/sh
 sudo /bin/timeout -s 2 100 /bin/perf stat -e cycles,syscalls:sys_enter_futex,instructions,cs,faults,cache-misses,cache-references,L1-dcache-loads-misses,L1-dcache-stores-misses,dTLB-loads-misses,dTLB-stores-misses -p $1 --per-thread  2> ./perf.log
 ./cpu-java.sh $1
-./jipc > output
+./java_ipc > output

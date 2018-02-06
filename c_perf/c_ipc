@@ -1,0 +1,143 @@
+#!/usr/bin/perl
+
+use Math::BigFloat;
+Math::BigFloat->precision(-2);
+use Data::Dumper qw(Dumper);
+ 
+my %data;
+open PLOG,"./perf.log"  or die $!;
+while ($l = <PLOG>) {
+    $pid = $l;
+    $pid =~ s/java-*//g;
+    @name = split(m[(?:/| |:)+], $pid);
+    $pid =~ s/ *//g;
+    #$data{$name[1]}{"status"} = "counted";
+    if ($name[3] eq "instructions"){
+       $data{$name[1]}{"inst"} = $name[2];
+       $data{$name[1]}{"inst"} =~ s/,//g;
+    }
+    elsif  ($name[4] eq "instructions"){
+       $data{$name[1]}{"inst"} = 0;
+    }
+    elsif ($name[3] eq "cycles"){
+       $data{$name[1]}{"status"} = "counted";
+       $data{$name[1]}{"cycles"} = $name[2];
+       $data{$name[1]}{"cycles"} =~ s/,//g;
+       $data{$name[1]}{"dTLB-misses"} = 0;
+       $data{$name[1]}{"syscalls:sys_enter_futex"} = 0;
+       $data{$name[1]}{"L1-dcache-misses"} = 0;
+    } 
+    elsif ($name[4] eq "sys_enter_futex"){
+       $data{$name[1]}{"syscalls:sys_enter_futex"} = $name[2];
+       $data{$name[1]}{"syscalls:sys_enter_futex"} =~ s/,//g;
+    }
+    elsif ($name[3] eq "cs"){
+       $data{$name[1]}{"cs"} = $name[2];
+       $data{$name[1]}{"cs"} =~ s/,//g;
+    }
+    elsif ($name[3] eq "faults"){
+       $data{$name[1]}{"faults"} = $name[2];
+       $data{$name[1]}{"faults"} =~ s/,//g;
+    }
+    elsif ($name[3] eq "cache-references"){
+       $data{$name[1]}{"crefers"} = $name[2];
+       $data{$name[1]}{"crefers"} =~ s/,//g;
+    }
+    elsif ($name[3] eq "cache-misses"){
+       $data{$name[1]}{"cmisses"} = $name[2];
+       $data{$name[1]}{"cmisses"} =~ s/,//g;
+    }
+    elsif (($name[3] eq "dTLB-stores-misses") or ($name[3] eq "dTLB-loads-misses") ){
+       $val = $name[2];
+       $val =~ s/,//g;
+       $data{$name[1]}{"dTLB-misses"} = $data{$name[1]}{"dTLB-misses"} + $val ;
+    }
+    elsif (($name[3] eq "L1-dcache-loads-misses") or ($name[3] eq "L1-dcache-stores-misses")){
+       $val = $name[2];
+       $val =~ s/,//g;
+       $data{$name[1]}{"L1-dcache-misses"} = $data{$name[1]}{"L1-dcache-misses"} + $val ;
+    }
+#printf "%s:%s:%s \n", $name[2],$name[3],$name[4] ;
+    if ($name[2] eq "<not" ) {
+#printf "matched \n";
+        $data{$name[1]}{"IPC"} = 0;
+        if (($name[4] eq "L1-dcache-loads-misses") or ($name[4] eq "L1-dcache-stores-misses")){
+           $data{$name[1]}{"L1-dcache-misses"} = $data{$name[1]}{"L1-dcache-misses"} + 0;
+        }elsif (($name[4] eq "dTLB-stores-misses") or ($name[4] eq "dTLB-loads-misses") ){
+           $data{$name[1]}{"dTLB-misses"}= $data{$name[1]}{"dTLB-misses"} + 0;
+        }else{
+           $data{$name[1]}{$name[4]} = 0;
+        }
+    }
+}
+close PLOG;
+$data{"APP"}{"cycles"} = 1;
+$data{"APP"}{"name"}="Entire-JVM" ;
+print Dumper \%data;
+
+#$data{"APP"}{"IPC"} = ($data{"APP"}{"inst"})/($data{"APP"}{"cycles"}) ;
+ 
+$data{"APP"}{"inst"} =0;
+
+for my $pid (sort keys %data) {
+ #$percentage = ($data{$pid}{'inst'}/$data{'APP'}{'inst'})*100 ;
+ printf " %.3f  Inst: %d fault:%d cs:%d ",$data{$pid}{'IPC'},$data{$pid}{'inst'},$data{$pid}{'faults'},$data{$pid}{'cs'} ;
+ print "'$pid'  $data{$pid}{'name'} \n";
+ $data{"APP"}{"inst"} =  $data{"APP"}{"inst"} + $data{$pid}{"inst"} ;
+ $data{"APP"}{"cycles"} =  $data{"APP"}{"cycles"} + $data{$pid}{"cycles"} ;
+$data{$pid}{"cycles"} = $data{$pid}{"cycles"} +1;
+$data{$pid}{"IPC"} = ($data{$pid}{"inst"})/($data{$pid}{"cycles"}) ;
+}
+
+printf "------------------------- Instructions ---------\n" ;
+printf " <rank> <IPC><instructions>(Percentage) faults:<> cs:<> futex:<>(Percentage) <thread name> (pid) \n" ;
+$count =0 ;
+$cum_inst =0;
+foreach my $pid (sort { $data{$b}{'inst'} <=> $data{$a}{'inst'} } keys %data)  {
+ $count++;
+ $cum_inst = $cum_inst + $data{$pid}{'inst'};
+ $percentage = ($data{$pid}{'inst'}/$data{'APP'}{'inst'})*100 ;
+ #$percFutex = ($data{$pid}{'syscalls:sys_enter_futex'}/$data{'APP'}{'syscalls:sys_enter_futex'})*100 ;
+ $cum_per = ($cum_inst/$data{'APP'}{'inst'})*100  -100 ;
+ printf "%d, %.3f  Inst: %d(%d/%d) fault:%d cs:%d futex:%d(%d) %s \n",$count,$data{$pid}{'IPC'},$data{$pid}{'inst'},$percentage,$cum_per,$data{$pid}{'faults'},$data{$pid}{'cs'}, $data{$pid}{'syscalls:sys_enter_futex'},$percFutex,$data{$pid}{'name'} ;
+}
+
+my $type;
+$type = "cs";
+print_log();
+
+$type = "faults";
+print_log();
+
+$type = "cmisses";
+print_log();
+
+$type = "crefers";
+print_log();
+
+
+$type = "L1-dcache-misses";
+print_log();
+
+$type = "dTLB-misses";
+print_log();
+
+sub print_log {
+   printf "---------------------------------------------\n" ;
+   printf " <rank> <%s>(Percentage)  <thread name> (pid) \n",$type ;
+   $count =0 ;
+   foreach my $pid (sort { $data{$b}{$type} <=> $data{$a}{$type} } keys %data)  {
+     $count++;
+      if ($count eq "15") {
+        last; 
+      }
+      if ( $data{'APP'}{$type} == 0) {
+         $percentage =0;
+      }else{
+         $percentage = ($data{$pid}{$type}/$data{'APP'}{$type})*100 ;
+      }
+      printf "%d:  %d(%d) : %s($pid)\n",$count,$data{$pid}{$type},$percentage,$data{$pid}{'name'},$pid ;
+    }
+    return;
+}
+

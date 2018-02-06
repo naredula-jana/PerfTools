@@ -1,0 +1,3 @@
+#!/bin/sh
+timeout -s 2 100 perf stat -e cycles,instructions,cs,faults,cache-misses,L1-dcache-loads-misses,L1-dcache-stores-misses,dTLB-loads-misses,dTLB-stores-misses -p $1 --per-thread  2> ./perf.log
+./c_ipc

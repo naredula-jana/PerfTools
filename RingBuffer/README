@@ -1,5 +1,0 @@
-socket ticks :1521646741 ticks2:1521646912 count:10000000
-sharedmemory ticks :1521647823 ticks2:1521647824 count:1000000
-
-iusing socket: 170sec
-     shemed memory : 1sec

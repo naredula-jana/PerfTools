@@ -1,0 +1,21 @@
+socket ticks :1521646741 ticks2:1521646912 count:10000000
+sharedmemory ticks :1521647823 ticks2:1521647824 count:1000000
+
+using socket: 170sec
+shemed memory : 1sec
+ration : 170:1 , socket is slower
+
+For batch=1
+Redis using socket: 54k
+Redis using shared memory: 2000k
+ratio : 1:37 
+
+For batch=10
+Redis using socket: 576k
+Redis using shared memory: 3000k
+
+
+For batch=50
+Redis using socket: 1800k
+Redis using shared memory: 3300k
+

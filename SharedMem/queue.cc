@@ -40,7 +40,7 @@ int fifo_queue::init(unsigned char *arg_name, int shm_len, int type){
 
 int fifo_queue::add_to_queue(unsigned char *buf, int len,int data_flags) {
 	unsigned long flags;
-	int ret = JFAIL;
+	int ret = 0;
 
 	if (buf == 0 || len == 0)
 		return ret;
@@ -50,7 +50,7 @@ int fifo_queue::add_to_queue(unsigned char *buf, int len,int data_flags) {
 	if ( data[producer.index].len== 0) {
 		data[producer.index].flags = data_flags;
 		/* copy the data */
-		copy_to_shm(data[producer.index].shm_offset, buf, len);
+		ret = copy_to_shm(data[producer.index].shm_offset, buf, len);
 		data[producer.index].len = len;  /* CAUTION: this should be done after copying */
 		producer.index++;
 		producer.count++;
@@ -58,40 +58,26 @@ int fifo_queue::add_to_queue(unsigned char *buf, int len,int data_flags) {
 		if (producer.index >= MAX_QUEUE_LENGTH){
 			producer.index = 0;
 		}
-		ret = JSUCCESS;
 		goto last;
 	}
 	error_full++;
 
 last:
-	if (ret == JFAIL){
-		;
-	}else{
-
-	}
 	return ret;
 }
 
-int fifo_queue::peep_from_queue(unsigned char **buf, int *len,int *wr_flags) {
-	if (data[consumer.index].len != 0) {
-		if (len){
-			*len = data[consumer.index].len;
-		}
-		if (wr_flags){
-			*wr_flags = data[consumer.index].flags;
-		}
-		return data[consumer.index].len;
-	}
-	return 0;
+int fifo_queue::peep_from_queue() {
+
+	return data[consumer.index].len;
 }
 int fifo_queue::copy_to_shm(int shm_offset, unsigned char *buf, int len){
 	unsigned char *p;
 
-	if (len > BUF_SIZE) return JFAIL;
+	if (len > BUF_SIZE) return -1;
 	p =  producer.shm_ptr + shm_offset;
 	//printf(" copy to shm:  p:%p len:%d data:%s: \n",p,len,buf);
 	memcpy(p,buf,len);
-	return JSUCCESS;
+	return len;
 }
 int fifo_queue::copy_from_shm(int shm_offset, unsigned char *buf, int len){
 	unsigned char *p;
@@ -110,7 +96,9 @@ int fifo_queue::remove_from_queue(unsigned char *buf, int *len,int *wr_flags) {
 		if (data[consumer.index].len != 0) {
 			copy_from_shm(data[consumer.index].shm_offset, buf, data[consumer.index].len);
 			*len = data[consumer.index].len;
-			*wr_flags = data[consumer.index].flags;
+			if (wr_flags !=0){
+				*wr_flags = data[consumer.index].flags;
+			}
 
 			data[consumer.index].len = 0;
 			consumer.index++;
@@ -173,11 +161,29 @@ int shm_queue::add_to_queue(unsigned char *buf, int len, int flags){
 		return in_queue->add_to_queue(buf, len, flags);
 	}
 }
-int shm_queue::peep_from_queue(unsigned char **buf, int *len,int *wr_flags){
+int shm_queue::peep_from_queue(){
 	if (is_server){
-		return in_queue->peep_from_queue(buf, len, wr_flags);
+		return in_queue->peep_from_queue();
 	}else{
-		return out_queue->peep_from_queue(buf, len, wr_flags);
+		return out_queue->peep_from_queue();
 	}
+}
+
+extern "C" {
+shm_queue shm_queue;
+
+int shm_create(int is_server_arg){
+    return shm_queue.create( is_server_arg);
+}
+int shm_add_to_queue(unsigned char *buf, int len, int flags){
+	return shm_queue.add_to_queue(buf, len, flags);
+}
+int shm_remove_from_queue(unsigned char *buf, int *len,int *wr_flags){
+	return shm_queue.remove_from_queue(buf, len,wr_flags);
+}
+int shm_peep_from_queue(){
+	return shm_queue.peep_from_queue();
+}
+
 }
 

@@ -1,9 +1,0 @@
-
-rm *.o
-rm client 
-rm server
-g++  -g queue.cc -c
-g++  -g server.cc -c
-g++  -g client.cc -c
-g++ server.o queue.o -lrt -o server
-g++ client.o queue.o -lrt -o client

@@ -11,7 +11,7 @@ struct fifo_user{
 	} __attribute__ ((aligned (128)));
 
 #define MAX_FILENAME 100
-#define MAX_QUEUE_LENGTH 10
+#define MAX_QUEUE_LENGTH 200
 #define BUF_SIZE 4096
 #define QUEUE_PRODUCER 1
 #define QUEUE_CONSUMER 2
@@ -33,7 +33,7 @@ class fifo_queue {
 public:
 	int remove_from_queue(unsigned char *buf, int *len,int *wr_flags);
 	int add_to_queue(unsigned char *buf, int len, int flags);
-	int peep_from_queue(unsigned char **buf, int *len,int *wr_flags);
+	int peep_from_queue();
 	int init(unsigned char *arg_name,int wq_enable, int type);
 
 };
@@ -45,5 +45,5 @@ public:
 	int create(int type);
 	int remove_from_queue(unsigned char *buf, int *len,int *wr_flags);
 	int add_to_queue(unsigned char *buf, int len, int flags);
-	int peep_from_queue(unsigned char **buf, int *len,int *wr_flags);
+	int peep_from_queue();
 };

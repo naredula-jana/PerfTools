@@ -15,8 +15,6 @@
 
 #include "queue.h"
 
-shm_queue shm_queue;
-
 int server_socket() {
 	int listenfd = 0, connfd = 0;
 	struct sockaddr_in serv_addr;
@@ -55,23 +53,28 @@ int server_socket() {
 
 	return 1;
 }
+
+extern "C" {
+extern int shm_create(int is_server_arg);
+extern int shm_add_to_queue(unsigned char *buf, int len, int flags);
+extern int shm_remove_from_queue(unsigned char *buf, int *len,int *wr_flags);
+extern int shm_peep_from_queue();
+}
+
 int main(){
-	unsigned char *shm;
 	int i;
 	unsigned char buf[4096];
 	int len,flag;
 
-	//server_socket();
-	shm_queue.create(1);
-
+	shm_create(1);
 	while(1){
-		if (shm_queue.peep_from_queue(0,0,0) != 0){
+		if (shm_peep_from_queue() != 0){
 			i++;
-			shm_queue.remove_from_queue(&buf[0],&len,&flag);
-			//printf(" %d: Got the message  :%s : len:%d \n",i,buf,len);
+			shm_remove_from_queue(&buf[0],&len,&flag);
+			//printf(" %d: USINGC the message  :%s : len:%d \n",i,buf,len);
 			buf[0]='B';
-			shm_queue.add_to_queue(&buf[0],len,0);
+			shm_add_to_queue(&buf[0],len,0);
 		}
-
 	}
+
 }

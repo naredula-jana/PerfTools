@@ -15,7 +15,7 @@
 #include <time.h>
 
 #include "queue.h"
-shm_queue shm_queue;
+shm_queue c_shm_queue;
 #define MAX_REC 50000000
 time_t ticks1, ticks2;
 int client_socket() {
@@ -60,33 +60,61 @@ int client_socket() {
 
 	return 0;
 }
+int recv_pkts=0;
+int recv_count=0;
+int rlen=0;
+void recv_func(){
+	unsigned  char buf[1024];
+	int i,flag,len;
+	while(1)
+	{
+		if (c_shm_queue.peep_from_queue() == 0) {
+			return;
+		}
+		recv_count++;
+		c_shm_queue.remove_from_queue(&buf[0], &len, &flag);
+		if (buf[0] == '$') {
+			recv_pkts++;
+			rlen=len;
+		}
+	}
+}
 int main() {
 	unsigned char *shm;
-	int i,flag,len;
+	int i,k,flag,len;
 	int count=0;
+	int ret;
+	int batch=10;
+
 
 	//client_socket();
 	//system("sleep 5");
-	shm_queue.create(0);
+	c_shm_queue.create(0);
 
 	ticks1 = time(NULL);
-	for (i=0; i<MAX_REC; i++){
-		unsigned  char buf[1024];
+	for (i=0; i<MAX_REC; i=i+batch){
+		unsigned  char pkt[100];
+		unsigned  char buf[3024];
+		unsigned char *p;
+		int plen;
 
-		sprintf((char *)buf,"    DATA--%d:",i);
-		//printf(" Sending Data  :%s: \n",buf);
-		shm_queue.add_to_queue(buf,100,0);
-		//system("sleep 1");
-		while (shm_queue.peep_from_queue(0,0,0) == 0){
-
+		sprintf((char *)pkt,"*2\r\n$3\r\nGET\r\n$16\r\nkey:000000000001\r\n");
+		p=&buf[0];
+		len=0;
+		plen=strlen((const char *)pkt);
+		for (k=0; k<batch; k++){
+			memcpy(p,pkt,plen);
+			len=len+plen;
+			p=p+plen;
 		}
-		shm_queue.remove_from_queue(&buf[0],&len,&flag);
-		if (buf[0] == 'B'){
-			count++;
+		//printf(" Sending Data  :%s: len:%d \n",buf,strlen((const char *)buf));
+		ret=0;
+		while(ret==0){
+			ret=c_shm_queue.add_to_queue(&buf[0],len,0);
 		}
-		//printf(" DATA  :%s: len:%d\n",buf, len);
+		recv_func();
 	}
 	ticks2 = time(NULL);
-	printf(" sharedmemoryv.1 ticks :%ld ticks2:%ld diff:%ld count:%d\n", ticks1, ticks2,(ticks2-ticks1),count);
+	printf(" sharedmemoryv.1 ticks :%ld ticks2:%ld diff:%ld recv_count:%d recv_pkts:%d batch=%d rlen=%d\n", ticks1, ticks2,(ticks2-ticks1),recv_count,recv_pkts,batch,rlen);
 }
 

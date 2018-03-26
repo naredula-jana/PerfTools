@@ -16,6 +16,7 @@
 int fifo_queue::init(unsigned char *arg_name, int shm_len, int type){
 	unsigned char *shmem = (unsigned char *)this;
 	int i;
+	int last_buf_index;
 
 	if (type == QUEUE_PRODUCER){
 		producer.shm_ptr = shmem;
@@ -32,8 +33,13 @@ int fifo_queue::init(unsigned char *arg_name, int shm_len, int type){
 
 	for (i=0; i< MAX_QUEUE_LENGTH ; i++){
 		data[i].shm_offset = buf_start_index + (i*BUF_SIZE) ;
+		last_buf_index = buf_start_index + (i*BUF_SIZE) ;
 	}
-	queue_total_len = buf_start_index + (BUF_SIZE*MAX_QUEUE_LENGTH) ;
+	last_buf_index = last_buf_index + BUF_SIZE;
+	for (i=0; i< MAX_ADDITIONAL_BUFS ; i++){
+		free_buf_offset[i] = last_buf_index + (i*BUF_SIZE) ;
+	}
+	queue_total_len = buf_start_index + (BUF_SIZE*(MAX_QUEUE_LENGTH + MAX_ADDITIONAL_BUFS)) ;
 	printf(" Total len of fifo queue with %d bufs : %d  shmem:%p \n",MAX_QUEUE_LENGTH,queue_total_len,shmem);
 	return queue_total_len;
 }
@@ -89,28 +95,58 @@ int fifo_queue::copy_from_shm(int shm_offset, unsigned char *buf, int len){
 	//printf(" copy from shm:  p:%p len:%d data:%s: \n",p,len,buf);
 	return JSUCCESS;
 }
-int fifo_queue::remove_from_queue(unsigned char *buf, int *len,int *wr_flags) {
-	unsigned long flags;
-	int ret = JFAIL;
-	while (ret == JFAIL) {
-		if (data[consumer.index].len != 0) {
-			copy_from_shm(data[consumer.index].shm_offset, buf, data[consumer.index].len);
-			*len = data[consumer.index].len;
-			if (wr_flags !=0){
-				*wr_flags = data[consumer.index].flags;
-			}
+int fifo_queue::get_freebuf(){
+	int i;
+	int ret =-1;
 
-			data[consumer.index].len = 0;
-			consumer.index++;
-			consumer.count++;
-			if (consumer.index >= MAX_QUEUE_LENGTH){
-				consumer.index = 0;
+	for (i=0; i< MAX_ADDITIONAL_BUFS ; i++){
+		if (free_buf_offset[i] != -1){
+			ret = free_buf_offset[i];
+			free_buf_offset[i] = -1;
+			return ret;
+		}
+	}
+	return ret;
+}
+int fifo_queue::put_freebuf(unsigned char *p){
+	int i;
+
+	for (i=0; i< MAX_ADDITIONAL_BUFS ; i++){
+		if (free_buf_offset[i] == -1){
+			free_buf_offset[i] = ( p - consumer.shm_ptr);
+			return 1;
+		}
+	}
+	printf(" BUG: Not able to put free buf: %d\n",i);
+	while(1);
+	return 0;
+}
+unsigned char *fifo_queue::remove_from_queue(unsigned char *buf, int *len, int *wr_flags) {
+	unsigned long flags;
+	unsigned char *ret = buf;
+
+	if (data[consumer.index].len != 0) {
+		if (buf==0){
+			ret =  consumer.shm_ptr + data[consumer.index].shm_offset;
+			data[consumer.index].shm_offset = get_freebuf();
+			if (data[consumer.index].shm_offset  == -1){
+				printf(" BUG: OUT OF BUFFERS in remove\n");
+				while(1);
 			}
-			ret = JSUCCESS;
+		}else{
+			copy_from_shm(data[consumer.index].shm_offset, buf,
+				data[consumer.index].len);
+		}
+		*len = data[consumer.index].len;
+		if (wr_flags != 0) {
+			*wr_flags = data[consumer.index].flags;
 		}
 
-		if (ret == JFAIL){
-			return ret;
+		data[consumer.index].len = 0;
+		consumer.index++;
+		consumer.count++;
+		if (consumer.index >= MAX_QUEUE_LENGTH) {
+			consumer.index = 0;
 		}
 	}
 	return ret;
@@ -146,7 +182,7 @@ int shm_queue::create( int is_server_arg){
 	out_queue = (fifo_queue *)shm;
 	len = out_queue->init((unsigned char*)"queue2",SIZE,type2);
 }
-int shm_queue::remove_from_queue(unsigned char *buf, int *len,int *wr_flags){
+unsigned char  *shm_queue::remove_from_queue(unsigned char *buf, int *len,int *wr_flags){
 	if (is_server){
 		return in_queue->remove_from_queue(buf, len, wr_flags);
 	}else{
@@ -168,6 +204,13 @@ int shm_queue::peep_from_queue(){
 		return out_queue->peep_from_queue();
 	}
 }
+int shm_queue::put_freebuf(unsigned char *p){
+	if (is_server){
+		return in_queue->put_freebuf(p);
+	}else{
+		return out_queue->put_freebuf(p);
+	}
+}
 
 extern "C" {
 shm_queue shm_queue;
@@ -178,12 +221,14 @@ int shm_create(int is_server_arg){
 int shm_add_to_queue(unsigned char *buf, int len, int flags){
 	return shm_queue.add_to_queue(buf, len, flags);
 }
-int shm_remove_from_queue(unsigned char *buf, int *len,int *wr_flags){
+unsigned char  *shm_remove_from_queue(unsigned char *buf, int *len,int *wr_flags){
 	return shm_queue.remove_from_queue(buf, len,wr_flags);
 }
 int shm_peep_from_queue(){
 	return shm_queue.peep_from_queue();
 }
-
+int shm_put_freebuf(unsigned char *p){
+	return shm_queue.put_freebuf(p);
+}
 }
 

@@ -5,9 +5,10 @@
 extern int shm_create(int is_server_arg);
 extern int shm_add_to_queue(unsigned char *buf, int len, int flags);
 extern int shm_remove_from_queue(unsigned char *buf, int *len, int *wr_flags);
-extern int shm_peep_from_queue(unsigned char **buf, int *len, int *wr_flags);
+extern int shm_peep_from_queue();
 client *client_obj;
 extern void (*ModuleSHM_BeforeSelect)();
+unsigned char *recv_buf =0;
 void ModuleSHM_BeforeSelect_Impl() {
 
 }
@@ -22,9 +23,17 @@ ssize_t ModuleSHM_ReadUnusual_Impl(int fd, void *buf, size_t count) {
 	int len = count;
 
 //printf("Reading the SHM...: count:%d \n");
-	while (shm_peep_from_queue(0, 0, 0) == 0)
+	while (shm_peep_from_queue() == 0)
 		;
-	shm_remove_from_queue(buf, &len, 0);
+#if 0
+    if (buf == client_obj->querybuf){
+		recv_buf = client_obj->querybuf;
+		client_obj->querybuf = shm_remove_from_queue(0, &len, 0);
+	}else{
+#endif
+		shm_remove_from_queue(buf, &len, 0);
+	//}
+
 	// printf("Read the data :%s:  readlen:%d\n",buf,len);
 
 	if (len == 0) {
@@ -56,7 +65,13 @@ void *RedisMod_ThreadMain(void *arg) {
 			i++;
 
 			readQueryFromClient(0, -1, client_obj, AE_READABLE);
-			//shm_add_to_queue(&buf[0],len,0);
+#if 0
+			if (recv_buf != 0){
+				shm_put_freebuf(client_obj->querybuf);
+				client_obj->querybuf = recv_buf;
+				recv_buf =0;
+			}
+#endif
 			if (clientHasPendingReplies(client_obj)) {
 				sendReplyToClient(0, -1, client_obj, AE_WRITABLE);
 			}

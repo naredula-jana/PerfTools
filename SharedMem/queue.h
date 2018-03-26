@@ -12,6 +12,7 @@ struct fifo_user{
 
 #define MAX_FILENAME 100
 #define MAX_QUEUE_LENGTH 200
+#define MAX_ADDITIONAL_BUFS 100
 #define BUF_SIZE 4096
 #define QUEUE_PRODUCER 1
 #define QUEUE_CONSUMER 2
@@ -21,6 +22,7 @@ class fifo_queue {
 	struct fifo_user producer;
 	fifo_data_struct data[MAX_QUEUE_LENGTH];
 	struct fifo_user consumer;
+	int free_buf_offset[MAX_ADDITIONAL_BUFS];
 
 	unsigned long error_full;
 	unsigned long error_empty_check;
@@ -31,9 +33,11 @@ class fifo_queue {
     int copy_to_shm(int index, unsigned char *buf, int len);
     int copy_from_shm(int index, unsigned char *buf, int len);
 public:
-	int remove_from_queue(unsigned char *buf, int *len,int *wr_flags);
+	unsigned char  *remove_from_queue(unsigned char *buf, int *len,int *wr_flags);
 	int add_to_queue(unsigned char *buf, int len, int flags);
 	int peep_from_queue();
+	int get_freebuf();
+	int put_freebuf(unsigned char *p);
 	int init(unsigned char *arg_name,int wq_enable, int type);
 
 };
@@ -43,7 +47,8 @@ class shm_queue {
 	int is_server;
 public:
 	int create(int type);
-	int remove_from_queue(unsigned char *buf, int *len,int *wr_flags);
+	unsigned char  *remove_from_queue(unsigned char *buf, int *len,int *wr_flags);
 	int add_to_queue(unsigned char *buf, int len, int flags);
 	int peep_from_queue();
+	int put_freebuf(unsigned char *p);
 };

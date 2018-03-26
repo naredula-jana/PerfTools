@@ -65,6 +65,7 @@ int recv_count=0;
 int rlen=0;
 void recv_func(){
 	unsigned  char buf[1024];
+	unsigned char *ret_buf =0;
 	int i,flag,len;
 	while(1)
 	{
@@ -72,8 +73,10 @@ void recv_func(){
 			return;
 		}
 		recv_count++;
-		c_shm_queue.remove_from_queue(&buf[0], &len, &flag);
-		if (buf[0] == '$') {
+		//c_shm_queue.remove_from_queue(&buf[0], &len, &flag);
+		ret_buf = c_shm_queue.remove_from_queue(0, &len, &flag);
+		if (ret_buf!=0 && ret_buf[0] == '$') {
+			c_shm_queue.put_freebuf(ret_buf);
 			recv_pkts++;
 			rlen=len;
 		}
@@ -85,7 +88,6 @@ int main() {
 	int count=0;
 	int ret;
 	int batch=10;
-
 
 	//client_socket();
 	//system("sleep 5");

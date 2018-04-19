@@ -19,3 +19,12 @@ For batch=50
 Redis using socket: 1800k
 Redis using shared memory: 3300k
 
+For Batch=10, server-client
+without zero copy = 3571k
+with zero copy = 4540k
+
+
+For Batch=50, server-client
+without zero copy = 8300k 
+with zero copy = 12500k
+

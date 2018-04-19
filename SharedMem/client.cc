@@ -16,7 +16,7 @@
 
 #include "queue.h"
 shm_queue c_shm_queue;
-#define MAX_REC 50000000
+#define MAX_REC 500000000
 time_t ticks1, ticks2;
 int client_socket() {
 	int sockfd = 0, n = 0;
@@ -63,40 +63,52 @@ int client_socket() {
 int recv_pkts=0;
 int recv_count=0;
 int rlen=0;
-void recv_func(){
-	unsigned  char buf[1024];
-	unsigned char *ret_buf =0;
-	int i,flag,len;
-	while(1)
-	{
+int zero_copy = 0;
+void recv_func() {
+	unsigned char buf[5024];
+	unsigned char *ret_buf = 0;
+	int i, flag, len;
+
+
+	while (1) {
 		if (c_shm_queue.peep_from_queue() == 0) {
 			return;
 		}
 		recv_count++;
-		//c_shm_queue.remove_from_queue(&buf[0], &len, &flag);
-		ret_buf = c_shm_queue.remove_from_queue(0, &len, &flag);
-		if (ret_buf!=0 && ret_buf[0] == '$') {
-			c_shm_queue.put_freebuf(ret_buf);
-			recv_pkts++;
-			rlen=len;
+		if (zero_copy == 0) {
+			c_shm_queue.remove_from_queue(&buf[0], &len, &flag);
+			if (buf[0] == '$') {
+				recv_pkts++;
+			}
+		} else {
+			ret_buf = c_shm_queue.remove_from_queue(0, &len, &flag);
+			if (ret_buf != 0) {
+				if (ret_buf[0] == '$') {
+					recv_pkts++;
+				}
+				c_shm_queue.put_freebuf(ret_buf);
+				rlen = len;
+			}
 		}
 	}
 }
+unsigned  char buf[7024];
 int main() {
 	unsigned char *shm;
 	int i,k,flag,len;
 	int count=0;
 	int ret;
-	int batch=10;
+	int batch=50;
 
 	//client_socket();
 	//system("sleep 5");
 	c_shm_queue.create(0);
 
+	printf(" zero copy: %d\n",zero_copy);
 	ticks1 = time(NULL);
 	for (i=0; i<MAX_REC; i=i+batch){
 		unsigned  char pkt[100];
-		unsigned  char buf[3024];
+
 		unsigned char *p;
 		int plen;
 

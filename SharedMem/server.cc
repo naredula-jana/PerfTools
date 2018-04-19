@@ -57,23 +57,34 @@ int server_socket() {
 extern "C" {
 extern int shm_create(int is_server_arg);
 extern int shm_add_to_queue(unsigned char *buf, int len, int flags);
-extern int shm_remove_from_queue(unsigned char *buf, int *len,int *wr_flags);
+extern unsigned char  *shm_remove_from_queue(unsigned char *buf, int *len,int *wr_flags);
 extern int shm_peep_from_queue();
+extern int shm_put_freebuf(unsigned char *p);
 }
-
-int main(){
+int zero_copy = 0;
+int main() {
 	int i;
 	unsigned char buf[4096];
-	int len,flag;
+	int len, flag;
+	unsigned char *pbuf;
+
 
 	shm_create(1);
-	while(1){
-		if (shm_peep_from_queue() != 0){
+	printf(" zero copy: %d\n",zero_copy);
+	while (1) {
+		if (shm_peep_from_queue() != 0) {
 			i++;
-			shm_remove_from_queue(&buf[0],&len,&flag);
-			//printf(" %d: USINGC the message  :%s : len:%d \n",i,buf,len);
-			buf[0]='B';
-			shm_add_to_queue(&buf[0],len,0);
+			if (zero_copy == 0) {
+				shm_remove_from_queue(&buf[0], &len, &flag);
+				buf[0] = '$';
+				shm_add_to_queue(&buf[0], len, 0);
+			} else {
+				pbuf = shm_remove_from_queue((unsigned char *) 0, &len, &flag);
+				pbuf[0] = '$';
+				shm_add_to_queue(pbuf, len, 0);
+				shm_put_freebuf(pbuf);
+			}
+
 		}
 	}
 

@@ -1,7 +1,7 @@
 # Reactive programming vs synchronised 
-Reactive programming is also called Event based or asynchronise programming model. A reactive system is an architectural style that allows multiple individual requests to be processed by a single thread for each cpu core.  Synchronised is the alternate  programming model, where each request is handled by a individual thread.  Reactive programming is having advantage if number concurrent requests to the server is large and processing of each request need lot of sleeps/waits during the processing. Reactive programming model is relative new in Java world, But in the linux kernel the epoll and AsyncIO is been introduced or supported more then decade back. Reactive programming is implemented on the foundation of epoll and asyncIO to reduce the system calls overhead. system call are expensive and can impact latency as-well  throughput. 
+Reactive programming is also called Event based or asynchronise programming model. A reactive system is an architectural style that allows multiple individual requests to be processed by a single thread for each cpu core.  Synchronised is the alternate  programming model, where each request is handled by a individual thread.  Reactive programming is having advantage if number concurrent requests to the server is large and processing of each request need lot of IO or sleeps/waits during the processing. Reactive programming model is relative new in Java world, But in the linux kernel the epoll and AsyncIO is been introduced or supported more then decade back. Reactive programming is implemented on the foundations of epoll and asyncIO to reduce the system calls overhead. system call are expensive and can impact latency as-well throughput. 
 
-In this Perf Test, Comparison between a Netty server a Asynchronous model vs Tomacat  a Synchronous model is compared.  Netty uses few number of threads proportional to the number of cpu cores  to process large number of requests. On the Other hand Tomcat uses separate thread for each request. Suppose if there are 2000 concurrent requests on 32 core machine  then Netty uses around 32 active threads vs Tomcat uses 2000 active threads to processes the requests. Due to this if the number  of request are large and each request need lot of waits during processing of thread like waiting for database response then Netty Performs well in terms of latency as well as throughput. Tomcat spends lot of cpu cycles in context switches.
+In this Perf Test, Comparison between a Netty server a Asynchronous model vs Tomacat  a Synchronous model is compared.  Netty uses few number of threads proportional to the number of cpu cores  to process large number of requests. On the Other hand Tomcat uses separate thread for each request. Suppose if there are 2000 concurrent requests on 32 core machine  then Netty uses around 32 active threads vs Tomcat uses 2000 active threads to processes the requests. Due to this if the number  of request are large and each request need lot of waits during processing of thread like waiting for database response then Netty Performs well in terms of latency as well as throughput. Tomcat spends lot of cpu cycles in context switches. Netty has its own memory allocator for buffers, it doesn't waste memory bandwidth by filling buffers with zeros, Netty implements a jemalloc variant of memory allocation by bypassing jvm GC. 
 
 
 
@@ -12,6 +12,7 @@ Description: Rest server does a sleep of 100ms as part of request processing. sl
 
 ```
 Load generator: ab -n 90000 -c 200 http://localhost:8080/sleep
+Flow of packets:  load generator -> Netty/Tomacat . 100ms delay is created inside the request processing.
 Tomcat command: java -jar ./Tomcat_sync-0.0.1-SNAPSHOT.jar
 Netty Command: java -jar ./Netty_example-0.0.1-SNAPSHOT.jar 
 Total number of Request in all the tests =  90000
@@ -32,7 +33,7 @@ Test Results:
 <th>1) concurrency=200 </th>
 <th>latency=101ms, cpu= 90/3200 </th>
 <th>latency=101ms, cpu= 100/3200</th>
-<th>50ms is the waiting time inside the web request.  </th>
+<th>100ms is the waiting time inside the web request. Tomcat and Netty Perform at the same level.  </th>
 </tr>
 <tr>
 <th>2) concurrency=400 </th>
@@ -44,7 +45,7 @@ Test Results:
 <th>3) concurrency=800 </th>
 <th>latency=400ms, cpu= 90/3200 </th>
 <th>latency=104ms, cpu=300/3200 </th>
-<th></th>
+<th>Netty is 4.0x better.</th>
 </tr>
 <tr>
 <th>4) concurrency=1600 </th>
@@ -56,7 +57,7 @@ Test Results:
 <th>5) concurrency=2600 </th>
 <th>latency=1300ms, cpu= 90/3200 </th>
 <th>latency=245ms, cpu=560/3200 </th>
-<th>  </th>
+<th> Netty is 5.3x times better interms of latency </th>
 </tr>
 </tbody></table>
 
@@ -67,6 +68,7 @@ Description: Rest server does a web request as part of request processing. web r
 
 ```
 Load generator: ab -n 90000 -c 200 http://localhost:8080/webrequest
+Flow of packets:  load generator -> Netty/Tomacat -> echo server. echo server creates a delay of 50ms.
 Tomcat command: java -jar ./Tomcat_sync-0.0.1-SNAPSHOT.jar
 Netty Command: java -jar ./Netty_example-0.0.1-SNAPSHOT.jar 
 Total number of Request in all the tests =  90000
@@ -87,7 +89,7 @@ Test Results:
 <th>6)concurrency=200 </th>
 <th>latency=52ms, cpu=320/3200  </th>
 <th>latency=52ms, cpu=320/3200 </th>
-<th>50ms is the waiting time inside the web request.   </th>
+<th>50ms is the waiting time inside the web request. Tomcat and Netty Perform at the same level.   </th>
 </tr>
 </tr>
 <tr>
@@ -112,7 +114,7 @@ Test Results:
 <th>10)concurrency=2600 </th>
 <th>latency=670ms, cpu=320/3200  </th>
 <th>latency=280ms, cpu=680/3200 </th>
-<th>  </th>
+<th> Netty is 2.4x better.  </th>
 </tr>
 </tbody></table>
 
@@ -138,10 +140,13 @@ comparison of total syscalls and context switch(cs):
 
 # Summary :
 
- -  As load increases the latency and throughput gap between Netty and Tomcat will increases from 1X to 3X. The main reason is tomcat spends lot of cpu cycles in switching user to kernel space with futex system calls. futex call will be used when a thread waits or for syncronization.
- -  Netty is more suitable if the Rest server need to handle requests that need lot of backend communications like databases,rest servers,...etc.  The latency gap is more in Perf Test-1 when compare to Perf-Test-1 because the waiting period is 100ms in Test-1 when compare to 50ms in other.   
+ -  As the number of concurrent IO bound requests increases the latency and throughput gap between Netty and Tomcat will increases from 1X to 5X. The main reason is Tomcat spends lot of cpu cycles in switching user to kernel space with futex system calls during the IO time. futex call will be used when a thread waits for IO or for syncronization purpose.
+ -  Netty is more suitable if the Rest server need to handle requests that need lot of backend communications like databases,rest servers,...etc.  The latency gap is more in Perf Test-1 when compare to Perf-Test-2 because the waiting period is 100ms in Perf-Test-1 when compare to 50ms in other. 
+ - The performance gap between Tomcat and Netty can be less if the load is cpu bound and less number of concurrent requests.  
 
 
 ## Papers related to syscall impact on performance:
  -   [syscall impact in high end NoSQL database](https://github.com/naredula-jana/Jiny-Kernel/blob/master/doc/HighThroughputDatabaseForBigData.pdf) .
  -   [Minimising syscall : Golang apps in ring-0](https://github.com/naredula-jana/Jiny-Kernel/blob/master/doc/GolangAppInRing0.pdf).
+  -   [Netty uses Jemalloc varient for memory allocation](https://github.com/naredula-jana/Jiny-Kernel/blob/master/doc/malloc_paper_techpulse_submit_final.pdf).
+ 

@@ -15,6 +15,7 @@ Load generator: ab -n 90000 -c 200 http://localhost:8080/sleep
 Tomcat command: java -jar ./Tomcat_sync-0.0.1-SNAPSHOT.jar
 Netty Command: java -jar ./Netty_example-0.0.1-SNAPSHOT.jar 
 Total number of Request in all the tests =  90000
+number of cpu cores inside the machine: 32 cores
 ```
 
 Test Results:
@@ -31,7 +32,7 @@ Test Results:
 <th>1) concurrency=200 </th>
 <th>latency=101ms, cpu= 90/3200 </th>
 <th>latency=101ms, cpu= 100/3200</th>
-<th>Best for tomcat after that latency increases  </th>
+<th>50ms is the waiting time inside the web request.  </th>
 </tr>
 <tr>
 <th>2) concurrency=400 </th>
@@ -43,7 +44,7 @@ Test Results:
 <th>3) concurrency=800 </th>
 <th>latency=400ms, cpu= 90/3200 </th>
 <th>latency=104ms, cpu=300/3200 </th>
-<th>Best for Netty  after that latency slow increases </th>
+<th></th>
 </tr>
 <tr>
 <th>4) concurrency=1600 </th>
@@ -69,6 +70,7 @@ Load generator: ab -n 90000 -c 200 http://localhost:8080/webrequest
 Tomcat command: java -jar ./Tomcat_sync-0.0.1-SNAPSHOT.jar
 Netty Command: java -jar ./Netty_example-0.0.1-SNAPSHOT.jar 
 Total number of Request in all the tests =  90000
+number of cpu cores inside the machine: 32 cores
 ```
 
 Test Results:
@@ -85,7 +87,7 @@ Test Results:
 <th>6)concurrency=200 </th>
 <th>latency=52ms, cpu=320/3200  </th>
 <th>latency=52ms, cpu=320/3200 </th>
-<th>Best for tomcat after that latency increases  </th>
+<th>50ms is the waiting time inside the web request.   </th>
 </tr>
 </tr>
 <tr>
@@ -141,5 +143,5 @@ comparison of total syscalls and context switch(cs):
 
 
 ## Papers related to syscall impact on performance:
- -   [syscall impact in high end NoSQL database](../master/doc/HighThroughputDatabaseForBigData.pdf) .
- -   [Minimising syscall : Golang apps in ring-0](../master/doc/GolangAppInRing0.pdf).
+ -   [syscall impact in high end NoSQL database](https://github.com/naredula-jana/Jiny-Kernel/blob/master/doc/HighThroughputDatabaseForBigData.pdf) .
+ -   [Minimising syscall : Golang apps in ring-0](https://github.com/naredula-jana/Jiny-Kernel/blob/master/doc/GolangAppInRing0.pdf).

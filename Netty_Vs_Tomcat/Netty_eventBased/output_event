@@ -1,0 +1,1741 @@
+PID	CPU	Mem	JStack Info
+9163 	"reactor-http-epoll-1" 
+9167 	"reactor-http-epoll-5" 
+9171 	"reactor-http-epoll-9" 
+9175 	"reactor-http-epoll-13" 
+9188 	"reactor-http-epoll-25" 
+9190 	"reactor-http-epoll-27" 
+9194 	"reactor-http-epoll-31" 
+9195 	"reactor-http-epoll-32" 
+9164 	"reactor-http-epoll-2" 
+9166 	"reactor-http-epoll-4" 
+9168 	"reactor-http-epoll-6" 
+9170 	"reactor-http-epoll-8" 
+9172 	"reactor-http-epoll-10" 
+9173 	"reactor-http-epoll-11" 
+9174 	"reactor-http-epoll-12" 
+9176 	"reactor-http-epoll-14" 
+9179 	"reactor-http-epoll-17" 
+9180 	"reactor-http-epoll-18" 
+9189 	"reactor-http-epoll-26" 
+9191 	"reactor-http-epoll-28" 
+9192 	"reactor-http-epoll-29" 
+9165 	"reactor-http-epoll-3" 
+9169 	"reactor-http-epoll-7" 
+9177 	"reactor-http-epoll-15" 
+9178 	"reactor-http-epoll-16" 
+9181 	"reactor-http-epoll-19" 
+9182 	"reactor-http-epoll-20" 
+9183 	"reactor-http-epoll-21" 
+9185 	"reactor-http-epoll-22" 
+9186 	"reactor-http-epoll-23" 
+9187 	"reactor-http-epoll-24" 
+9193 	"reactor-http-epoll-30" 
+9116 	"DestroyJavaVM" 
+9117 	"GC task thread
+9118 	"GC task thread
+9119 	"GC task thread
+9120 	"GC task thread
+9121 	"GC task thread
+9122 	"GC task thread
+9123 	"GC task thread
+9124 	"GC task thread
+9125 	"GC task thread
+9126 	"GC task thread
+9127 	"GC task thread
+9128 	"GC task thread
+9129 	"GC task thread
+9130 	"GC task thread
+9131 	"GC task thread
+9132 	"GC task thread
+9133 	"GC task thread
+9134 	"GC task thread
+9135 	"GC task thread
+9136 	"GC task thread
+9137 	"GC task thread
+9138 	"GC task thread
+9139 	"GC task thread
+9140 	"VM Thread" os_prio=0 tid=0x00007ff1fc3c5800 nid=0x23b4 runnable 
+9141 	"Reference Handler" 
+9142 	"Finalizer" 
+9143 	"Signal Dispatcher" 
+9144 	"C2 CompilerThread0" 
+9145 	"C2 CompilerThread1" 
+9146 	"C2 CompilerThread2" 
+9147 	"C2 CompilerThread3" 
+9148 	"C2 CompilerThread4" 
+9149 	"C2 CompilerThread5" 
+9150 	"C2 CompilerThread6" 
+9151 	"C2 CompilerThread7" 
+9152 	"C2 CompilerThread8" 
+9153 	"C2 CompilerThread9" 
+9154 	"C1 CompilerThread10" 
+9155 	"C1 CompilerThread11" 
+9156 	"C1 CompilerThread12" 
+9157 	"C1 CompilerThread13" 
+9158 	"C1 CompilerThread14" 
+9159 	"Service Thread" 
+9160 	"VM Periodic Task Thread" os_prio=0 tid=0x00007ff1fc42d800 nid=0x23c8 waiting on condition 
+9196 	"server" 
+9521 	"Attach Listener" 
+$VAR1 = {
+          '9134' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 77,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 95,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 46
+                    },
+          '9196' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'dTLB-misses' => 0,
+                      'syscalls:sys_enter_futex' => 0,
+                      'IPC' => '1',
+                      'syscalls' => 0,
+                      'cycles' => 1,
+                      'name' => '"server" ',
+                      'faults' => 0,
+                      'cache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'L1-dcache-misses' => 0,
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'cs' => 0,
+                      'inst' => 1
+                    },
+          '9164' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-2" ',
+                      'cycles' => 1,
+                      'faults' => 2083,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 54421,
+                      'syscalls:sys_enter_futex' => 40,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 34461,
+                      'inst' => 1,
+                      'cs' => 26470
+                    },
+          '9185' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-22" ',
+                      'cycles' => 1,
+                      'faults' => 1656,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 53496,
+                      'syscalls:sys_enter_futex' => 28,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 33717,
+                      'inst' => 1,
+                      'cs' => 26248
+                    },
+          '9116' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'dTLB-misses' => 0,
+                      'syscalls:sys_enter_futex' => 0,
+                      'IPC' => '1',
+                      'syscalls' => 0,
+                      'cycles' => 1,
+                      'name' => '"DestroyJavaVM" ',
+                      'faults' => 0,
+                      'cache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'L1-dcache-misses' => 0,
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'cs' => 0,
+                      'inst' => 1
+                    },
+          '9152' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"C2 CompilerThread8" ',
+                      'cycles' => 1,
+                      'faults' => 1723,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 13,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 5
+                    },
+          '9137' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 132,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 110,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 41
+                    },
+          '9123' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 1701,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 116,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 47
+                    },
+          '9122' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 60,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 103,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 38
+                    },
+          '9157' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"C1 CompilerThread13" ',
+                      'cycles' => 1,
+                      'faults' => 11,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 16,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 6
+                    },
+          '9117' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 97,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 103,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 63
+                    },
+          '9183' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-21" ',
+                      'cycles' => 1,
+                      'faults' => 0,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 54392,
+                      'syscalls:sys_enter_futex' => 49,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 34325,
+                      'inst' => 1,
+                      'cs' => 26459
+                    },
+          '9127' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 67,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 112,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 79
+                    },
+          '9186' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-23" ',
+                      'cycles' => 1,
+                      'faults' => 1320,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 55084,
+                      'syscalls:sys_enter_futex' => 43,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 34815,
+                      'inst' => 1,
+                      'cs' => 26807
+                    },
+          '9132' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 1607,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 95,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 47
+                    },
+          '9136' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 105,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 96,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 40
+                    },
+          '9143' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'dTLB-misses' => 0,
+                      'syscalls:sys_enter_futex' => 0,
+                      'IPC' => '1',
+                      'syscalls' => 0,
+                      'cycles' => 1,
+                      'name' => '"Signal Dispatcher" ',
+                      'faults' => 0,
+                      'cache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'L1-dcache-misses' => 0,
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'cs' => 0,
+                      'inst' => 1
+                    },
+          '9166' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-4" ',
+                      'cycles' => 1,
+                      'faults' => 1573,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 56398,
+                      'syscalls:sys_enter_futex' => 52,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 35624,
+                      'inst' => 1,
+                      'cs' => 27203
+                    },
+          '9160' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"VM Periodic Task Thread" os_prio=0 tid=0x00007ff1fc42d800 nid=0x23c8 waiting on condition ',
+                      'cycles' => 1,
+                      'faults' => 234,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 806,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 404
+                    },
+          '9195' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-32" ',
+                      'cycles' => 1,
+                      'faults' => 1272,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 56145,
+                      'syscalls:sys_enter_futex' => 36,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 35459,
+                      'inst' => 1,
+                      'cs' => 27064
+                    },
+          '9145' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"C2 CompilerThread1" ',
+                      'cycles' => 1,
+                      'faults' => 11,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 13,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 6
+                    },
+          '9194' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-31" ',
+                      'cycles' => 1,
+                      'faults' => 1910,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 55964,
+                      'syscalls:sys_enter_futex' => 30,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 35247,
+                      'inst' => 1,
+                      'cs' => 26815
+                    },
+          '9140' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"VM Thread" os_prio=0 tid=0x00007ff1fc3c5800 nid=0x23b4 runnable ',
+                      'cycles' => 1,
+                      'faults' => 2495,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 99,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 41
+                    },
+          '9119' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 36,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 102,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 47
+                    },
+          '9129' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 607,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 96,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 41
+                    },
+          '9151' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"C2 CompilerThread7" ',
+                      'cycles' => 1,
+                      'faults' => 11,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 14,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 5
+                    },
+          '9177' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-15" ',
+                      'cycles' => 1,
+                      'faults' => 1205,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 54762,
+                      'syscalls:sys_enter_futex' => 42,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 34585,
+                      'inst' => 1,
+                      'cs' => 26685
+                    },
+          '9178' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-16" ',
+                      'cycles' => 1,
+                      'faults' => 1316,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 48376,
+                      'syscalls:sys_enter_futex' => 35,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 30528,
+                      'inst' => 1,
+                      'cs' => 25012
+                    },
+          '9118' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 69,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 104,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 45
+                    },
+          '9148' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"C2 CompilerThread4" ',
+                      'cycles' => 1,
+                      'faults' => 12,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 21,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 8
+                    },
+          '9174' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'dTLB-misses' => 0,
+                      'syscalls:sys_enter_futex' => 40,
+                      'IPC' => '1',
+                      'syscalls' => 0,
+                      'cycles' => 1,
+                      'name' => '"reactor-http-epoll-12" ',
+                      'faults' => 1786,
+                      'cache-misses' => 0,
+                      'syscalls:sys_enter_write' => 54341,
+                      'L1-dcache-misses' => 0,
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'cs' => 26789,
+                      'inst' => 1
+                    },
+          '9156' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"C1 CompilerThread12" ',
+                      'cycles' => 1,
+                      'faults' => 11,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 13,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 5
+                    },
+          '9149' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"C2 CompilerThread5" ',
+                      'cycles' => 1,
+                      'faults' => 15,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 18,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 7
+                    },
+          '9187' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-24" ',
+                      'cycles' => 1,
+                      'faults' => 1390,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 57662,
+                      'syscalls:sys_enter_futex' => 42,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 36338,
+                      'inst' => 1,
+                      'cs' => 27420
+                    },
+          '9144' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"C2 CompilerThread0" ',
+                      'cycles' => 1,
+                      'faults' => 12,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 21,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 8
+                    },
+          '9128' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 2132,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 101,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 51
+                    },
+          '9173' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-11" ',
+                      'cycles' => 1,
+                      'faults' => 1822,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 62321,
+                      'syscalls:sys_enter_futex' => 50,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 39277,
+                      'inst' => 1,
+                      'cs' => 28174
+                    },
+          '9521' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'dTLB-misses' => 0,
+                      'syscalls:sys_enter_futex' => 0,
+                      'IPC' => '1',
+                      'syscalls' => 0,
+                      'cycles' => 1,
+                      'name' => '"Attach Listener" ',
+                      'faults' => 0,
+                      'cache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'L1-dcache-misses' => 0,
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'cs' => 0,
+                      'inst' => 1
+                    },
+          '9115' => {
+                      'syscalls' => 0,
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'cycles' => 0,
+                      'faults' => 0,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 0,
+                      'IPC' => 0,
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'cs' => 0
+                    },
+          '9150' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"C2 CompilerThread6" ',
+                      'cycles' => 1,
+                      'faults' => 23,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 16,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 6
+                    },
+          '9170' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-8" ',
+                      'cycles' => 1,
+                      'faults' => 1570,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 60198,
+                      'syscalls:sys_enter_futex' => 44,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 37852,
+                      'inst' => 1,
+                      'cs' => 27827
+                    },
+          '9182' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-20" ',
+                      'cycles' => 1,
+                      'faults' => 1397,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 57382,
+                      'syscalls:sys_enter_futex' => 34,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 36209,
+                      'inst' => 1,
+                      'cs' => 27266
+                    },
+          '9175' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-13" ',
+                      'cycles' => 1,
+                      'faults' => 1256,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 57295,
+                      'syscalls:sys_enter_futex' => 41,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 36338,
+                      'inst' => 1,
+                      'cs' => 27403
+                    },
+          '9131' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 71,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 119,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 55
+                    },
+          'APP' => {
+                     'name' => 'Entire-JVM',
+                     'cycles' => 80,
+                     'faults' => 63352,
+                     'dTLB-misses' => 0,
+                     'L1-dcache-misses' => 0,
+                     'syscalls:sys_enter_write' => 1949710,
+                     'cmisses' => '0',
+                     'syscalls:sys_enter_futex' => 4805,
+                     'syscalls:sys_enter_read' => 1052237,
+                     'inst' => 80,
+                     'cs' => 921223,
+                     'crefers' => '0'
+                   },
+          '9159' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'dTLB-misses' => 0,
+                      'syscalls:sys_enter_futex' => 0,
+                      'IPC' => '1',
+                      'syscalls' => 0,
+                      'cycles' => 1,
+                      'name' => '"Service Thread" ',
+                      'faults' => 0,
+                      'cache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'L1-dcache-misses' => 0,
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'cs' => 0,
+                      'inst' => 1
+                    },
+          '9147' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"C2 CompilerThread3" ',
+                      'cycles' => 1,
+                      'faults' => 1851,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 12,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 6
+                    },
+          '9176' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-14" ',
+                      'cycles' => 1,
+                      'faults' => 881,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 57471,
+                      'syscalls:sys_enter_futex' => 36,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 36196,
+                      'inst' => 1,
+                      'cs' => 27404
+                    },
+          '9141' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'dTLB-misses' => 0,
+                      'syscalls:sys_enter_futex' => 0,
+                      'IPC' => '1',
+                      'syscalls' => 0,
+                      'cycles' => 1,
+                      'name' => '"Reference Handler" ',
+                      'faults' => 0,
+                      'cache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'L1-dcache-misses' => 0,
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'cs' => 0,
+                      'inst' => 1
+                    },
+          '9189' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-26" ',
+                      'cycles' => 1,
+                      'faults' => 1220,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 52484,
+                      'syscalls:sys_enter_futex' => 39,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 33079,
+                      'inst' => 1,
+                      'cs' => 26100
+                    },
+          '9154' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"C1 CompilerThread10" ',
+                      'cycles' => 1,
+                      'faults' => 11,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 18,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 7
+                    },
+          '9130' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 3136,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 118,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 40
+                    },
+          '9126' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 32,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 112,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 63
+                    },
+          '9155' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"C1 CompilerThread11" ',
+                      'cycles' => 1,
+                      'faults' => 11,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 16,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 6
+                    },
+          '9168' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-6" ',
+                      'cycles' => 1,
+                      'faults' => 1174,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 57013,
+                      'syscalls:sys_enter_futex' => 52,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 35877,
+                      'inst' => 1,
+                      'cs' => 27104
+                    },
+          '9120' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 63,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 110,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 41
+                    },
+          '9138' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 47,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 114,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 45
+                    },
+          '9181' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'dTLB-misses' => 0,
+                      'syscalls:sys_enter_futex' => 0,
+                      'IPC' => '1',
+                      'syscalls' => 0,
+                      'cycles' => 1,
+                      'name' => '"reactor-http-epoll-19" ',
+                      'faults' => 0,
+                      'cache-misses' => 0,
+                      'syscalls:sys_enter_write' => 60143,
+                      'L1-dcache-misses' => 0,
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 38238,
+                      'cs' => 28366,
+                      'inst' => 1
+                    },
+          '9158' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"C1 CompilerThread14" ',
+                      'cycles' => 1,
+                      'faults' => 577,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 14,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 5
+                    },
+          '9121' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 32,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 101,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 54
+                    },
+          '9169' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-7" ',
+                      'cycles' => 1,
+                      'faults' => 1397,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 53930,
+                      'syscalls:sys_enter_futex' => 36,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 34016,
+                      'inst' => 1,
+                      'cs' => 26373
+                    },
+          '9188' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-25" ',
+                      'cycles' => 1,
+                      'faults' => 834,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 54034,
+                      'syscalls:sys_enter_futex' => 35,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 34103,
+                      'inst' => 1,
+                      'cs' => 26427
+                    },
+          '9179' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-17" ',
+                      'cycles' => 1,
+                      'faults' => 1215,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 51554,
+                      'syscalls:sys_enter_futex' => 38,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 32692,
+                      'inst' => 1,
+                      'cs' => 25902
+                    },
+          '9139' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 58,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 104,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 37
+                    },
+          '9163' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-1" ',
+                      'cycles' => 1,
+                      'faults' => 3095,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 218440,
+                      'syscalls:sys_enter_futex' => 32,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 30835,
+                      'inst' => 1,
+                      'cs' => 85016
+                    },
+          '9125' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 53,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 106,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 54
+                    },
+          '9142' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'dTLB-misses' => 0,
+                      'syscalls:sys_enter_futex' => 0,
+                      'IPC' => '1',
+                      'syscalls' => 0,
+                      'cycles' => 1,
+                      'name' => '"Finalizer" ',
+                      'faults' => 0,
+                      'cache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'L1-dcache-misses' => 0,
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'cs' => 0,
+                      'inst' => 1
+                    },
+          '9146' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"C2 CompilerThread2" ',
+                      'cycles' => 1,
+                      'faults' => 11,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 12,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 5
+                    },
+          '9165' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-3" ',
+                      'cycles' => 1,
+                      'faults' => 1888,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 52314,
+                      'syscalls:sys_enter_futex' => 35,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 33149,
+                      'inst' => 1,
+                      'cs' => 26259
+                    },
+          '9124' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 98,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 99,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 49
+                    },
+          '9192' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-29" ',
+                      'cycles' => 1,
+                      'faults' => 1898,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 52055,
+                      'syscalls:sys_enter_futex' => 33,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 32942,
+                      'inst' => 1,
+                      'cs' => 26150
+                    },
+          '9190' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-27" ',
+                      'cycles' => 1,
+                      'faults' => 1746,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 60262,
+                      'syscalls:sys_enter_futex' => 38,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 38106,
+                      'inst' => 1,
+                      'cs' => 28142
+                    },
+          '9193' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-30" ',
+                      'cycles' => 1,
+                      'faults' => 1449,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 52884,
+                      'syscalls:sys_enter_futex' => 38,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 33383,
+                      'inst' => 1,
+                      'cs' => 26183
+                    },
+          '9167' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-5" ',
+                      'cycles' => 1,
+                      'faults' => 1289,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 52733,
+                      'syscalls:sys_enter_futex' => 56,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 33314,
+                      'inst' => 1,
+                      'cs' => 26164
+                    },
+          '9191' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-28" ',
+                      'cycles' => 1,
+                      'faults' => 1400,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 53170,
+                      'syscalls:sys_enter_futex' => 35,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 33572,
+                      'inst' => 1,
+                      'cs' => 26250
+                    },
+          '9180' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'dTLB-misses' => 0,
+                      'syscalls:sys_enter_futex' => 42,
+                      'IPC' => '1',
+                      'syscalls' => 0,
+                      'cycles' => 1,
+                      'name' => '"reactor-http-epoll-18" ',
+                      'faults' => 1493,
+                      'cache-misses' => 0,
+                      'syscalls:sys_enter_write' => 59068,
+                      'L1-dcache-misses' => 0,
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'cs' => 27417,
+                      'inst' => 1
+                    },
+          '9172' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-10" ',
+                      'cycles' => 1,
+                      'faults' => 1260,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 57924,
+                      'syscalls:sys_enter_futex' => 42,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 36454,
+                      'inst' => 1,
+                      'cs' => 27434
+                    },
+          '9153' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"C2 CompilerThread9" ',
+                      'cycles' => 1,
+                      'faults' => 8,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 13,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 5
+                    },
+          '9133' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 118,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 108,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 46
+                    },
+          '9135' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"GC task thread',
+                      'cycles' => 1,
+                      'faults' => 167,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 0,
+                      'syscalls:sys_enter_futex' => 111,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 0,
+                      'inst' => 1,
+                      'cs' => 49
+                    },
+          '9171' => {
+                      'instructions' => 0,
+                      'status' => 'counted',
+                      'name' => '"reactor-http-epoll-9" ',
+                      'cycles' => 1,
+                      'faults' => 1965,
+                      'cache-misses' => 0,
+                      'dTLB-misses' => 0,
+                      'L1-dcache-misses' => 0,
+                      'syscalls:sys_enter_write' => 65994,
+                      'syscalls:sys_enter_futex' => 41,
+                      'IPC' => '1',
+                      'cache-references' => 0,
+                      'syscalls:sys_enter_read' => 41506,
+                      'inst' => 1,
+                      'cs' => 29237
+                    }
+        };
+ 0.000  Inst: 0 fault:0 cs:0 '9115'   
+ 1.000  Inst: 1 fault:0 cs:0 '9116'  "DestroyJavaVM"  
+ 1.000  Inst: 1 fault:97 cs:63 '9117'  "GC task thread 
+ 1.000  Inst: 1 fault:69 cs:45 '9118'  "GC task thread 
+ 1.000  Inst: 1 fault:36 cs:47 '9119'  "GC task thread 
+ 1.000  Inst: 1 fault:63 cs:41 '9120'  "GC task thread 
+ 1.000  Inst: 1 fault:32 cs:54 '9121'  "GC task thread 
+ 1.000  Inst: 1 fault:60 cs:38 '9122'  "GC task thread 
+ 1.000  Inst: 1 fault:1701 cs:47 '9123'  "GC task thread 
+ 1.000  Inst: 1 fault:98 cs:49 '9124'  "GC task thread 
+ 1.000  Inst: 1 fault:53 cs:54 '9125'  "GC task thread 
+ 1.000  Inst: 1 fault:32 cs:63 '9126'  "GC task thread 
+ 1.000  Inst: 1 fault:67 cs:79 '9127'  "GC task thread 
+ 1.000  Inst: 1 fault:2132 cs:51 '9128'  "GC task thread 
+ 1.000  Inst: 1 fault:607 cs:41 '9129'  "GC task thread 
+ 1.000  Inst: 1 fault:3136 cs:40 '9130'  "GC task thread 
+ 1.000  Inst: 1 fault:71 cs:55 '9131'  "GC task thread 
+ 1.000  Inst: 1 fault:1607 cs:47 '9132'  "GC task thread 
+ 1.000  Inst: 1 fault:118 cs:46 '9133'  "GC task thread 
+ 1.000  Inst: 1 fault:77 cs:46 '9134'  "GC task thread 
+ 1.000  Inst: 1 fault:167 cs:49 '9135'  "GC task thread 
+ 1.000  Inst: 1 fault:105 cs:40 '9136'  "GC task thread 
+ 1.000  Inst: 1 fault:132 cs:41 '9137'  "GC task thread 
+ 1.000  Inst: 1 fault:47 cs:45 '9138'  "GC task thread 
+ 1.000  Inst: 1 fault:58 cs:37 '9139'  "GC task thread 
+ 1.000  Inst: 1 fault:2495 cs:41 '9140'  "VM Thread" os_prio=0 tid=0x00007ff1fc3c5800 nid=0x23b4 runnable  
+ 1.000  Inst: 1 fault:0 cs:0 '9141'  "Reference Handler"  
+ 1.000  Inst: 1 fault:0 cs:0 '9142'  "Finalizer"  
+ 1.000  Inst: 1 fault:0 cs:0 '9143'  "Signal Dispatcher"  
+ 1.000  Inst: 1 fault:12 cs:8 '9144'  "C2 CompilerThread0"  
+ 1.000  Inst: 1 fault:11 cs:6 '9145'  "C2 CompilerThread1"  
+ 1.000  Inst: 1 fault:11 cs:5 '9146'  "C2 CompilerThread2"  
+ 1.000  Inst: 1 fault:1851 cs:6 '9147'  "C2 CompilerThread3"  
+ 1.000  Inst: 1 fault:12 cs:8 '9148'  "C2 CompilerThread4"  
+ 1.000  Inst: 1 fault:15 cs:7 '9149'  "C2 CompilerThread5"  
+ 1.000  Inst: 1 fault:23 cs:6 '9150'  "C2 CompilerThread6"  
+ 1.000  Inst: 1 fault:11 cs:5 '9151'  "C2 CompilerThread7"  
+ 1.000  Inst: 1 fault:1723 cs:5 '9152'  "C2 CompilerThread8"  
+ 1.000  Inst: 1 fault:8 cs:5 '9153'  "C2 CompilerThread9"  
+ 1.000  Inst: 1 fault:11 cs:7 '9154'  "C1 CompilerThread10"  
+ 1.000  Inst: 1 fault:11 cs:6 '9155'  "C1 CompilerThread11"  
+ 1.000  Inst: 1 fault:11 cs:5 '9156'  "C1 CompilerThread12"  
+ 1.000  Inst: 1 fault:11 cs:6 '9157'  "C1 CompilerThread13"  
+ 1.000  Inst: 1 fault:577 cs:5 '9158'  "C1 CompilerThread14"  
+ 1.000  Inst: 1 fault:0 cs:0 '9159'  "Service Thread"  
+ 1.000  Inst: 1 fault:234 cs:404 '9160'  "VM Periodic Task Thread" os_prio=0 tid=0x00007ff1fc42d800 nid=0x23c8 waiting on condition  
+ 1.000  Inst: 1 fault:3095 cs:85016 '9163'  "reactor-http-epoll-1"  
+ 1.000  Inst: 1 fault:2083 cs:26470 '9164'  "reactor-http-epoll-2"  
+ 1.000  Inst: 1 fault:1888 cs:26259 '9165'  "reactor-http-epoll-3"  
+ 1.000  Inst: 1 fault:1573 cs:27203 '9166'  "reactor-http-epoll-4"  
+ 1.000  Inst: 1 fault:1289 cs:26164 '9167'  "reactor-http-epoll-5"  
+ 1.000  Inst: 1 fault:1174 cs:27104 '9168'  "reactor-http-epoll-6"  
+ 1.000  Inst: 1 fault:1397 cs:26373 '9169'  "reactor-http-epoll-7"  
+ 1.000  Inst: 1 fault:1570 cs:27827 '9170'  "reactor-http-epoll-8"  
+ 1.000  Inst: 1 fault:1965 cs:29237 '9171'  "reactor-http-epoll-9"  
+ 1.000  Inst: 1 fault:1260 cs:27434 '9172'  "reactor-http-epoll-10"  
+ 1.000  Inst: 1 fault:1822 cs:28174 '9173'  "reactor-http-epoll-11"  
+ 1.000  Inst: 1 fault:1786 cs:26789 '9174'  "reactor-http-epoll-12"  
+ 1.000  Inst: 1 fault:1256 cs:27403 '9175'  "reactor-http-epoll-13"  
+ 1.000  Inst: 1 fault:881 cs:27404 '9176'  "reactor-http-epoll-14"  
+ 1.000  Inst: 1 fault:1205 cs:26685 '9177'  "reactor-http-epoll-15"  
+ 1.000  Inst: 1 fault:1316 cs:25012 '9178'  "reactor-http-epoll-16"  
+ 1.000  Inst: 1 fault:1215 cs:25902 '9179'  "reactor-http-epoll-17"  
+ 1.000  Inst: 1 fault:1493 cs:27417 '9180'  "reactor-http-epoll-18"  
+ 1.000  Inst: 1 fault:0 cs:28366 '9181'  "reactor-http-epoll-19"  
+ 1.000  Inst: 1 fault:1397 cs:27266 '9182'  "reactor-http-epoll-20"  
+ 1.000  Inst: 1 fault:0 cs:26459 '9183'  "reactor-http-epoll-21"  
+ 1.000  Inst: 1 fault:1656 cs:26248 '9185'  "reactor-http-epoll-22"  
+ 1.000  Inst: 1 fault:1320 cs:26807 '9186'  "reactor-http-epoll-23"  
+ 1.000  Inst: 1 fault:1390 cs:27420 '9187'  "reactor-http-epoll-24"  
+ 1.000  Inst: 1 fault:834 cs:26427 '9188'  "reactor-http-epoll-25"  
+ 1.000  Inst: 1 fault:1220 cs:26100 '9189'  "reactor-http-epoll-26"  
+ 1.000  Inst: 1 fault:1746 cs:28142 '9190'  "reactor-http-epoll-27"  
+ 1.000  Inst: 1 fault:1400 cs:26250 '9191'  "reactor-http-epoll-28"  
+ 1.000  Inst: 1 fault:1898 cs:26150 '9192'  "reactor-http-epoll-29"  
+ 1.000  Inst: 1 fault:1449 cs:26183 '9193'  "reactor-http-epoll-30"  
+ 1.000  Inst: 1 fault:1910 cs:26815 '9194'  "reactor-http-epoll-31"  
+ 1.000  Inst: 1 fault:1272 cs:27064 '9195'  "reactor-http-epoll-32"  
+ 1.000  Inst: 1 fault:0 cs:0 '9196'  "server"  
+ 1.000  Inst: 1 fault:0 cs:0 '9521'  "Attach Listener"  
+ 1.000  Inst: 80 fault:63352 cs:921223 'APP'  Entire-JVM 
+------------------------- Instructions ---------
+ <rank> <IPC><instructions>(Percentage) faults:<> cs:<> futex:<>(Percentage) <thread name> (pid) 
+1, 1.000  Inst: 80(100/0) fault:63352 cs:921223 futex:4805(100) read:1052237 write:1949710 Entire-JVM 
+2, 1.000  Inst: 1(1/1) fault:0 cs:0 futex:0(0) read:0 write:0 "server"  
+3, 1.000  Inst: 1(1/2) fault:1965 cs:29237 futex:41(0) read:41506 write:65994 "reactor-http-epoll-9"  
+4, 1.000  Inst: 1(1/3) fault:1570 cs:27827 futex:44(0) read:37852 write:60198 "reactor-http-epoll-8"  
+5, 1.000  Inst: 1(1/5) fault:1397 cs:26373 futex:36(0) read:34016 write:53930 "reactor-http-epoll-7"  
+6, 1.000  Inst: 1(1/6) fault:1174 cs:27104 futex:52(1) read:35877 write:57013 "reactor-http-epoll-6"  
+7, 1.000  Inst: 1(1/7) fault:1289 cs:26164 futex:56(1) read:33314 write:52733 "reactor-http-epoll-5"  
+8, 1.000  Inst: 1(1/8) fault:1573 cs:27203 futex:52(1) read:35624 write:56398 "reactor-http-epoll-4"  
+9, 1.000  Inst: 1(1/10) fault:1272 cs:27064 futex:36(0) read:35459 write:56145 "reactor-http-epoll-32"  
+10, 1.000  Inst: 1(1/11) fault:1910 cs:26815 futex:30(0) read:35247 write:55964 "reactor-http-epoll-31"  
+11, 1.000  Inst: 1(1/12) fault:1449 cs:26183 futex:38(0) read:33383 write:52884 "reactor-http-epoll-30"  
+12, 1.000  Inst: 1(1/13) fault:1888 cs:26259 futex:35(0) read:33149 write:52314 "reactor-http-epoll-3"  
+13, 1.000  Inst: 1(1/14) fault:1898 cs:26150 futex:33(0) read:32942 write:52055 "reactor-http-epoll-29"  
+14, 1.000  Inst: 1(1/16) fault:1400 cs:26250 futex:35(0) read:33572 write:53170 "reactor-http-epoll-28"  
+15, 1.000  Inst: 1(1/17) fault:1746 cs:28142 futex:38(0) read:38106 write:60262 "reactor-http-epoll-27"  
+16, 1.000  Inst: 1(1/18) fault:1220 cs:26100 futex:39(0) read:33079 write:52484 "reactor-http-epoll-26"  
+17, 1.000  Inst: 1(1/20) fault:834 cs:26427 futex:35(0) read:34103 write:54034 "reactor-http-epoll-25"  
+18, 1.000  Inst: 1(1/21) fault:1390 cs:27420 futex:42(0) read:36338 write:57662 "reactor-http-epoll-24"  
+19, 1.000  Inst: 1(1/22) fault:1320 cs:26807 futex:43(0) read:34815 write:55084 "reactor-http-epoll-23"  
+20, 1.000  Inst: 1(1/23) fault:1656 cs:26248 futex:28(0) read:33717 write:53496 "reactor-http-epoll-22"  
+21, 1.000  Inst: 1(1/25) fault:0 cs:26459 futex:49(1) read:34325 write:54392 "reactor-http-epoll-21"  
+22, 1.000  Inst: 1(1/26) fault:1397 cs:27266 futex:34(0) read:36209 write:57382 "reactor-http-epoll-20"  
+23, 1.000  Inst: 1(1/27) fault:2083 cs:26470 futex:40(0) read:34461 write:54421 "reactor-http-epoll-2"  
+24, 1.000  Inst: 1(1/28) fault:0 cs:28366 futex:0(0) read:38238 write:60143 "reactor-http-epoll-19"  
+25, 1.000  Inst: 1(1/30) fault:1493 cs:27417 futex:42(0) read:0 write:59068 "reactor-http-epoll-18"  
+26, 1.000  Inst: 1(1/31) fault:1215 cs:25902 futex:38(0) read:32692 write:51554 "reactor-http-epoll-17"  
+27, 1.000  Inst: 1(1/32) fault:1316 cs:25012 futex:35(0) read:30528 write:48376 "reactor-http-epoll-16"  
+28, 1.000  Inst: 1(1/33) fault:1205 cs:26685 futex:42(0) read:34585 write:54762 "reactor-http-epoll-15"  
+29, 1.000  Inst: 1(1/35) fault:881 cs:27404 futex:36(0) read:36196 write:57471 "reactor-http-epoll-14"  
+30, 1.000  Inst: 1(1/36) fault:1256 cs:27403 futex:41(0) read:36338 write:57295 "reactor-http-epoll-13"  
+31, 1.000  Inst: 1(1/37) fault:1786 cs:26789 futex:40(0) read:0 write:54341 "reactor-http-epoll-12"  
+32, 1.000  Inst: 1(1/38) fault:1822 cs:28174 futex:50(1) read:39277 write:62321 "reactor-http-epoll-11"  
+33, 1.000  Inst: 1(1/40) fault:1260 cs:27434 futex:42(0) read:36454 write:57924 "reactor-http-epoll-10"  
+34, 1.000  Inst: 1(1/41) fault:3095 cs:85016 futex:32(0) read:30835 write:218440 "reactor-http-epoll-1"  
+35, 1.000  Inst: 1(1/42) fault:2495 cs:41 futex:99(2) read:0 write:0 "VM Thread" os_prio=0 tid=0x00007ff1fc3c5800 nid=0x23b4 runnable  
+36, 1.000  Inst: 1(1/43) fault:234 cs:404 futex:806(16) read:0 write:0 "VM Periodic Task Thread" os_prio=0 tid=0x00007ff1fc42d800 nid=0x23c8 waiting on condition  
+37, 1.000  Inst: 1(1/45) fault:0 cs:0 futex:0(0) read:0 write:0 "Signal Dispatcher"  
+38, 1.000  Inst: 1(1/46) fault:0 cs:0 futex:0(0) read:0 write:0 "Service Thread"  
+39, 1.000  Inst: 1(1/47) fault:0 cs:0 futex:0(0) read:0 write:0 "Reference Handler"  
+40, 1.000  Inst: 1(1/48) fault:77 cs:46 futex:95(1) read:0 write:0 "GC task thread 
+41, 1.000  Inst: 1(1/50) fault:132 cs:41 futex:110(2) read:0 write:0 "GC task thread 
+42, 1.000  Inst: 1(1/51) fault:1701 cs:47 futex:116(2) read:0 write:0 "GC task thread 
+43, 1.000  Inst: 1(1/52) fault:60 cs:38 futex:103(2) read:0 write:0 "GC task thread 
+44, 1.000  Inst: 1(1/53) fault:97 cs:63 futex:103(2) read:0 write:0 "GC task thread 
+45, 1.000  Inst: 1(1/55) fault:67 cs:79 futex:112(2) read:0 write:0 "GC task thread 
+46, 1.000  Inst: 1(1/56) fault:1607 cs:47 futex:95(1) read:0 write:0 "GC task thread 
+47, 1.000  Inst: 1(1/57) fault:105 cs:40 futex:96(1) read:0 write:0 "GC task thread 
+48, 1.000  Inst: 1(1/58) fault:36 cs:47 futex:102(2) read:0 write:0 "GC task thread 
+49, 1.000  Inst: 1(1/60) fault:607 cs:41 futex:96(1) read:0 write:0 "GC task thread 
+50, 1.000  Inst: 1(1/61) fault:69 cs:45 futex:104(2) read:0 write:0 "GC task thread 
+51, 1.000  Inst: 1(1/62) fault:2132 cs:51 futex:101(2) read:0 write:0 "GC task thread 
+52, 1.000  Inst: 1(1/63) fault:71 cs:55 futex:119(2) read:0 write:0 "GC task thread 
+53, 1.000  Inst: 1(1/65) fault:3136 cs:40 futex:118(2) read:0 write:0 "GC task thread 
+54, 1.000  Inst: 1(1/66) fault:32 cs:63 futex:112(2) read:0 write:0 "GC task thread 
+55, 1.000  Inst: 1(1/67) fault:63 cs:41 futex:110(2) read:0 write:0 "GC task thread 
+56, 1.000  Inst: 1(1/68) fault:47 cs:45 futex:114(2) read:0 write:0 "GC task thread 
+57, 1.000  Inst: 1(1/70) fault:32 cs:54 futex:101(2) read:0 write:0 "GC task thread 
+58, 1.000  Inst: 1(1/71) fault:58 cs:37 futex:104(2) read:0 write:0 "GC task thread 
+59, 1.000  Inst: 1(1/72) fault:53 cs:54 futex:106(2) read:0 write:0 "GC task thread 
+60, 1.000  Inst: 1(1/73) fault:98 cs:49 futex:99(2) read:0 write:0 "GC task thread 
+61, 1.000  Inst: 1(1/75) fault:118 cs:46 futex:108(2) read:0 write:0 "GC task thread 
+62, 1.000  Inst: 1(1/76) fault:167 cs:49 futex:111(2) read:0 write:0 "GC task thread 
+63, 1.000  Inst: 1(1/77) fault:0 cs:0 futex:0(0) read:0 write:0 "Finalizer"  
+64, 1.000  Inst: 1(1/78) fault:0 cs:0 futex:0(0) read:0 write:0 "DestroyJavaVM"  
+65, 1.000  Inst: 1(1/80) fault:8 cs:5 futex:13(0) read:0 write:0 "C2 CompilerThread9"  
+66, 1.000  Inst: 1(1/81) fault:1723 cs:5 futex:13(0) read:0 write:0 "C2 CompilerThread8"  
+67, 1.000  Inst: 1(1/82) fault:11 cs:5 futex:14(0) read:0 write:0 "C2 CompilerThread7"  
+68, 1.000  Inst: 1(1/83) fault:23 cs:6 futex:16(0) read:0 write:0 "C2 CompilerThread6"  
+69, 1.000  Inst: 1(1/85) fault:15 cs:7 futex:18(0) read:0 write:0 "C2 CompilerThread5"  
+70, 1.000  Inst: 1(1/86) fault:12 cs:8 futex:21(0) read:0 write:0 "C2 CompilerThread4"  
+71, 1.000  Inst: 1(1/87) fault:1851 cs:6 futex:12(0) read:0 write:0 "C2 CompilerThread3"  
+72, 1.000  Inst: 1(1/88) fault:11 cs:5 futex:12(0) read:0 write:0 "C2 CompilerThread2"  
+73, 1.000  Inst: 1(1/90) fault:11 cs:6 futex:13(0) read:0 write:0 "C2 CompilerThread1"  
+74, 1.000  Inst: 1(1/91) fault:12 cs:8 futex:21(0) read:0 write:0 "C2 CompilerThread0"  
+75, 1.000  Inst: 1(1/92) fault:577 cs:5 futex:14(0) read:0 write:0 "C1 CompilerThread14"  
+76, 1.000  Inst: 1(1/93) fault:11 cs:6 futex:16(0) read:0 write:0 "C1 CompilerThread13"  
+77, 1.000  Inst: 1(1/95) fault:11 cs:5 futex:13(0) read:0 write:0 "C1 CompilerThread12"  
+78, 1.000  Inst: 1(1/96) fault:11 cs:6 futex:16(0) read:0 write:0 "C1 CompilerThread11"  
+79, 1.000  Inst: 1(1/97) fault:11 cs:7 futex:18(0) read:0 write:0 "C1 CompilerThread10"  
+80, 1.000  Inst: 1(1/98) fault:0 cs:0 futex:0(0) read:0 write:0 "Attach Listener"  
+81, 0.000  Inst: 0(0/98) fault:0 cs:0 futex:0(0) read:0 write:0  
+---------------------------------------------
+ <rank> <syscalls:sys_enter_futex>(Percentage)  <thread name> (pid) 
+1:  4805(100) : Entire-JVM(APP)
+2:  806(16) : "VM Periodic Task Thread" os_prio=0 tid=0x00007ff1fc42d800 nid=0x23c8 waiting on condition (9160)
+3:  119(2) : "GC task thread(9131)
+4:  118(2) : "GC task thread(9130)
+5:  116(2) : "GC task thread(9123)
+6:  114(2) : "GC task thread(9138)
+7:  112(2) : "GC task thread(9127)
+8:  112(2) : "GC task thread(9126)
+9:  111(2) : "GC task thread(9135)
+10:  110(2) : "GC task thread(9137)
+11:  110(2) : "GC task thread(9120)
+12:  108(2) : "GC task thread(9133)
+13:  106(2) : "GC task thread(9125)
+14:  104(2) : "GC task thread(9118)
+---------------------------------------------
+ <rank> <cs>(Percentage)  <thread name> (pid) 
+1:  921223(100) : Entire-JVM(APP)
+2:  85016(9) : "reactor-http-epoll-1" (9163)
+3:  29237(3) : "reactor-http-epoll-9" (9171)
+4:  28366(3) : "reactor-http-epoll-19" (9181)
+5:  28174(3) : "reactor-http-epoll-11" (9173)
+6:  28142(3) : "reactor-http-epoll-27" (9190)
+7:  27827(3) : "reactor-http-epoll-8" (9170)
+8:  27434(2) : "reactor-http-epoll-10" (9172)
+9:  27420(2) : "reactor-http-epoll-24" (9187)
+10:  27417(2) : "reactor-http-epoll-18" (9180)
+11:  27404(2) : "reactor-http-epoll-14" (9176)
+12:  27403(2) : "reactor-http-epoll-13" (9175)
+13:  27266(2) : "reactor-http-epoll-20" (9182)
+14:  27203(2) : "reactor-http-epoll-4" (9166)
+---------------------------------------------
+ <rank> <faults>(Percentage)  <thread name> (pid) 
+1:  63352(100) : Entire-JVM(APP)
+2:  3136(4) : "GC task thread(9130)
+3:  3095(4) : "reactor-http-epoll-1" (9163)
+4:  2495(3) : "VM Thread" os_prio=0 tid=0x00007ff1fc3c5800 nid=0x23b4 runnable (9140)
+5:  2132(3) : "GC task thread(9128)
+6:  2083(3) : "reactor-http-epoll-2" (9164)
+7:  1965(3) : "reactor-http-epoll-9" (9171)
+8:  1910(3) : "reactor-http-epoll-31" (9194)
+9:  1898(2) : "reactor-http-epoll-29" (9192)
+10:  1888(2) : "reactor-http-epoll-3" (9165)
+11:  1851(2) : "C2 CompilerThread3" (9147)
+12:  1822(2) : "reactor-http-epoll-11" (9173)
+13:  1786(2) : "reactor-http-epoll-12" (9174)
+14:  1746(2) : "reactor-http-epoll-27" (9190)
+---------------------------------------------
+ <rank> <cmisses>(Percentage)  <thread name> (pid) 
+1:  0(0) : "GC task thread(9134)
+2:  0(0) : "server" (9196)
+3:  0(0) : "reactor-http-epoll-2" (9164)
+4:  0(0) : "reactor-http-epoll-22" (9185)
+5:  0(0) : "DestroyJavaVM" (9116)
+6:  0(0) : "C2 CompilerThread8" (9152)
+7:  0(0) : "GC task thread(9137)
+8:  0(0) : "GC task thread(9123)
+9:  0(0) : "GC task thread(9122)
+10:  0(0) : "C1 CompilerThread13" (9157)
+11:  0(0) : "GC task thread(9117)
+12:  0(0) : "reactor-http-epoll-21" (9183)
+13:  0(0) : "GC task thread(9127)
+14:  0(0) : "reactor-http-epoll-23" (9186)
+---------------------------------------------
+ <rank> <crefers>(Percentage)  <thread name> (pid) 
+1:  0(0) : "GC task thread(9134)
+2:  0(0) : "server" (9196)
+3:  0(0) : "reactor-http-epoll-2" (9164)
+4:  0(0) : "reactor-http-epoll-22" (9185)
+5:  0(0) : "DestroyJavaVM" (9116)
+6:  0(0) : "C2 CompilerThread8" (9152)
+7:  0(0) : "GC task thread(9137)
+8:  0(0) : "GC task thread(9123)
+9:  0(0) : "GC task thread(9122)
+10:  0(0) : "C1 CompilerThread13" (9157)
+11:  0(0) : "GC task thread(9117)
+12:  0(0) : "reactor-http-epoll-21" (9183)
+13:  0(0) : "GC task thread(9127)
+14:  0(0) : "reactor-http-epoll-23" (9186)
+---------------------------------------------
+ <rank> <L1-dcache-misses>(Percentage)  <thread name> (pid) 
+1:  0(0) : "GC task thread(9134)
+2:  0(0) : "server" (9196)
+3:  0(0) : "reactor-http-epoll-2" (9164)
+4:  0(0) : "reactor-http-epoll-22" (9185)
+5:  0(0) : "DestroyJavaVM" (9116)
+6:  0(0) : "C2 CompilerThread8" (9152)
+7:  0(0) : "GC task thread(9137)
+8:  0(0) : "GC task thread(9123)
+9:  0(0) : "GC task thread(9122)
+10:  0(0) : "C1 CompilerThread13" (9157)
+11:  0(0) : "GC task thread(9117)
+12:  0(0) : "reactor-http-epoll-21" (9183)
+13:  0(0) : "GC task thread(9127)
+14:  0(0) : "reactor-http-epoll-23" (9186)
+---------------------------------------------
+ <rank> <dTLB-misses>(Percentage)  <thread name> (pid) 
+1:  0(0) : "GC task thread(9134)
+2:  0(0) : "server" (9196)
+3:  0(0) : "reactor-http-epoll-2" (9164)
+4:  0(0) : "reactor-http-epoll-22" (9185)
+5:  0(0) : "DestroyJavaVM" (9116)
+6:  0(0) : "C2 CompilerThread8" (9152)
+7:  0(0) : "GC task thread(9137)
+8:  0(0) : "GC task thread(9123)
+9:  0(0) : "GC task thread(9122)
+10:  0(0) : "C1 CompilerThread13" (9157)
+11:  0(0) : "GC task thread(9117)
+12:  0(0) : "reactor-http-epoll-21" (9183)
+13:  0(0) : "GC task thread(9127)
+14:  0(0) : "reactor-http-epoll-23" (9186)

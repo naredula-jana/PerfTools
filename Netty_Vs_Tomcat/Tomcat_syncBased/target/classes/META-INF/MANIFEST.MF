@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: Tomcat_sync
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: jrn000k
+Implementation-Vendor-Id: com.example
+Build-Jdk: 1.8.0_171
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/Tomcat_sync
+Created-By: Maven Integration for Eclipse
+Main-Class: Tomcat_Example
+

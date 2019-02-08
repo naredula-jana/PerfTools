@@ -35,8 +35,8 @@ Test Results:
 </tr>
 <tr>
 <th>3) concurrency=800 </th>
-<th>latency=103ms, cpu=350/3200 </th>
 <th>latency=111ms, cpu=350/3200 </th>
+<th>latency=103ms, cpu=350/3200 </th>
 <th>Netty is better slightly.</th>
 </tr>
 

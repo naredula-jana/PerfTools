@@ -39,7 +39,7 @@ Test Results:
 <th>3) concurrency=800 </th>
 <th>latency=105ms, cpu=700/3200 </th>
 <th>latency=82ms, cpu=400/3200 </th>
-<th>Netty is better by 20% in latency and 80% in cpu savings.</th>
+<th>Netty is better by 20% in latency and 42% in cpu savings.</th>
 </tr>
 
 </tr>
@@ -47,7 +47,7 @@ Test Results:
 <th>3) concurrency=1800 </th>
 <th>latency=191ms, cpu=840/3200 </th>
 <th>latency=157ms, cpu=480/3200 </th>
-<th>Netty is better by 20% in latency and 80% in cpu savings.</th>
+<th>Netty is better by 20% in latency and 42% in cpu savings.</th>
 </tr>
 
 </tbody></table>

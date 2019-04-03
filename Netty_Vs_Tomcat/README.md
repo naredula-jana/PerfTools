@@ -129,5 +129,6 @@ flow of packets: epoll thread(32) -> http-nio(1800: one thread per request)-> ..
  -   [Minimising syscall : Golang apps in ring-0](https://github.com/naredula-jana/Jiny-Kernel/blob/master/doc/GolangAppInRing0.pdf).
   -  [Netty uses Jemalloc varient for memory allocation](https://github.com/naredula-jana/Jiny-Kernel/blob/master/doc/malloc_paper_techpulse_submit_final.pdf).
   -  [Async-Netty Vs sync-Tomcat performance results](https://www.slideshare.net/brendangregg/rxnetty-vs-tomcat-performance-results).
+  -  [Java Perf Tool Used to measure the metrics](https://github.com/naredula-jana/PerfTools/tree/master/java_perf)
 
  

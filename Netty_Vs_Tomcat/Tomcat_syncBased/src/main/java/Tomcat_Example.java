@@ -6,11 +6,21 @@ import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-
+import org.apache.camel.CamelContext;
+import org.apache.camel.ProducerTemplate;
+import org.apache.camel.spring.SpringCamelContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+
+import org.apache.camel.CamelContext;
+import org.apache.camel.ProducerTemplate;
+import org.apache.camel.spring.SpringCamelContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @RestController
 @EnableAutoConfiguration
@@ -21,24 +31,20 @@ public class Tomcat_Example {
 			.accept(MediaType.ALL)
 			.exchange();
 	
+	static ApplicationContext appContext ;
+	static CamelContext camelContext ;
+	static ProducerTemplate template;
+	
 	@RequestMapping("/webrequest")
 	public String getNewResult() {
 		return ">> result = " + result.flatMap(res -> res.bodyToMono(String.class)).block();
 	}
-	
-	
-	@Autowired
-	private StringRedisTemplate template;
-	@RequestMapping("/redis")
-	String get_redis() throws Exception{
-		ValueOperations<String, String> ops = this.template.opsForValue();
-		System.out.println("Before REdis ");
-		String key = "spring.boot.redis.test";
-		if (!this.template.hasKey(key)) {
-			ops.set(key, "foo");
-		}
-		System.out.println("Found key " + key + ", value=" + ops.get(key));
-		return ops.get(key);
+
+	@RequestMapping("/camelrequest")
+	public String getCamelResult() {
+		 // template.sendBody("direct:sampleroute1", "Hello did i Print... ??");
+		 return  template.requestBody("direct:sampleroute1",0, String.class);
+		 //return "dummy" ;
 	}
 
 	@RequestMapping("/sleep")
@@ -52,7 +58,19 @@ public class Tomcat_Example {
 		return "Hello... World......";
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception  {
+	    appContext = new ClassPathXmlApplicationContext("BOOT-INF/classes/application-context.xml");
+		CamelContext camelContext = SpringCamelContext.springCamelContext(appContext, false);
+		try {
+			template = camelContext.createProducerTemplate();
+			camelContext.start();
+			System.out.println("first");
+		
+			//template.sendBody("direct:sampleroute1", "Hello did i Print... ??");
+			
+		} finally {
+			//camelContext.stop();
+		}
 		SpringApplication.run(Tomcat_Example.class, args);
 	
 	}

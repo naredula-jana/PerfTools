@@ -3,41 +3,21 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xs/
         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
-   <bean id="exampleConfigProperties"
-		  class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-		<property name="properties">
-			<props>
-				<prop key="iro.pangaea.route.threadpool.size">10</prop>
-				<prop key="iro.pangaea.route.max.threadpool.size">20</prop>
-			</props>
-		</property>
-	</bean>
     <camelContext xmlns="http://camel.apache.org/schema/spring">
-    <threadPoolProfile id="multicastPangaeaRouteThreadPoolProfile" poolSize="10" maxPoolSize="20" defaultProfile="true" />
+    <threadPoolProfile id="threadprofile" poolSize="10" maxPoolSize="20" defaultProfile="true" />
 		
         <route >
             <from uri="direct:sampleroute1" />
             <setExchangePattern pattern="InOut" />
             <to uri="bean:myBean?method=appendSomeText5"/>
             
-            <choice>
-				<when>
-				   <method bean="myBean" method="multicast1" />
-					<multicast id="searchAndBrowseWithStoreIds" parallelProcessing="true" stopOnException="true" executorServiceRef="multicastPangaeaRouteThreadPoolProfile">
+					<multicast id="testId" parallelProcessing="true" stopOnException="true" executorServiceRef="threadprofile">
 						<to uri="bean:myBean?method=appendSomeText2"/>
 						<to uri="bean:myBean?method=appendSomeText2"/>
 					</multicast>
-				</when>
-				<otherwise>
-					<multicast id="searchAndBrowseWithoutStoreIds" parallelProcessing="true" stopOnException="true" executorServiceRef="multicastPangaeaRouteThreadPoolProfile">
-						<to uri="bean:myBean?method=appendSomeText3"/>
-						<to uri="bean:myBean?method=appendSomeText4"/>
-					</multicast>
-				</otherwise>
-			</choice>
 
         </route>
     </camelContext>

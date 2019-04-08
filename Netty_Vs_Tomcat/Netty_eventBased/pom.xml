@@ -9,13 +9,14 @@
 <properties>
         <!-- Spring boot main class -->
         <start-class>Netty_Example</start-class>
+        <camel.version>2.20.0</camel.version>
 </properties>
 <build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>2.1.2.RELEASE</version>
+				<!--  >version>2.1.2.RELEASE</version -->
 				<executions>
 					<execution>
 						<goals>
@@ -60,7 +61,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
-					<version>2.1.2.RELEASE</version>
+					<!--   >version>2.1.2.RELEASE</version -->
 		</dependency>
 		
 		<dependency>
@@ -68,6 +69,42 @@
 			<artifactId>reactor-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+          <groupId>io.projectreactor.addons</groupId>
+          <artifactId>reactor-adapter</artifactId>
+          <version>3.2.2.RELEASE</version>
+        </dependency>
+        <dependency>
+           <groupId>io.reactivex.rxjava2</groupId>
+           <artifactId>rxjava</artifactId>
+            <version>2.2.8</version>
+          </dependency>
+		
+		
+ <dependency>
+      <groupId>io.projectreactor</groupId>
+      <artifactId>reactor-core</artifactId>
+      <!--  >version>${reactor-version}</version-->
+       </dependency>
+
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-rx</artifactId>
+      <version>2.23.0</version>
+    </dependency>
+           
+<dependency>
+    <groupId>org.apache.camel</groupId>
+    <artifactId>camel-reactive-streams</artifactId>
+    <version>2.22.0</version>
+</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-spring</artifactId>
+			<version>2.15.1</version>
+		</dependency>
+		
       
       
 </dependencies>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       ">
+  
+    <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <threadPoolProfile id="threadpool" poolSize="10" maxPoolSize="20" defaultProfile="true" />
+		
+        <route >
+            <from uri="direct:sampleroute1" />
+            <setExchangePattern pattern="InOut" />
+            <to uri="bean:myBean?method=appendSomeText5"/>
+            
+			<!--  >multicast id="searchAndBrowseWithStoreIds" parallelProcessing="true" stopOnException="true" executorServiceRef="threadpool">
+						<to uri="bean:myBean?method=appendSomeText2"/>
+						<to uri="bean:myBean?method=appendSomeText3"/>
+			</multicast-->
+        </route>
+        
+        <route >
+            <from uri="direct:sampleroute2" />
+            <setExchangePattern pattern="InOut" />
+            <to uri="bean:myBean?method=appendSomeText6"/>
+        </route>
+                <route >
+            <from uri="direct:sampleroute3" />
+            <setExchangePattern pattern="InOut" />
+            <to uri="bean:myBean?method=appendSomeText4"/>
+        </route>
+    </camelContext>
+    <bean id="myBean" class="CamelBeanEvent"/>
+ 
+</beans>

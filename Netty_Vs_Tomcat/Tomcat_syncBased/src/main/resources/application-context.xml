@@ -3,11 +3,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xs/
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
     <camelContext xmlns="http://camel.apache.org/schema/spring">
-    <threadPoolProfile id="threadprofile" poolSize="10" maxPoolSize="20" defaultProfile="true" />
+    <threadPoolProfile id="threadprofile" poolSize="200" maxPoolSize="200" defaultProfile="true" />
 		
         <route >
             <from uri="direct:sampleroute1" />
@@ -15,8 +15,8 @@
             <to uri="bean:myBean?method=appendSomeText5"/>
             
 					<multicast id="testId" parallelProcessing="true" stopOnException="true" executorServiceRef="threadprofile">
-						<to uri="bean:myBean?method=appendSomeText2"/>
-						<to uri="bean:myBean?method=appendSomeText2"/>
+						<to uri="bean:myBean?method=appendSomeText3"/>
+						<to uri="bean:myBean?method=appendSomeText4"/>
 					</multicast>
 
         </route>

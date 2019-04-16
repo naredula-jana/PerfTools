@@ -42,9 +42,7 @@ public class Tomcat_Example {
 
 	@RequestMapping("/camelrequest")
 	public String getCamelResult() {
-		 // template.sendBody("direct:sampleroute1", "Hello did i Print... ??");
 		 return  template.requestBody("direct:sampleroute1",0, String.class);
-		 //return "dummy" ;
 	}
 
 	@RequestMapping("/sleep")
@@ -59,11 +57,12 @@ public class Tomcat_Example {
 	}
 
 	public static void main(String[] args) throws Exception  {
-	    appContext = new ClassPathXmlApplicationContext("BOOT-INF/classes/application-context.xml");
+		
+	    appContext = new ClassPathXmlApplicationContext("application-context.xml");
 		CamelContext camelContext = SpringCamelContext.springCamelContext(appContext, false);
 		try {
 			template = camelContext.createProducerTemplate();
-			camelContext.start();
+			//camelContext.start();
 			System.out.println("first");
 		
 			//template.sendBody("direct:sampleroute1", "Hello did i Print... ??");

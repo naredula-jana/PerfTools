@@ -8,30 +8,41 @@
        ">
   
     <camelContext xmlns="http://camel.apache.org/schema/spring">
-    <threadPoolProfile id="threadpool" poolSize="10" maxPoolSize="20" defaultProfile="true" />
+    <!-- >threadPoolProfile id="sharedNIOPool" poolSize="2" maxPoolSize="2" defaultProfile="true" / -->
 		
         <route >
             <from uri="direct:sampleroute1" />
             <setExchangePattern pattern="InOut" />
-            <to uri="bean:myBean?method=appendSomeText5"/>
+            <to uri="bean:myBean?method=appendSomeText2"/>
             
-			<!--  >multicast id="searchAndBrowseWithStoreIds" parallelProcessing="true" stopOnException="true" executorServiceRef="threadpool">
-						<to uri="bean:myBean?method=appendSomeText2"/>
+			<multicast id="searchAndBrowseWithStoreIds" parallelProcessing="true" stopOnException="true" executorServiceRef="sharedNIOPool">
 						<to uri="bean:myBean?method=appendSomeText3"/>
-			</multicast-->
-        </route>
+						<to uri="bean:myBean?method=appendSomeText4"/>
+			</multicast>
+        </route>  
         
-        <route >
-            <from uri="direct:sampleroute2" />
+       <route >
+            <from uri="direct:sampleroute6"  />
             <setExchangePattern pattern="InOut" />
             <to uri="bean:myBean?method=appendSomeText6"/>
         </route>
-                <route >
+        
+        <route >
             <from uri="direct:sampleroute3" />
             <setExchangePattern pattern="InOut" />
-            <to uri="bean:myBean?method=appendSomeText4"/>
+            <to uri="bean:myBean?method=appendSomeText3"/>
         </route>
     </camelContext>
+    
     <bean id="myBean" class="CamelBeanEvent"/>
+    
+    <bean id="poolBuilder" class="org.apache.camel.component.netty4.NettyWorkerPoolBuilder">
+                <property name="workerCount" value="2"/>
+    </bean>
+              
+              
+    <bean id="sharedNIOPool" class="io.netty.channel.EventLoopGroup"
+                factory-bean="poolBuilder" factory-method="build" destroy-method="shutdown">
+    </bean>
  
 </beans>

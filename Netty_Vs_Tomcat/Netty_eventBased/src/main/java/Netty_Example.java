@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 
+
 import reactor.core.publisher.Mono;
 import rx.RxReactiveStreams;
 import reactor.core.publisher.Flux;
@@ -62,7 +63,6 @@ public class Netty_Example {
 			.exchange();
 	
 
-	
 	@RequestMapping("/")
 	String home1() {
 		return "Hello... World......";
@@ -75,64 +75,47 @@ public class Netty_Example {
 	}
 
 	@RequestMapping("/echo")
+	 public Mono<String> echo()
+    {
+        return Mono.just("I'm from ECHO api").delayElement( Duration.ofMillis( 50 ) );
+    }
+	/*
 	public Mono<Long> echo() {
 		return Mono.delay(Duration.ofMillis(50));
-	}
+	}*/
 	
 	@RequestMapping("/sleep")
-	public Mono<Long> getNewResult1() {
+	public Mono<Long> getNewResult1() 
+	{
 		return Mono.delay(Duration.ofMillis(100));
 	}
 	
 	@RequestMapping("/camelrequest1")
 	public Mono<String> getCamelResult1() {
-		 //return Mono.just(template.requestBody("direct:sampleroute2",0, String.class));
-		 //return Mono.fromSupplier(()->template.requestBody("direct:sampleroute2",0, String.class));
-		 return Mono.fromSupplier(()->template.requestBody("direct:sampleroute2",0, String.class));
+		 return Mono.fromSupplier(()->template.requestBody("direct:sampleroute1",0, String.class));
 	}
 	
+	@RequestMapping("/camelrequest2")
+	public String getCamelResult2() {
+		 return  template.requestBody("direct:sampleroute2",0, String.class);
+	}
+	
+	@RequestMapping("/camelrequest3")
+	public Mono<String> getCamelResult3() {
+		 return  (Mono<String>)template.requestBody("direct:sampleroute3",0);
+		 
+	}
+
+	
+	@RequestMapping("/camelrequest6")
+	public Mono<Long> getCamelResult6() {
+		//print_stack();
+		return  (Mono<Long>)template.requestBody("direct:sampleroute6",0);
+	}
+
 	@RequestMapping("/camelrequest")
 	public Mono<String> getCamelResult() {
-	
-		 return Mono.just(template.requestBody("direct:sampleroute1",0, String.class));
-
-	}
-
-	@RequestMapping("/camelrequest2")
-	public Flux<String> getCamelResult2() {
-		//Flux<String> flux = Flux.just("red", "white", "blue");
-		//return flux;
-		
-		/*
-		//return RxJava2Adapter.observableToFlux(observable, BackpressureStrategy.BUFFER);
-		
-		rx = new ReactiveCamel(camelContext);
-		//observable = rx.toObservable("direct:sampleroute1", String.class);
-		Subscription s = observable.subscribe();
-		
-		rx.sendTo(observable,"direct:sampleroute1" );
-		
-		*/
-		
-		//rx.from("direct:sampleroute1" );
-		//return Flux.from(RxReactiveStreams.toPublisher(rx.from("direct:sampleroute1" )));
-		//return Flux.from(RxReactiveStreams.toPublisher(observable));
-		
-		
-		Publisher<String> publisher = camel.from("direct:sampleroute1", String.class);
-		
-		Flux<String> flux = Flux.from(publisher);
-		return flux;
-		 
-       /*  Subscriber<String> elements = camel.streamSubscriber("direct:sampleroute1", String.class);
-           // Emit a string every 7 seconds and push it to the Camel "elements" stream
-		 Flux.interval(Duration.ofSeconds(1))
-                .map(item -> "element " + item)
-                .subscribe(elements);
-		 Flux<String> flux = Flux.just("red","white").subscribe(elements);*/
-		 
-        
-
+		return  (Mono<String>)template.requestBody("direct:sampleroute3",0);
 	}
 	
 	public static void main(String[] args) throws Exception  {
@@ -140,8 +123,6 @@ public class Netty_Example {
 	    appContext = new ClassPathXmlApplicationContext("application-context.xml");
 		camelContext = SpringCamelContext.springCamelContext(appContext, false);
 		
-		
-	
 		
 		//rx = new ReactiveCamel(camelContext);
 		//observable = rx.toObservable("direct:sampleroute3", String.class);

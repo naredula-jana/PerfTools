@@ -40,9 +40,14 @@ public class Tomcat_Example {
 		return ">> result = " + result.flatMap(res -> res.bodyToMono(String.class)).block();
 	}
 
-	@RequestMapping("/camelrequest")
-	public String getCamelResult() {
+	@RequestMapping("/camelrequest_multi")
+	public String getCamelResult_multi() {
 		 return  template.requestBody("direct:sampleroute1",0, String.class);
+	}
+	
+	@RequestMapping("/camelrequest_seq")
+	public String getCamelResult_seq() {
+		 return  template.requestBody("direct:sampleroute2",0, String.class);
 	}
 
 	@RequestMapping("/sleep")

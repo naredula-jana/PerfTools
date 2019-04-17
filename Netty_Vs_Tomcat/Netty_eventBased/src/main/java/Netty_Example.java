@@ -77,45 +77,24 @@ public class Netty_Example {
 	@RequestMapping("/echo")
 	 public Mono<String> echo()
     {
-        return Mono.just("I'm from ECHO api").delayElement( Duration.ofMillis( 50 ) );
+        return Mono.just("I am from ECHO api").delayElement( Duration.ofMillis( 50 ) );
     }
-	/*
-	public Mono<Long> echo() {
-		return Mono.delay(Duration.ofMillis(50));
-	}*/
+
 	
 	@RequestMapping("/sleep")
 	public Mono<Long> getNewResult1() 
 	{
 		return Mono.delay(Duration.ofMillis(100));
 	}
+
 	
-	@RequestMapping("/camelrequest1")
+	@RequestMapping("/camelrequest_multi")
 	public Mono<String> getCamelResult1() {
-		 return Mono.fromSupplier(()->template.requestBody("direct:sampleroute1",0, String.class));
+		return  (Mono<String>)template.requestBody("direct:sampleroute1",0);
 	}
-	
-	@RequestMapping("/camelrequest2")
-	public String getCamelResult2() {
-		 return  template.requestBody("direct:sampleroute2",0, String.class);
-	}
-	
-	@RequestMapping("/camelrequest3")
-	public Mono<String> getCamelResult3() {
-		 return  (Mono<String>)template.requestBody("direct:sampleroute3",0);
-		 
-	}
-
-	
-	@RequestMapping("/camelrequest6")
-	public Mono<Long> getCamelResult6() {
-		//print_stack();
-		return  (Mono<Long>)template.requestBody("direct:sampleroute6",0);
-	}
-
-	@RequestMapping("/camelrequest")
-	public Mono<String> getCamelResult() {
-		return  (Mono<String>)template.requestBody("direct:sampleroute3",0);
+	@RequestMapping("/camelrequest_seq")
+	public Mono<String> getCamelResult2() {
+		return  (Mono<String>)template.requestBody("direct:sampleroute2",0);
 	}
 	
 	public static void main(String[] args) throws Exception  {

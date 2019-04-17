@@ -12,13 +12,17 @@
         <route >
             <from uri="direct:sampleroute1" />
             <setExchangePattern pattern="InOut" />
-            <to uri="bean:myBean?method=appendSomeText5"/>
-            
+            <to uri="bean:myBean?method=appendSomeText2"/>
 					<multicast id="testId" parallelProcessing="true" stopOnException="true" executorServiceRef="threadprofile">
 						<to uri="bean:myBean?method=appendSomeText3"/>
 						<to uri="bean:myBean?method=appendSomeText4"/>
 					</multicast>
-
+        </route>
+        <route >
+            <from uri="direct:sampleroute2" />
+            <setExchangePattern pattern="InOut" />
+            <to uri="bean:myBean?method=appendSomeText2"/>
+					
         </route>
     </camelContext>
     <bean id="myBean" class="CamelBean"/>

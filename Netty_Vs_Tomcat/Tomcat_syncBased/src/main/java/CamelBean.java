@@ -11,29 +11,15 @@ public class CamelBean {
 			.accept(MediaType.ALL)
 			.exchange();
 	
-	
-	public String appendSomeText1(String msg) {
-
-        String finalMessage = msg + " text1111" ;
-        return finalMessage;
-    }
 	public String appendSomeText2(String msg) {
-        String finalMessage = msg + " text2222";
-        return finalMessage;
+		return "re: " + result.flatMap(res -> res.bodyToMono(String.class)).block();
     }
+
 	public String appendSomeText3(String msg) {
 		return "re: " + result.flatMap(res -> res.bodyToMono(String.class)).block();
     }
 	public String appendSomeText4(String msg) {
 		return "re: " + result.flatMap(res -> res.bodyToMono(String.class)).block();
-    }
-	public String appendSomeText5(String msg) {
-        String finalMessage = msg + " text5555";
-        return finalMessage;
-    }
-	public String multicast1(String msg) {
-        String finalMessage = msg + " multicast111";
-        return finalMessage;
     }
 
 }

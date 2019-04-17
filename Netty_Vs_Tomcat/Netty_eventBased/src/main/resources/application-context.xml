@@ -14,24 +14,17 @@
             <from uri="direct:sampleroute1" />
             <setExchangePattern pattern="InOut" />
             <to uri="bean:myBean?method=appendSomeText2"/>
-            
 			<multicast id="searchAndBrowseWithStoreIds" parallelProcessing="true" stopOnException="true" executorServiceRef="sharedNIOPool">
 						<to uri="bean:myBean?method=appendSomeText3"/>
 						<to uri="bean:myBean?method=appendSomeText4"/>
 			</multicast>
         </route>  
         
-       <route >
-            <from uri="direct:sampleroute6"  />
+        <route>
+            <from uri="direct:sampleroute2" />
             <setExchangePattern pattern="InOut" />
-            <to uri="bean:myBean?method=appendSomeText6"/>
-        </route>
-        
-        <route >
-            <from uri="direct:sampleroute3" />
-            <setExchangePattern pattern="InOut" />
-            <to uri="bean:myBean?method=appendSomeText3"/>
-        </route>
+            <to uri="bean:myBean?method=appendSomeText2"/>
+        </route> 
     </camelContext>
     
     <bean id="myBean" class="CamelBeanEvent"/>

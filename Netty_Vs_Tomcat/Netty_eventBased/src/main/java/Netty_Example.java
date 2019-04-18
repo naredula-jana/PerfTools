@@ -97,8 +97,13 @@ public class Netty_Example {
 		return  (Mono<String>)template.requestBody("direct:sampleroute2",0);
 	}
 	
+	@RequestMapping("/camelrequest3")
+	public Mono<String> getCamelResult3() {
+		return  (Mono<String>)template.requestBody("direct:sampleroute3",0);
+	}
+	
 	public static void main(String[] args) throws Exception  {
-		System.out.println("Starting ...");
+
 	    appContext = new ClassPathXmlApplicationContext("application-context.xml");
 		camelContext = SpringCamelContext.springCamelContext(appContext, false);
 		
@@ -115,7 +120,7 @@ public class Netty_Example {
 		} finally {
 			//camelContext.stop();
 		}
-		
+		System.out.println("Starting NETTY v1.0");
 		SpringApplication.run(Netty_Example.class, args);
 	
 	}

@@ -8,27 +8,31 @@ import reactor.core.publisher.Mono;
 
 public class CamelBeanEvent {
 	private WebClient client = WebClient.create("http://localhost:8081");
+
+	public Mono<String> appendSomeText1(){
+        Mono<String> monoObj =client.get().uri( "/echo" ).retrieve().bodyToMono(String.class);
+        monoObj.subscribe(CamelBeanEvent::handleResponseString);
+        return monoObj;
+    }
+
+	public Mono<String> appendSomeText2(){
+        Mono<String> monoObj =client.get().uri( "/echo" ).retrieve().bodyToMono(String.class);
+        monoObj.subscribe(CamelBeanEvent::handleResponseString);
+        return monoObj;
+    }
 	
-
-	public Mono<String> appendSomeText2()
-    {
+	public Mono<String> appendSomeText3(){
         Mono<String> monoObj =client.get().uri( "/echo" ).retrieve().bodyToMono(String.class);
         monoObj.subscribe(CamelBeanEvent::handleResponseString);
         return monoObj;
     }
-
-	public Mono<String> appendSomeText3()
-    {
+	public Mono<String> appendSomeText4(){
         Mono<String> monoObj =client.get().uri( "/echo" ).retrieve().bodyToMono(String.class);
         monoObj.subscribe(CamelBeanEvent::handleResponseString);
         return monoObj;
     }
-	public Mono<String> appendSomeText4()
-    {
-        Mono<String> monoObj =client.get().uri( "/echo" ).retrieve().bodyToMono(String.class);
-        monoObj.subscribe(CamelBeanEvent::handleResponseString);
-        return monoObj;
-    }
+	
+	
 	private static void handleResponseString(String s) {
         //System.out.println("handle response");
         //System.out.println(s);
@@ -40,6 +44,9 @@ public class CamelBeanEvent {
 	        return  Mono.just(1234l).delayElement( Duration.ofMillis( 120000) );
 	}
 	
+	public String computeText(){
+        return "test";
+    }
 	
 	public void print_stack() {
 		System.out.println("Printing stack trace:");

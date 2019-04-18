@@ -13,10 +13,18 @@
         <route >
             <from uri="direct:sampleroute1" />
             <setExchangePattern pattern="InOut" />
-            <to uri="bean:myBean?method=appendSomeText2"/>
+            <to uri="bean:myBean?method=computeText"/>
 			<multicast id="searchAndBrowseWithStoreIds" parallelProcessing="true" stopOnException="true" executorServiceRef="sharedNIOPool">
-						<to uri="bean:myBean?method=appendSomeText3"/>
-						<to uri="bean:myBean?method=appendSomeText4"/>
+				<pipeline>
+					<to uri="bean:myBean?method=appendSomeText1"/>
+					<to uri="bean:myBean?method=appendSomeText2"/>
+				</pipeline>
+				<pipeline>
+					<to uri="bean:myBean?method=appendSomeText3"/>
+					<to uri="bean:myBean?method=appendSomeText4"/>
+					<to uri="bean:myBean?method=appendSomeText1"/>
+					<to uri="bean:myBean?method=appendSomeText2"/>
+				</pipeline>
 			</multicast>
         </route>  
         
@@ -25,12 +33,25 @@
             <setExchangePattern pattern="InOut" />
             <to uri="bean:myBean?method=appendSomeText2"/>
         </route> 
+        
+        <route >
+            <from uri="direct:sampleroute3" />
+            <setExchangePattern pattern="InOut" />
+            <to uri="bean:myBean?method=appendSomeText2"/>
+			<multicast id="searchAndBrowse2" parallelProcessing="true" stopOnException="true" executorServiceRef="sharedNIOPool">
+						<to uri="bean:myBean?method=appendSomeText3"/>
+						<to uri="bean:myBean?method=appendSomeText4"/>
+						<to uri="bean:myBean?method=appendSomeText1"/>
+					    <to uri="bean:myBean?method=appendSomeText2"/>
+			</multicast>
+        </route>
+        
     </camelContext>
     
     <bean id="myBean" class="CamelBeanEvent"/>
     
     <bean id="poolBuilder" class="org.apache.camel.component.netty4.NettyWorkerPoolBuilder">
-                <property name="workerCount" value="2"/>
+                <property name="workerCount" value="4"/>
     </bean>
               
               

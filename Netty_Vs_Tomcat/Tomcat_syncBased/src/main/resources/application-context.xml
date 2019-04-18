@@ -7,24 +7,60 @@
         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
     <camelContext xmlns="http://camel.apache.org/schema/spring">
-    <threadPoolProfile id="threadprofile" poolSize="200" maxPoolSize="200" defaultProfile="true" />
+    <threadPoolProfile id="threadprofile" poolSize="1800" maxPoolSize="1800" defaultProfile="true" />
 		
         <route >
-            <from uri="direct:sampleroute1" />
+            <from uri="direct:camelsync" />
             <setExchangePattern pattern="InOut" />
-            <to uri="bean:myBean?method=appendSomeText2"/>
-					<multicast id="testId" parallelProcessing="true" stopOnException="true" executorServiceRef="threadprofile">
-						<to uri="bean:myBean?method=appendSomeText3"/>
-						<to uri="bean:myBean?method=appendSomeText4"/>
-					</multicast>
+            <to uri="bean:myBean?method=computeText"/>
+			<multicast id="testId" parallelProcessing="true" stopOnException="true" executorServiceRef="threadprofile">
+				<pipeline>
+					<to uri="bean:myBean?method=appendSomeText1"/>
+					<to uri="bean:myBean?method=appendSomeText2"/>
+				</pipeline>
+				<pipeline>
+					<to uri="bean:myBean?method=appendSomeText3"/>
+					<to uri="bean:myBean?method=appendSomeText4"/>
+<!-- 					<to uri="bean:myBean?method=appendSomeText1"/>
+					<to uri="bean:myBean?method=appendSomeText2"/> -->
+				</pipeline>
+		   </multicast>
         </route>
+        
         <route >
             <from uri="direct:sampleroute2" />
             <setExchangePattern pattern="InOut" />
-            <to uri="bean:myBean?method=appendSomeText2"/>
-					
+            <to uri="bean:myBean?method=appendSomeText2"/>	
         </route>
+        
+        
+        <route >
+            <from uri="direct:hybrid" />
+            <setExchangePattern pattern="InOut" />
+            <to uri="bean:myBean?method=computeText"/>
+			<multicast id="searchhybrid" parallelProcessing="true" stopOnException="true" executorServiceRef="sharedNIOPool">
+				<pipeline>
+					<to uri="bean:myBean?method=appendSomeText10"/>
+					<to uri="bean:myBean?method=appendSomeText20"/>
+				</pipeline>
+				<pipeline>
+					<to uri="bean:myBean?method=appendSomeText30"/>
+					<to uri="bean:myBean?method=appendSomeText40"/>
+					<to uri="bean:myBean?method=appendSomeText10"/>
+					<to uri="bean:myBean?method=appendSomeText20"/>
+				</pipeline>
+			</multicast>
+        </route>  
     </camelContext>
     <bean id="myBean" class="CamelBean"/>
+    
+    <bean id="poolBuilder" class="org.apache.camel.component.netty4.NettyWorkerPoolBuilder">
+                <property name="workerCount" value="2"/>
+    </bean>
+              
+              
+    <bean id="sharedNIOPool" class="io.netty.channel.EventLoopGroup"
+                factory-bean="poolBuilder" factory-method="build" destroy-method="shutdown">
+    </bean>
  
 </beans>

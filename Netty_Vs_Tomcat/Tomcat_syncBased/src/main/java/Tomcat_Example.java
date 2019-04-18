@@ -42,12 +42,18 @@ public class Tomcat_Example {
 
 	@RequestMapping("/camelrequest_multi")
 	public String getCamelResult_multi() {
-		 return  template.requestBody("direct:sampleroute1",0, String.class);
+		 return  template.requestBody("direct:camelsync",0, String.class);
 	}
 	
 	@RequestMapping("/camelrequest_seq")
 	public String getCamelResult_seq() {
 		 return  template.requestBody("direct:sampleroute2",0, String.class);
+	}
+	@RequestMapping("/camelrequest_hybrid")
+	public String getCamelResult_hybrid() {
+		  Mono<String> result =   (Mono<String>)template.requestBody("direct:hybrid",0);
+		 return result.block();
+		 
 	}
 
 	@RequestMapping("/sleep")
@@ -75,6 +81,7 @@ public class Tomcat_Example {
 		} finally {
 			//camelContext.stop();
 		}
+		System.out.println("Starting TOMCAT v1.2  ");
 		SpringApplication.run(Tomcat_Example.class, args);
 	
 	}

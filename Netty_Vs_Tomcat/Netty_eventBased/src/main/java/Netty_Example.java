@@ -75,9 +75,9 @@ public class Netty_Example {
 	}
 
 	@RequestMapping("/echo")
-	 public Mono<String> echo()
+	 public Mono<String> echo(@RequestParam(value = "foo", required = false) String foo)
     {
-        return Mono.just("I am from ECHO api").delayElement( Duration.ofMillis( 50 ) );
+        return Mono.just("I am from ECHO api "+foo).delayElement( Duration.ofMillis( 50 ) );
     }
 
 	
@@ -101,6 +101,14 @@ public class Netty_Example {
 	public Mono<String> getCamelResult3() {
 		return  (Mono<String>)template.requestBody("direct:sampleroute3",0);
 	}
+	@RequestMapping("/multicastlarge")
+	public Mono<String> getCamelMulticastlarge() {
+		return  (Mono<String>)template.requestBody("direct:multicastlarge",0);
+	}
+	@RequestMapping("/multicastsmall")
+	public Mono<String> getCamelMulticastsmall() {
+		return  (Mono<String>)template.requestBody("direct:multicastsmall",0);
+	}
 	
 	public static void main(String[] args) throws Exception  {
 
@@ -120,7 +128,7 @@ public class Netty_Example {
 		} finally {
 			//camelContext.stop();
 		}
-		System.out.println("Starting NETTY v1.0");
+		System.out.println("Starting NETTY v1.6");
 		SpringApplication.run(Netty_Example.class, args);
 	
 	}

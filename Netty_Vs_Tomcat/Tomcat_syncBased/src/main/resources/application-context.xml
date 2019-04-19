@@ -27,6 +27,32 @@
 		   </multicast>
         </route>
         
+       <route >
+            <from uri="direct:multicastlarge" />
+            <setExchangePattern pattern="InOut" />
+            <to uri="bean:myBean?method=computeText"/>
+			<multicast id="testIdmulticast" parallelProcessing="true" stopOnException="true" executorServiceRef="threadprofile">
+					<to uri="bean:myBean?method=appendSomeText1"/>
+					<to uri="bean:myBean?method=appendSomeText2"/>
+					<to uri="bean:myBean?method=appendSomeText3"/>
+					<to uri="bean:myBean?method=appendSomeText4"/>
+					<to uri="bean:myBean?method=appendSomeText5"/>
+					<to uri="bean:myBean?method=appendSomeText6"/>
+					<to uri="bean:myBean?method=appendSomeText7"/>
+		   </multicast>
+        </route>
+        
+               <route >
+            <from uri="direct:multicastsmall" />
+            <setExchangePattern pattern="InOut" />
+            <to uri="bean:myBean?method=computeText"/>
+			<multicast id="testIdmulticastsmall" parallelProcessing="true" stopOnException="true" executorServiceRef="threadprofile">
+					<to uri="bean:myBean?method=appendSomeText1"/>
+					<to uri="bean:myBean?method=appendSomeText2"/>
+		   </multicast>
+        </route>
+        
+        
         <route >
             <from uri="direct:sampleroute2" />
             <setExchangePattern pattern="InOut" />

@@ -9,7 +9,7 @@
 <properties>
         <!-- Spring boot main class -->
         <start-class>Tomcat_Example</start-class>
-        <camel.version>2.19.0</camel.version>
+        <camel.version>2.22.0</camel.version>
 </properties>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -96,11 +96,19 @@
 			<artifactId>spring-context</artifactId>
 
 		</dependency>
-		<dependency>
+		<!--  >dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-spring</artifactId>
 			<version>2.15.1</version>
-		</dependency>
+		</dependency -->
+		
+		 <dependency>
+           <groupId>org.apache.camel</groupId>
+           <artifactId>camel-netty4</artifactId>
+           <version>2.22.0</version>
+          <!-- use the same version as your Camel core version -->
+        </dependency>
+
 </dependencies>
 	<!-- Additional lines to be added here... -->
 

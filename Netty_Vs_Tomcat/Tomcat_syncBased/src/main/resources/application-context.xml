@@ -65,16 +65,13 @@
             <setExchangePattern pattern="InOut" />
             <to uri="bean:myBean?method=computeText"/>
 			<multicast id="searchhybrid" parallelProcessing="true" stopOnException="true" executorServiceRef="sharedNIOPool">
-				<pipeline>
 					<to uri="bean:myBean?method=appendSomeText10"/>
 					<to uri="bean:myBean?method=appendSomeText20"/>
-				</pipeline>
-				<pipeline>
 					<to uri="bean:myBean?method=appendSomeText30"/>
 					<to uri="bean:myBean?method=appendSomeText40"/>
-					<to uri="bean:myBean?method=appendSomeText10"/>
-					<to uri="bean:myBean?method=appendSomeText20"/>
-				</pipeline>
+					<to uri="bean:myBean?method=appendSomeText50"/>
+					<to uri="bean:myBean?method=appendSomeText60"/>
+					<to uri="bean:myBean?method=appendSomeText70"/>
 			</multicast>
         </route>  
     </camelContext>

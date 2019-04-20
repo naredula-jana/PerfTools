@@ -90,7 +90,7 @@ public class CamelBean {
 
 	public Mono<String> appendSomeText20( String msg){
 		 // String ret = msg.block(); System.out.println(" Test20 : "+ret);
-		System.out.println(" Test20 : "+msg);
+		//System.out.println(" Test20 : "+msg);
 		
         Mono<String> monoObj =client.get().uri( "/echo?foo=20" ).retrieve().bodyToMono(String.class);
         monoObj.subscribe(CamelBean::handleResponseString);
@@ -108,9 +108,21 @@ public class CamelBean {
         return monoObj;
     }
 	public Mono<String> appendSomeText40(String msg){
-		//String ret =  input.block();
-		//System.out.println(" Test40 : "+ret);
-		
+        Mono<String> monoObj =client.get().uri( "/echo?foo=40" ).retrieve().bodyToMono(String.class);
+        monoObj.subscribe(CamelBean::handleResponseString);
+        return monoObj;
+    }
+	public Mono<String> appendSomeText50(String msg){
+        Mono<String> monoObj =client.get().uri( "/echo?foo=40" ).retrieve().bodyToMono(String.class);
+        monoObj.subscribe(CamelBean::handleResponseString);
+        return monoObj;
+    }
+	public Mono<String> appendSomeText60(String msg){
+        Mono<String> monoObj =client.get().uri( "/echo?foo=40" ).retrieve().bodyToMono(String.class);
+        monoObj.subscribe(CamelBean::handleResponseString);
+        return monoObj;
+    }
+	public Mono<String> appendSomeText70(String msg){
         Mono<String> monoObj =client.get().uri( "/echo?foo=40" ).retrieve().bodyToMono(String.class);
         monoObj.subscribe(CamelBean::handleResponseString);
         return monoObj;

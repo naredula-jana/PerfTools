@@ -8,10 +8,10 @@ In this Perf Test, Comparison between  Asynchronous Rest Server(based on Netty) 
 
 # Summary of Tests :
 Type of Tests:
-- Test Setup: load generator -> Rest Server -> echo server.   "ab" is used for load generator, Rest server can Sync or Async server.
-- Without Camel:  Rest controller directly calls web client to send the rest requests to the backend.
+- Test Setup: load generator -> Rest Server -> echo server.   "ab" is used for load generator, Rest server can be Sync or Async server.
+- Without Camel:  Rest controller directly calls web client to send the rest requests to the backend without camel.
 - With Camel + Large Multicast: Multicast route having 7 endpoints.  Here there will be 7 camel worker threads and  one aggregator thread per request.
-- With Camel + Small Multicast: Multicast route having 2 endpoints. Here there will be 2 camel worker threads and one aggregator thread per request.
+- With Camel + Small Multicast: Multicast route having 2 endpoints. Here there will be 2 camel worker threads across the system and one aggregator thread per request.
 - With Camel + With Hysterix: TODO
 
 
@@ -118,12 +118,15 @@ Type of Tests:
 
 # Load  vs Performance Gap
 As load increases, the Gap between Async and Sync increases. Sync Collapses at load of 1200/sec for large multicast. Here load refers to number of concurrent request and number of endpoints in the camel multicast route. As the load increases the following thing happens for Async and Sync servers:
-- Async:  Since total threads stays constant irrespective of load. Firstly , the amount of idle time decreases per thread as load increases, so context switches decreases. secondly as consumer threads especially camel thread will be serving more requests before going to sleep, means the number of the producer(camel aggregator) wake-up's become less, means number of futex calls decreases, or average cpu cycles spend for IPC decreases. 
-- Sync:  As the load increases the total number of active threads increase, context switches increases proportionally. As the request passing from producer(camel-aggregator) to consumer(camel-threads) increases so the fuxex call increases. This is exactly opposite to Async.
 
-Context swicthes and IPC:
-- Context switches: As active threads increases the context switches increases proportionally.
-- IPC: suppose there are 1 request per sec in case-1 and 1000 request per second in case-2. in  case-1 the camel-worker thread will be sleeping for every request, so the camel aggregator thread need to wake up  the camel-worker thread for every request this contributes   , whereas in case-2, by the time camel-worker process one request, other request will be in the queue this avoids the futex call. on average instead of 1 futex call per request it will be something like 0.01 futex calls per request.
+Async model:  Since total threads stays constant irrespective of load. Firstly , the amount of idle time decreases per thread as load increases, so context switches decreases. secondly as consumer threads especially camel thread will be serving more requests before going to sleep, means the number of the producer(camel aggregator) wake-up's become less, means number of futex calls decreases, or average cpu cycles spend for IPC decreases. 
+  - Context switches: As load increases the context switch will decrease since less amount of idle time.
+  - IPC: As load increases, the producer may not required wake up the consumer since consumer is processing the preveous request. 
+
+Sync model:  As the load increases the total number of active threads increase, context switches increases proportionally. As the request passing from producer(camel-aggregator) to consumer(camel-threads) increases so the fuxex call increases. This is exactly opposite to Async.
+  - Context switches: As active threads increases the context switches increases proportionally in Sync.
+  - IPC: irrespective of load, the producer need to pick free thread from the free pool to assign the request, means it need to wake up the free thread before assignment. so as load increases the futex calls increases.
+
 
 In summary, as load increases the efficiency of IPC and context switches decreases in Sync model, on other hand for Async the efficiency of context switches and IPC increases, this makes the gap widen as load increases.  
 
@@ -164,6 +167,7 @@ In summary, as load increases the efficiency of IPC and context switches decreas
 
 - Large Multicast as more performance gap between Async and Sync because of threads gap between them is more.
 - Small Multicast as less performance gap because threads gaps is small.
+- Number of thread directly propotional to performance Gap.
 
 
 # Summary :
@@ -179,7 +183,7 @@ In summary, as load increases the efficiency of IPC and context switches decreas
 - making zero context switches and zero futex calls:  by pinning thread to the cpu and spinning the thread during idle will achieve it, for this variable thread pool like camel-aggregator and hysterix need to make constant number of threads,  this improves the latency  and throughput to the maximum. This is suitable for highend servers.
 
 
-## Papers related to syscall impact on performance:
+## Papers related to Async performance:
  -   [syscall impact in high end NoSQL database](https://github.com/naredula-jana/Jiny-Kernel/blob/master/doc/HighThroughputDatabaseForBigData.pdf) .
  -   [Minimising syscall : Golang apps in ring-0](https://github.com/naredula-jana/Jiny-Kernel/blob/master/doc/GolangAppInRing0.pdf).
   -  [Netty uses Jemalloc variant for memory allocation](https://github.com/naredula-jana/Jiny-Kernel/blob/master/doc/malloc_paper_techpulse_submit_final.pdf).

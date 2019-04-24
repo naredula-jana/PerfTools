@@ -124,9 +124,8 @@ As load increases, the Gap between Async and Sync increases. Sync Collapses at l
 Context swicthes and IPC:
 - Context switches: As active threads increases the context switches increases proportionally.
 - IPC: suppose there are 1 request per sec in case-1 and 1000 request per second in case-2. in  case-1 the camel-worker thread will be sleeping for every request, so the camel aggregator thread need to wake up  the camel-worker thread for every request this contributes   , whereas in case-2, by the time camel-worker process one request, other request will be in the queue this avoids the futex call. on average instead of 1 futex call per request it will be something like 0.01 futex calls per request.
-- making zero context switches and zero futex calls:  by pinning thread to the cpu and spinning the thread during idle will achieve it. this improves the latency  and throughput to the maximum. This is suitable for highend servers.
 
-In summary, as load increases in Sync efficiency of IPC and context switches decreases, on other hand for Async the efficiency of context switches and IPC increases. this makes the gap widen as load increases.  
+In summary, as load increases the efficiency of IPC and context switches decreases in Sync model, on other hand for Async the efficiency of context switches and IPC increases, this makes the gap widen as load increases.  
 
 <table border=1>
 <tr>
@@ -177,6 +176,7 @@ In summary, as load increases in Sync efficiency of IPC and context switches dec
 - pinning the cpu cores for camel worker threads and rest controller threads. these are highly io intensive, so by pinning the threads it improves the cpu efficiency further.
 - camel worker threads will be sleeping if there is no request, instead of sleeping it can spin continuously in the user space, by doing this it improves the latency and throughput. on other hand it waste the cpu cycles by spinning, this optimisation is well suited for high end machines with the dedicated cores.
 - Improving the efficiency of Hysterix and Camel Aggregator threads. Currently these threads are dynamic and created when there are requests.
+- making zero context switches and zero futex calls:  by pinning thread to the cpu and spinning the thread during idle will achieve it, for this variable thread pool like camel-aggregator and hysterix need to make constant number of threads,  this improves the latency  and throughput to the maximum. This is suitable for highend servers.
 
 
 ## Papers related to syscall impact on performance:

@@ -1,5 +1,5 @@
-# Async programming vs Synchronised 
-Reactive programming is also called Event based or Asynchronise programming model. A reactive system is an architectural style that allows multiple individual requests to be processed by a single NIO thread for each cpu core.  Synchronised is the alternate  programming model, where each request is handled by a individual thread.  Reactive programming is having advantage if number concurrent requests to the server is large and processing of each request need lot of IO or sleeps/waits during the processing. Reactive programming model is relative new in Java world, But in the linux kernel the epoll and AsyncIO is been introduced or supported more then decade back. Reactive programming is implemented on the foundations of epoll and asyncIO to reduce the system calls overhead. system call are expensive and can impact latency as-well throughput. During system call, cpu executes less number of instruction,[ more detail are here ](https://github.com/naredula-jana/Jiny-Kernel/blob/master/doc/Perf_IPC.pdf) 
+# Async programming vs Synchronised programming
+Reactive programming is also called Event based or Asynchronese programming model. A reactive system is an architectural style that allows multiple individual requests to be processed by a single NIO thread for each cpu core.  Synchronised is the alternate  programming model, where each request is handled by a individual thread.  Reactive programming is having advantage if number concurrent requests to the server is large and processing of each request need lot of IO or sleeps/waits during the processing. Reactive programming model is relative new in Java world, But in the linux kernel the epoll and AsyncIO is been introduced or supported more then decade back. Reactive programming is implemented on the foundations of epoll and asyncIO to reduce the system calls overhead. system call are expensive and can impact latency as-well throughput. During system call, cpu executes less number of instruction per second,[ more detail are here ](https://github.com/naredula-jana/Jiny-Kernel/blob/master/doc/Perf_IPC.pdf) 
 
 In this Perf Test, Comparison between  Asynchronous Rest Server(based on Netty) vs  Synchronous Server(Tomcat) is compared.  Async uses few number of threads proportional to the number of cpu cores  to process large number of requests. On the Other hand Sync uses separate thread for each request. Suppose if there are 2000 concurrent requests on 32 core machine  then Async uses around 32 active threads vs Sync uses atleast 4000 active threads to processes the requests. Due to this if the number  of request are large and each request need lot of waits during processing of thread like waiting for database response then Async Performs well in terms of latency as well as throughput. Sync spends lot of cpu cycles in context switches and futex system calls. Async(Netty) has its own memory allocator for buffers, it doesn't waste memory bandwidth by filling buffers with zeros, Netty implements a jemalloc variant of memory allocation by bypassing jvm GC. 
 
@@ -36,47 +36,47 @@ In this Perf Test, Comparison between  Asynchronous Rest Server(based on Netty) 
 </tr>
 
 <tr>
-<th align=left>2)With-Camel  </th>
-<th> LargeMulticast , concurrency=300 </th>
+<th align=left>2)With-Camel + LargeMulticast  </th>
+<th>   concurrency=300 </th>
 <th>cpu: 1400   user: 17 sys: 16</th>
 <th>cpu: 360 user: 11% sys: 5%   latency: 196</th>
 <th>CPU: 3.8X  </th>
 </tr>
 
 <tr>
-<th align=left>3)With-Camel </th>
-<th> LargeMulticast , concurrency=800  </th>
+<th align=left>3)With-Camel + LargeMulticast </th>
+<th>   concurrency=800  </th>
 <th>cpu: 1900   user:21  sys:26 latency=750ms </th>
 <th>cpu: 350 user:10.5% sys:4.5%   latency: 523</th>
 <th> CPU: 5.4X </th>
 </tr>
 
 <tr>
-<th align=left>4)With-Camel  </th>
-<th> LargeMulticast , concurrency=1200 </th>
+<th align=left>4)With-Camel + LargeMulticast </th>
+<th>   concurrency=1200 </th>
 <th>Breakdown due to large number of threads </th>
 <th>cpu: 310 user:10.5% sys:4.5%   latency: 600</th>
 <th> CPU: >5.4X </th>
 </tr>
 
 <tr>
-<th align=left>5)With-Camel</th>
-<th>  SmallMulticast,  concurrency=300 </th>
+<th align=left>5)With-Camel + SmallMulticast</th>
+<th>    concurrency=300 </th>
 <th> cpu: 960 user: 15 sys:13.4 </th>
 <th>cpu: 400 user: user:10% sys:6% latency: 85 </th>
 <th>CPU:2.4X  </th>
 </tr> 
 
 <tr>
-<th align=left>6)With-Camel  </th>
-<th> SmallMulticast , concurrency=800 </th>
+<th align=left>6)With-Camel + SmallMulticast  </th>
+<th>   concurrency=800 </th>
 <th> cpu:1400  user:21  sys:19 latency:165 </th>
 <th>cpu:450  user:11  sys:7% latency:220  </th>
 <th> CPU: 3.1X </th>
 </tr>
 <tr>
-<th align=left>7)With-Camel </th>
-<th> LargeMulticas, rx-camel on Sync-tomcat, concurrency=300 </th>
+<th align=left>7)With-Camel + LargeMulticas + rx-camel on Sync-tomcat </th>
+<th>  concurrency=300 </th>
 <th>Hybrid: cpu:500 LargeMultiCast:1500 concurrency=300  </th>
 <th>  </th>
 <th> CPU: 3.0X </th>
@@ -137,7 +137,7 @@ As load increases, the Gap between Async and Sync increases. Sync Collapses at l
 
 **Sync model**:  As the load increases the total number of active threads increase, context switches increases proportionally. As the request passing from producer(camel-aggregator) to consumer(camel-threads) increases so the fuxex call increases. This is exactly opposite to Async.
   - **Context switches**: As active threads increases the context switches increases proportionally in Sync.
-  - **IPC**: irrespective of load, the producer need to pick free thread from the free pool to assign the request, means it need to wake up the free thread before assignment. so as load increases the futex calls increases.
+  - **IPC**: irrespective of load, the producer need to pick free thread from the free pool to assign the request, means it need to wake up the free thread before assignment. so as load increases the futex calls increases proportionally.
 
 
 In summary, as load increases the efficiency of IPC and context switches decreases in Sync model, on other hand for Async the efficiency of context switches and IPC increases, this makes the gap widen as load increases.  

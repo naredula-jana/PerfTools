@@ -49,6 +49,11 @@ public class Tomcat_Example {
 	public String getCamelResult_seq() {
 		 return  template.requestBody("direct:sampleroute2",0, String.class);
 	}
+	@RequestMapping("/multicastlargehyst")
+	public String getCamelResult_multicastlargehyst() {
+		 return  template.requestBody("direct:multicastlargehyst",0, String.class);
+	}
+	
 	@RequestMapping("/multicastlarge")
 	public String getCamelResult_multicastlarge() {
 		 return  template.requestBody("direct:multicastlarge",0, String.class);
@@ -90,7 +95,7 @@ public class Tomcat_Example {
 		} finally {
 			//camelContext.stop();
 		}
-		System.out.println("Starting TOMCAT v1.7  ");
+		System.out.println("Starting TOMCAT v1.9  ");
 		SpringApplication.run(Tomcat_Example.class, args);
 	
 	}

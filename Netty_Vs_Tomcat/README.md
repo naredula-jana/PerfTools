@@ -74,6 +74,39 @@ In this Perf Test, Comparison between  Asynchronous Rest Server(based on Netty) 
 <th>cpu:450  user:11  sys:7% latency:220  </th>
 <th> CPU: 3.1X </th>
 </tr>
+
+<tr>
+<th align=left>6)With-Camel + LargeMulticast +Hysterix  </th>
+<th>   concurrency=100, netty worker=4, camel worker=2 </th>
+<th>without hysterix:cpu:800(threads:2088) latncy:61 withhysetrix:   </th>
+<th> </th>
+<th>  </th>
+</tr>
+
+<tr>
+<th align=left>6)With-Camel + LargeMulticast +Hysterix  </th>
+<th>   concurrency=300, netty worker=4, camel worker=2 </th>
+<th>without hysterix: cpu:1200 withhysetrix: BREAKDOWN(unable to create threads  > 3400)  </th>
+<th> without hysterix:cpu=330 , with hysterix: cpu=400  </th>
+<th>  </th>
+</tr>
+
+<tr>
+<th align=left>6)With-Camel + LargeMulticast +Hysterix  </th>
+<th>   concurrency=800, netty worker=4, camel worker=2 </th>
+<th>TODO  </th>
+<th> without hysterix:cpu=330,latency=381(connect=5ms) , with hysterix:cpu=400,latency=621(connect=200ms),hysetr threads=40</th>
+<th>  </th>
+</tr>
+
+<tr>
+<th align=left>6)With-Camel + Pipeline +Hysterix  </th>
+<th>   concurrency=800 </th>
+<th> TODO </th>
+<th>TODO  </th>
+<th>  </th>
+</tr>
+
 <tr>
 <th align=left>7)With-Camel + LargeMulticas + rx-camel on Sync-tomcat </th>
 <th>  concurrency=300 </th>
@@ -185,6 +218,7 @@ In summary, as load increases the efficiency of IPC and context switches decreas
  
 # Advanced Optimizations:
 
+1. ** NUmber of Tomcat threads and Camel Threads**: Depending on the load the number of tomcat/camel threads will decide the cpu utilization and latency. over allocation of threads can bring down the throughput and latency. 
 1. **Pinning Thread to cpu **: pinning the cpu cores for camel worker threads and rest controller threads. these are highly io intensive, so by pinning the threads it improves the cpu efficiency further.
 1. **Making zero context switches and zero futex calls by Spinning and pinning**: camel worker threads will be sleeping during the time of no request. Zero context switches and zero futex calls inside tomcat/camel can be acheived by the following means: a) Tomcat and  camel threads need to spin continously instead of sleeping inside the kernel. b) Using dedicated and pinned cores only for camel-worker and tomcat threads. remaining threads are assigned to left over cores.   by doing this it improves the latency and throughput. on other hand it waste the cpu cycles by spinning and may increase the power consumption, this optimization is well suited for high end machines with the dedicated cores.
 1. **Improving the efficiency of Hysterix and Camel Aggregator threads**: Currently these threads are dynamic and created when there are requests in Async.

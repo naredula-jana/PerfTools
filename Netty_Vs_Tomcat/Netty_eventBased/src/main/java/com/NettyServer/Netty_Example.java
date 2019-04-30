@@ -1,11 +1,16 @@
+package com.NettyServer;
+
 import org.apache.camel.CamelContext;
 import org.apache.camel.spring.SpringCamelContext;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import org.apache.camel.builder.RouteBuilder;
 
 
 
@@ -18,9 +23,7 @@ import reactor.adapter.rxjava.RxJava2Adapter;
 //import io.reactivex.Observable;
 
 import org.reactivestreams.Publisher;
-
 import org.reactivestreams.Subscriber;
-
 import rx.Observable;
 
 
@@ -35,13 +38,12 @@ import org.apache.camel.component.reactive.streams.api.CamelReactiveStreams;
 import org.apache.camel.component.reactive.streams.api.CamelReactiveStreamsService;
 
 
-
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.rx.ReactiveCamel;
 
 
 
-
+@ComponentScan("com.NettyServer")
 @RestController
 @EnableAutoConfiguration
 public class Netty_Example {
@@ -105,9 +107,17 @@ public class Netty_Example {
 	public Mono<String> getCamelMulticastlarge() {
 		return  (Mono<String>)template.requestBody("direct:multicastlarge",0);
 	}
+	@RequestMapping("/multicastlargehyst")
+	public Mono<String> getCamelMulticastlargehyst() {
+		return  (Mono<String>)template.requestBody("direct:multicastlargehysterix",0);
+	}
 	@RequestMapping("/multicastsmall")
 	public Mono<String> getCamelMulticastsmall() {
 		return  (Mono<String>)template.requestBody("direct:multicastsmall",0);
+	}
+	@RequestMapping("/multicastsmallAsync")
+	public Mono<String> getCamelMulticastsmallAsync() {
+		return  (Mono<String>)template.requestBody("direct:multicastsmallAsyncWeb",0);
 	}
 	
 	public static void main(String[] args) throws Exception  {
@@ -128,7 +138,8 @@ public class Netty_Example {
 		} finally {
 			//camelContext.stop();
 		}
-		System.out.println("Starting NETTY v1.6");
+		
+		System.out.println("Starting NETTY v1.7");
 		SpringApplication.run(Netty_Example.class, args);
 	
 	}

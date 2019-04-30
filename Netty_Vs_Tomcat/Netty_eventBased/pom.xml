@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 <properties>
         <!-- Spring boot main class -->
-        <start-class>Netty_Example</start-class>
+        <start-class>com.NettyServer.Netty_Example</start-class>
         <camel.version>2.20.0</camel.version>
 </properties>
 <build>
@@ -117,7 +117,28 @@
 			<artifactId>camel-spring</artifactId>
 			<version>2.22.0</version>
 		</dependency>
+		 <dependency>
+    		<groupId>org.apache.camel</groupId>
+    		<artifactId>camel-hystrix</artifactId>  
+    		<version>2.22.0</version> 		
+		</dependency> 
 		
+		<dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
+            <version>3.2.8.RELEASE</version>
+        </dependency>
+      <dependency>
+            <groupId>org.asynchttpclient</groupId>
+            <artifactId>async-http-client-extras-guava</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+      <dependency>
+            <groupId>org.asynchttpclient</groupId>
+            <artifactId>async-http-client</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+        
  <dependency>
     <groupId>org.apache.camel</groupId>
     <artifactId>camel-netty4</artifactId>

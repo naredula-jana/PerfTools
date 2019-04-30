@@ -6,75 +6,152 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-    <threadPoolProfile id="threadprofile" poolSize="1800" maxPoolSize="1800" defaultProfile="true" />
+	<camelContext
+		xmlns="http://camel.apache.org/schema/spring">
+		<hystrixConfiguration id="sharedConfig" corePoolSize="400" executionTimeoutInMilliseconds="5000" circuitBreakerSleepWindowInMilliseconds="10000" />
+		<threadPoolProfile id="threadprofile"
+			poolSize="1800" maxPoolSize="1800" defaultProfile="true" />
 		
-        <route >
-            <from uri="direct:camelsync" />
-            <setExchangePattern pattern="InOut" />
-            <to uri="bean:myBean?method=computeText"/>
-			<multicast id="testId" parallelProcessing="true" stopOnException="true" executorServiceRef="threadprofile">
+
+		<route>
+			<from uri="direct:camelsync" />
+			<setExchangePattern pattern="InOut" />
+			<to uri="bean:myBean?method=computeText" />
+			<multicast id="testId" parallelProcessing="true"
+				stopOnException="true" executorServiceRef="threadprofile">
 				<pipeline>
-					<to uri="bean:myBean?method=appendSomeText1"/>
-					<to uri="bean:myBean?method=appendSomeText2"/>
+					<to uri="bean:myBean?method=appendSomeText1" />
+					<to uri="bean:myBean?method=appendSomeText2" />
 				</pipeline>
 				<pipeline>
-					<to uri="bean:myBean?method=appendSomeText3"/>
-					<to uri="bean:myBean?method=appendSomeText4"/>
-<!-- 					<to uri="bean:myBean?method=appendSomeText1"/>
-					<to uri="bean:myBean?method=appendSomeText2"/> -->
+					<to uri="bean:myBean?method=appendSomeText3" />
+					<to uri="bean:myBean?method=appendSomeText4" />
+					<!-- <to uri="bean:myBean?method=appendSomeText1"/> <to uri="bean:myBean?method=appendSomeText2"/> -->
 				</pipeline>
-		   </multicast>
-        </route>
-        
-       <route >
-            <from uri="direct:multicastlarge" />
-            <setExchangePattern pattern="InOut" />
-            <to uri="bean:myBean?method=computeText"/>
-			<multicast id="testIdmulticast" parallelProcessing="true" stopOnException="true" executorServiceRef="threadprofile">
-					<to uri="bean:myBean?method=appendSomeText1"/>
-					<to uri="bean:myBean?method=appendSomeText2"/>
-					<to uri="bean:myBean?method=appendSomeText3"/>
-					<to uri="bean:myBean?method=appendSomeText4"/>
-					<to uri="bean:myBean?method=appendSomeText5"/>
-					<to uri="bean:myBean?method=appendSomeText6"/>
-					<to uri="bean:myBean?method=appendSomeText7"/>
-		   </multicast>
-        </route>
-        
-               <route >
-            <from uri="direct:multicastsmall" />
-            <setExchangePattern pattern="InOut" />
-            <to uri="bean:myBean?method=computeText"/>
-			<multicast id="testIdmulticastsmall" parallelProcessing="true" stopOnException="true" executorServiceRef="threadprofile">
-					<to uri="bean:myBean?method=appendSomeText1"/>
-					<to uri="bean:myBean?method=appendSomeText2"/>
-		   </multicast>
-        </route>
-        
-        
-        <route >
-            <from uri="direct:sampleroute2" />
-            <setExchangePattern pattern="InOut" />
-            <to uri="bean:myBean?method=appendSomeText2"/>	
-        </route>
-        
-        
-        <route >
-            <from uri="direct:hybrid" />
-            <setExchangePattern pattern="InOut" />
-            <to uri="bean:myBean?method=computeText"/>
-			<multicast id="searchhybrid" parallelProcessing="true" stopOnException="true" executorServiceRef="sharedNIOPool">
-					<to uri="bean:myBean?method=appendSomeText10"/>
-					<to uri="bean:myBean?method=appendSomeText20"/>
-					<to uri="bean:myBean?method=appendSomeText30"/>
-					<to uri="bean:myBean?method=appendSomeText40"/>
-					<to uri="bean:myBean?method=appendSomeText50"/>
-					<to uri="bean:myBean?method=appendSomeText60"/>
-					<to uri="bean:myBean?method=appendSomeText70"/>
 			</multicast>
-        </route>  
-    </camelContext>
+		</route>
+
+
+		<route>
+			<from uri="direct:multicastlargehyst" />
+			<setExchangePattern pattern="InOut" />
+			<to uri="bean:myBean?method=computeText" />
+			<multicast id="testIdmulticasthyst"
+				parallelProcessing="true" stopOnException="true"
+				executorServiceRef="threadprofile">
+				<hystrix>
+					<to uri="bean:myBean?method=appendSomeText1" />
+					<onFallback>
+						<transform>
+							<constant>Fallback message</constant>
+						</transform>
+					</onFallback>
+				</hystrix>
+				<hystrix>
+					<to uri="bean:myBean?method=appendSomeText2" />
+					<onFallback>
+						<transform>
+							<constant>Fallback message</constant>
+						</transform>
+					</onFallback>
+				</hystrix>
+				<hystrix>
+					<to uri="bean:myBean?method=appendSomeText3" />
+					<onFallback>
+						<transform>
+							<constant>Fallback message</constant>
+						</transform>
+					</onFallback>
+				</hystrix>
+				<hystrix>
+					<to uri="bean:myBean?method=appendSomeText4" />
+					<onFallback>
+						<transform>
+							<constant>Fallback message</constant>
+						</transform>
+					</onFallback>
+				</hystrix>
+				<hystrix>
+					<to uri="bean:myBean?method=appendSomeText5" />
+					<onFallback>
+						<transform>
+							<constant>Fallback message</constant>
+						</transform>
+					</onFallback>
+				</hystrix>
+				<hystrix>
+					<to uri="bean:myBean?method=appendSomeText6" />
+					<onFallback>
+						<transform>
+							<constant>Fallback message</constant>
+						</transform>
+					</onFallback>
+				</hystrix>
+				<hystrix>
+					<to uri="bean:myBean?method=appendSomeText7" />
+					<onFallback>
+						<transform>
+							<constant>Fallback message</constant>
+						</transform>
+					</onFallback>
+				</hystrix>
+			</multicast>
+		</route>
+
+		<route>
+			<from uri="direct:multicastlarge" />
+			<setExchangePattern pattern="InOut" />
+			<to uri="bean:myBean?method=computeText" />
+			<multicast id="testIdmulticast" parallelProcessing="true"
+				stopOnException="true" executorServiceRef="threadprofile">
+				<to uri="bean:myBean?method=appendSomeText1" />
+				<to uri="bean:myBean?method=appendSomeText2" />
+				<to uri="bean:myBean?method=appendSomeText3" />
+				<to uri="bean:myBean?method=appendSomeText4" />
+				<to uri="bean:myBean?method=appendSomeText5" />
+				<to uri="bean:myBean?method=appendSomeText6" />
+				<to uri="bean:myBean?method=appendSomeText7" />
+			</multicast>
+		</route>
+
+		<route>
+			<from uri="direct:multicastsmall" />
+			<setExchangePattern pattern="InOut" />
+			<to uri="bean:myBean?method=computeText" />
+			<multicast id="testIdmulticastsmall"
+				parallelProcessing="true" stopOnException="true"
+				executorServiceRef="threadprofile">
+				<to uri="bean:myBean?method=appendSomeText1" />
+				<to uri="bean:myBean?method=appendSomeText2" />
+			</multicast>
+		</route>
+
+
+
+
+		<route>
+			<from uri="direct:sampleroute2" />
+			<setExchangePattern pattern="InOut" />
+			<to uri="bean:myBean?method=appendSomeText2" />
+		</route>
+
+
+		<route>
+			<from uri="direct:hybrid" />
+			<setExchangePattern pattern="InOut" />
+			<to uri="bean:myBean?method=computeText" />
+			<multicast id="searchhybrid" parallelProcessing="true"
+				stopOnException="true" executorServiceRef="sharedNIOPool">
+				<to uri="bean:myBean?method=appendSomeText10" />
+				<to uri="bean:myBean?method=appendSomeText20" />
+				<to uri="bean:myBean?method=appendSomeText30" />
+				<to uri="bean:myBean?method=appendSomeText40" />
+				<to uri="bean:myBean?method=appendSomeText50" />
+				<to uri="bean:myBean?method=appendSomeText60" />
+				<to uri="bean:myBean?method=appendSomeText70" />
+			</multicast>
+		</route>
+	</camelContext>
     <bean id="myBean" class="CamelBean"/>
     
     <bean id="poolBuilder" class="org.apache.camel.component.netty4.NettyWorkerPoolBuilder">

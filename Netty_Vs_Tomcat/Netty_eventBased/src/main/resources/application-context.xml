@@ -6,78 +6,158 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
-  
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-    <!-- >threadPoolProfile id="sharedNIOPool" poolSize="2" maxPoolSize="2" defaultProfile="true" / -->
+
+	<camelContext
+		xmlns="http://camel.apache.org/schema/spring">
+
+		<!--  >routeBuilder ref="hysterixbuilder" /-->
+		<hystrixConfiguration id="sharedConfig" executionTimeoutInMilliseconds="5000" 
+			circuitBreakerSleepWindowInMilliseconds="10000" />
+
+		<route>
+			<from uri="direct:sampleroute1" />
+			<setExchangePattern pattern="InOut" />
+			<to uri="bean:myBean?method=computeText" />
+			<multicast id="searchAndBrowseWithStoreIds"
+				parallelProcessing="true" stopOnException="true"
+				executorServiceRef="sharedNIOPool">
+				<pipeline>
+					<to uri="bean:myBean?method=appendSomeText1" />
+					<to uri="bean:myBean?method=appendSomeText2" />
+				</pipeline>
+				<pipeline>
+					<to uri="bean:myBean?method=appendSomeText3" />
+					<to uri="bean:myBean?method=appendSomeText4" />
+					<to uri="bean:myBean?method=appendSomeText1" />
+					<to uri="bean:myBean?method=appendSomeText2" />
+				</pipeline>
+			</multicast>
+		</route>
+
+
+		<route>
+			<from uri="direct:multicastlargehysterix" />
+			<setExchangePattern pattern="InOut" />
+			<to uri="bean:myBean?method=computeText" />
+
+			<multicast id="searchmulticasthyst" parallelProcessing="true"
+				stopOnException="true" executorServiceRef="sharedNIOPool">
+				<hystrix>
+					<to uri="bean:myBean?method=appendSomeText1" />
+					<onFallback>
+						<transform>
+							<constant>Fallback message</constant>
+						</transform>
+					</onFallback>
+				</hystrix>
+				<hystrix>
+					<to uri="bean:myBean?method=appendSomeText2" />
+					<onFallback>
+						<transform>
+							<constant>Fallback message</constant>
+						</transform>
+					</onFallback>
+				</hystrix>
+								<hystrix>
+					<to uri="bean:myBean?method=appendSomeText3" />
+					<onFallback>
+						<transform>
+							<constant>Fallback message</constant>
+						</transform>
+					</onFallback>
+				</hystrix>
+								<hystrix>
+					<to uri="bean:myBean?method=appendSomeText4" />
+					<onFallback>
+						<transform>
+							<constant>Fallback message</constant>
+						</transform>
+					</onFallback>
+				</hystrix>
+								<hystrix>
+					<to uri="bean:myBean?method=appendSomeText5" />
+					<onFallback>
+						<transform>
+							<constant>Fallback message</constant>
+						</transform>
+					</onFallback>
+				</hystrix>
+								<hystrix>
+					<to uri="bean:myBean?method=appendSomeText6" />
+					<onFallback>
+						<transform>
+							<constant>Fallback message6666</constant>
+						</transform>
+					</onFallback>
+				</hystrix>
+								<hystrix>
+					<to uri="bean:myBean?method=appendSomeText7" />
+					<onFallback>
+						<transform>
+							<constant>Fallback message7777</constant>
+						</transform>
+					</onFallback>
+				</hystrix>
+			</multicast>
+		</route>
 		
-        <route >
-            <from uri="direct:sampleroute1" />
-            <setExchangePattern pattern="InOut" />
-            <to uri="bean:myBean?method=computeText"/>
-			<multicast id="searchAndBrowseWithStoreIds" parallelProcessing="true" stopOnException="true" executorServiceRef="sharedNIOPool">
-				<pipeline>
-					<to uri="bean:myBean?method=appendSomeText1"/>
-					<to uri="bean:myBean?method=appendSomeText2"/>
-				</pipeline>
-				<pipeline>
-					<to uri="bean:myBean?method=appendSomeText3"/>
-					<to uri="bean:myBean?method=appendSomeText4"/>
-					<to uri="bean:myBean?method=appendSomeText1"/>
-					<to uri="bean:myBean?method=appendSomeText2"/>
-				</pipeline>
+		<route>
+			<from uri="direct:multicastlarge" />
+			<setExchangePattern pattern="InOut" />
+			<to uri="bean:myBean?method=computeText" />
+
+			<multicast id="searchmulticast" parallelProcessing="true"
+				stopOnException="true" executorServiceRef="sharedNIOPool">
+
+				<to uri="bean:myBean?method=appendSomeText1" />
+				<to uri="bean:myBean?method=appendSomeText2" />
+				<to uri="bean:myBean?method=appendSomeText3" />
+				<to uri="bean:myBean?method=appendSomeText4" />
+				<to uri="bean:myBean?method=appendSomeText5" />
+				<to uri="bean:myBean?method=appendSomeText6" />
+				<to uri="bean:myBean?method=appendSomeText7" />
 			</multicast>
-        </route>  
-        
-        
-        <route >
-            <from uri="direct:multicastlarge" />
-            <setExchangePattern pattern="InOut" />
-            <to uri="bean:myBean?method=computeText"/>
-			<multicast id="searchmulticast" parallelProcessing="true" stopOnException="true" executorServiceRef="sharedNIOPool">
-					<to uri="bean:myBean?method=appendSomeText1"/>
-					<to uri="bean:myBean?method=appendSomeText2"/>
-					<to uri="bean:myBean?method=appendSomeText3"/>
-					<to uri="bean:myBean?method=appendSomeText4"/>
-					<to uri="bean:myBean?method=appendSomeText5"/>
-					<to uri="bean:myBean?method=appendSomeText6"/>
-					<to uri="bean:myBean?method=appendSomeText7"/>
+		</route>
+		
+		<route>
+			<from uri="direct:multicastsmall" />
+			<setExchangePattern pattern="InOut" />
+			<to uri="bean:myBean?method=computeText" />
+			<multicast id="searchmulticastsmall"
+				parallelProcessing="true" stopOnException="true"
+				executorServiceRef="sharedNIOPool">
+				<to uri="bean:myBean?method=appendSomeText1" />
+				<to uri="bean:myBean?method=appendSomeText2" />
 			</multicast>
-        </route>
-                <route >
-            <from uri="direct:multicastsmall" />
-            <setExchangePattern pattern="InOut" />
-            <to uri="bean:myBean?method=computeText"/>
-			<multicast id="searchmulticastsmall" parallelProcessing="true" stopOnException="true" executorServiceRef="sharedNIOPool">
-					<to uri="bean:myBean?method=appendSomeText1"/>
-					<to uri="bean:myBean?method=appendSomeText2"/>
+		</route>
+		<route>
+			<from uri="direct:multicastsmallAsyncWeb" />
+			<setExchangePattern pattern="InOut" />
+			<to uri="bean:myBean?method=computeText" />
+			<multicast id="testIdmulticastsmall"
+				parallelProcessing="true" stopOnException="true"
+				executorServiceRef="sharedNIOPool">
+				<to uri="bean:myBean?method=appendSomeText100" />
+				<to uri="bean:myBean?method=appendSomeText200" />
 			</multicast>
-        </route>
-        
-        
-        <route>
-            <from uri="direct:sampleroute2" />
-            <setExchangePattern pattern="InOut" />
-            <to uri="bean:myBean?method=appendSomeText2"/>
-        </route> 
-        
-        <route >
-            <from uri="direct:sampleroute3" />
-            <setExchangePattern pattern="InOut" />
-            <to uri="bean:myBean?method=appendSomeText2"/>
-			<multicast id="searchAndBrowse2" parallelProcessing="true" stopOnException="true" executorServiceRef="sharedNIOPool">
-						<to uri="bean:myBean?method=appendSomeText3"/>
-						<to uri="bean:myBean?method=appendSomeText4"/>
-						<to uri="bean:myBean?method=appendSomeText1"/>
-					    <to uri="bean:myBean?method=appendSomeText2"/>
-			</multicast>
-        </route>
-        
-    </camelContext>
+		</route>
+
+
+
+		<!-- <route> <from uri="direct:sampleroute3" /> <setExchangePattern pattern="InOut" 
+			/> <to uri="bean:myBean?method=appendSomeText2"/> <multicast id="searchAndBrowse2" 
+			parallelProcessing="true" stopOnException="true" executorServiceRef="sharedNIOPool"> 
+			<to uri="bean:myBean?method=appendSomeText3"/> <to uri="bean:myBean?method=appendSomeText4"/> 
+			<to uri="bean:myBean?method=appendSomeText1"/> <to uri="bean:myBean?method=appendSomeText2"/> 
+			</multicast> </route> -->
+
+	</camelContext>
     
-    <bean id="myBean" class="CamelBeanEvent"/>
+    <bean id="myBean" class="com.NettyServer.CamelBeanEvent"/>
+     <bean id="hysterixbuilder" class="com.NettyServer.Hysterixbuilder"/>
     
     <bean id="poolBuilder" class="org.apache.camel.component.netty4.NettyWorkerPoolBuilder">
-                <property name="workerCount" value="4"/>
+                <property name="workerCount" value="2"/>
     </bean>
               
               

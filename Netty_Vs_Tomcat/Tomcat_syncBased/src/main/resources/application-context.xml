@@ -8,7 +8,7 @@
        ">
 	<camelContext
 		xmlns="http://camel.apache.org/schema/spring">
-		<hystrixConfiguration id="sharedConfig" corePoolSize="5" maxQueueSize="10"  executionTimeoutInMilliseconds="15000" circuitBreakerSleepWindowInMilliseconds="10" />
+		<hystrixConfiguration id="sharedConfig" corePoolSize="1800" maxQueueSize="10"  executionTimeoutInMilliseconds="15000" circuitBreakerSleepWindowInMilliseconds="10" />
 		<threadPoolProfile id="threadprofile"
 			poolSize="1800" maxPoolSize="1800" defaultProfile="true" />
 		

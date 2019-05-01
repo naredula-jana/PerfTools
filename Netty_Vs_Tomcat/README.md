@@ -89,9 +89,9 @@ There are Two types of threads:
  - **Type of Perf Tests**: There are three type of Perf tests, first is just with Rest controller , second is Rest controller and Camel and third with Hysterix.
     1. **Only Rest Controller**:  Rest controller without camel directly calls web client to send the rest requests to the echo server.
     1. **Rest Controller + Camel**:
-        -  **With Camel + Large Multicast**: Multicast route having 7 endpoints.  Here there will be 7 camel worker threads and  one aggregator thread per route.
-        -  **With Camel + Small Multicast**: Multicast route having 2 endpoints. Here there will be 2 camel worker threads across the system and one aggregator thread per request.
-    1. **Rest Controller + Camel + Hysterix**:   
+        -  **With Camel + Large Multicast**: [Large Multicast route for Async](https://github.com/naredula-jana/PerfTools/blob/master/Netty_Vs_Tomcat/Netty_eventBased/src/main/resources/application-context.xml) having 7 endpoints for Async and similar [Large Multicast route](https://github.com/naredula-jana/PerfTools/blob/master/Netty_Vs_Tomcat/Tomcat_syncBased/src/main/resources/application-context.xml) for Sync are used for comparing.  Here there will be 7 camel worker threads and  one aggregator thread per route in Sync platform.
+        -  **With Camel + Small Multicast**: [Small Multicast route](https://github.com/naredula-jana/PerfTools/blob/master/Netty_Vs_Tomcat/Netty_eventBased/src/main/resources/application-context.xml) having 2 endpoints for Async and [Similar route is used for Sync](https://github.com/naredula-jana/PerfTools/blob/master/Netty_Vs_Tomcat/Tomcat_syncBased/src/main/resources/application-context.xml). Here there will be 2 camel worker threads and one aggregator thread per request in Sync platform. For Async there will only 2 camel worker for all the requests.
+    1. **Rest Controller + Camel + Hysterix**:   [Hysterix route with the name multicastlargehysterix](https://github.com/naredula-jana/PerfTools/blob/master/Netty_Vs_Tomcat/Netty_eventBased/src/main/resources/application-context.xml) is used for Async and similar for Sync, In Async platform there will be 2 Hysterix threads serving all the requests, On Sync platform there will 7 Hysterix threads per request.
 
 
 <table border=1>

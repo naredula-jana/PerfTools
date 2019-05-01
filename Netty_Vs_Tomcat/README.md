@@ -217,7 +217,7 @@ In summary, as load increases the efficiency of IPC and context switches decreas
 <th align=left width=auto>6)With-Camel + LargeMulticast +Hysterix  </th>
 <th width=auto>   concurrency=800, netty worker=4, camel worker=2 </th>
 <th width=auto>BREAKDOWN  </th>
-<th width=auto> without hysterix:cpu=330,latency=381(connect=5ms) , with hysterix:cpu=400,latency=621(connect=200ms),hysetr threads=40</th>
+<th width=auto> without hysterix:cpu=330, latency=381(connect=5ms) , with hysterix:cpu=400, latency=621(connect=200ms), hysetr threads=40</th>
 <th width=auto>  </th>
 </tr>
 

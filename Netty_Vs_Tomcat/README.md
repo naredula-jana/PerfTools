@@ -31,50 +31,50 @@ There are Two types of threads:
 </tr>
 <tr>
 <th align=left> 1.1)Rest Controller-IO <br> Tomcat/Netty </th>
-<th> <ul align=left><li> ASync Threads</li><li> 6 threads</li></ul> </th>
-<th><ul align=left><li> ASync Threads</li><li> 6 threads</li></ul></th>
+<th> <ul align=left><li> Async Threads</li><li> 6 threads</li></ul> </th>
+<th><ul align=left><li> Async Threads</li><li> 6 threads</li></ul></th>
 <th> These threads are per cpu and does socket io. These threads are more IO intensive. </th>
 </tr>
 <tr>
 <th align=left>1.2)Rest Controller-Exec  <br>  Tomcat/Netty </th>
 <th> <ul align=left><li> Sync Threads</li><li> R threads </li></ul></th>
-<th> IO threads does both IO and exec </th>
+<th> 0 threads </th>
 <th> These threads executes business logic of the rest controller. </th>
 </tr>
 <tr> 
 <th align=left>2.1) Camel-Worker <br> Camel/Camel-Rx/Camel-Netty </th>
 <th>  <ul align=left><li> Sync Threads</li><li> (E*R) threads </li></ul>  </th>
-<th><ul align=left><li> ASync Threads</li><li> 2 threads</li></ul></th>
+<th><ul align=left><li> Async Threads</li><li> 2 threads</li></ul></th>
 <th> These threads are more IO intensive when hysterix is not enabled. </th>
 </tr>
 <tr>
 <th align=left>2.2) Camel-Aggregator threads  <br> Camel/Camel-Rx/Camel-Netty </li></ul></th>
-<th> <ul align=left><li> Sync Threads</li><li> R threads </li></ul> </th>
-<th> 0 to R </th>
+<th> <ul align=left><li> Sync Threads</li><li> (0-R) threads</li></ul> </th>
+<th> <ul align=left><li> (0-R) threads </li></ul> </th>
 <th> These threads are Not IO intensive and more like a control threads. These thread manages each route. </th>
 </tr>
 <tr>
 <th align=left>3.1) Hysterix threads</th>
 <th>  <ul align=left><li> Sync Threads</li><li> (E*R) threads </li></ul>  </th>
-<th> <ul align=left><li> ASync Threads</li><li> 2 threads</li></ul> </th>
+<th> <ul align=left><li> Async Threads</li><li> 2 threads</li></ul> </th>
 <th>  These threads are IO intensive. </th>
 </tr>
 <th align=left>3.2) Hysterix Timer threads</th>
-<th> R </th>
-<th> R </th>
+<th> <ul align=left><li> (0-R) threads </li></ul> </th>
+<th><ul align=left><li> (0-R) threads</li></ul> </th>
 <th>  These threads are not  IO intensive. </th>
 </tr>
 <tr>
 <th>Total threads needed without Hysterix  </th>
 <th> (tomcat)+ E*R(camel-worker) +R(camel-aggregator) = (2+E)*R  </th>
-<th> 8 to 8+R</th>
-<th> </th>
+<th> 8 to 8+(0-R)</th>
+<th> Example Perf Case: Sync Vs Async threads: 2400 vs 68 threads  </th>
 </tr>
 <tr>
 <th>Total threads needed with Hysterix  </th>
 <th>    (3+2*E)*R </th>
-<th> 10 to 10+2R</th>
-<th> </th>
+<th> 10 to 10+2*(0-R)</th>
+<th> Example Perf Case: Sync Vs Async threads: 3200 vs 68 threads  </th>
 </tr>
 </table>
 

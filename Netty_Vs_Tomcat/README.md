@@ -13,12 +13,10 @@ There are Two types of threads:
  - Load = Number of Request(R) X number of endpoints per camel route(E)
     - R = number of Concurrent requests.
     - E = Number of endpoints in the camel route.
- - Opensource componets used in the Perf Test:
-    - Camel and hysterix version used = 2.22
  - Following are different threads:
-    - RestController: IO  threads: 
-    - RestController: Exec threads: This threads are present only in Tomcat, In Async these threads are removed.
-    - Camel-Worker threads: 
+    - RestController: IO  threads: These threads are Async threads pool both in Async as well as latest Tomcat versions.
+    - RestController: Exec threads: These threads are present only in Tomcat, In Async these threads are removed.
+    - Camel-Worker threads: These threads does the task of endpoints in route, they are IO intensive if Hysterix is not enabled, otherwise IO is execute in Hysterix thread context.
     - Camel Aggregator threads:
     - Hysterix Threads:
     - Hysterix Timer threads:
@@ -80,6 +78,119 @@ There are Two types of threads:
 </tr>
 </table>
 
+
+# Summary of Perf Tests :
+
+ - **Test Setup**:
+    - load generator -> Rest Server -> echo server. 
+    - "ab" is used for load generator.
+    -  Rest server can be Sync or Async server.
+    - Camel and hysterix version used = 2.22
+ - **Type of Perf Tests**: There are three type of Perf tests, first is just with Rest controller , second is Rest controller and Camel and third with Hysterix.
+    1. **Only Rest Controller**:  Rest controller without camel directly calls web client to send the rest requests to the echo server.
+    1. **Rest Controller + Camel**:
+        -  **With Camel + Large Multicast**: Multicast route having 7 endpoints.  Here there will be 7 camel worker threads and  one aggregator thread per route.
+        -  **With Camel + Small Multicast**: Multicast route having 2 endpoints. Here there will be 2 camel worker threads across the system and one aggregator thread per request.
+    1. **Rest Controller + Camel + Hysterix**:   
+
+
+<table border=1>
+<tr>
+<th>Test-Description</th>
+<th> parameters </th>
+<th>Sync Platform</th>
+<th>Async Platform</th>
+<th>Async Improvement over Sync </th>
+</tr>
+<tr>
+<th align=left width=auto>1)Without-Camel  </th>
+<th width=auto> concurrency= 1800 </th>
+<th width=auto>latency=191ms, cpu=840 </th>
+<th width=auto>latency=157ms, cpu=480 </th>
+<th width=auto>CPU: 1.75X  </th>
+</tr>
+
+<tr>
+<th align=left width=auto>2)With-Camel + LargeMulticast  </th>
+<th width=auto>   concurrency= 300 </th>
+<th width=auto>cpu: 1400   user: 17 sys: 16</th>
+<th width=auto>cpu: 360 user: 11% sys: 5%   latency: 196</th>
+<th width=auto>CPU: 3.8X  </th>
+</tr>
+
+<tr>
+<th align=left width=auto>3)With-Camel + LargeMulticast </th>
+<th width=auto>   concurrency= 800  </th>
+<th width=auto>cpu: 1900   user:21  sys:26 latency=750ms </th>
+<th width=auto>cpu: 350 user:10.5% sys:4.5%   latency: 523</th>
+<th width=auto> CPU: 5.4X </th>
+</tr>
+
+<tr>
+<th align=left width=auto>4)With-Camel + LargeMulticast </th>
+<th width=auto>   concurrency= 1200 </th>
+<th width=auto>Breakdown due to large number of threads </th>
+<th width=auto>cpu: 310 user:10.5% sys:4.5%   latency: 600</th>
+<th width=auto> CPU: >5.4X </th>
+</tr>
+
+<tr>
+<th align=left width=auto>5)With-Camel + SmallMulticast</th>
+<th width=auto>    concurrency= 300 </th>
+<th width=auto> cpu: 960 user: 15 sys:13.4 </th>
+<th width=auto>cpu: 400 user: user:10% sys:6% latency: 85 </th>
+<th width=auto>CPU:2.4X  </th>
+</tr> 
+
+<tr>
+<th align=left width=auto>6)With-Camel + SmallMulticast  </th>
+<th width=auto>   concurrency= 800 </th>
+<th width=auto> cpu:1400  user:21  sys:19 latency:165 </th>
+<th width=auto>cpu:450  user:11  sys:7% latency:220  </th>
+<th width=auto> CPU: 3.1X </th>
+</tr>
+
+<tr>
+<th align=left width=auto>7)With-Camel + LargeMulticast +Hysterix  </th>
+<th width=auto>   concurrency= 100, netty worker=4, camel worker=2 </th>
+<th width=auto>without hysterix:cpu:800 (threads:2088) latency:61 withhysetrix:   </th>
+<th width=auto> </th>
+<th width=auto>  CPU: >5.4X  </th>
+</tr>
+
+<tr>
+<th align=left width=auto>8)With-Camel + LargeMulticast +Hysterix  </th>
+<th width=auto>   concurrency= 300, netty worker=4, camel worker=2 </th>
+<th width=auto>without hysterix: cpu:1200 withhysetrix: BREAKDOWN (unable to create threads  > 3400)  </th>
+<th width=auto> without hysterix:cpu=330 , with hysterix: cpu=400  </th>
+<th width=auto>  CPU: >6.0X  </th>
+</tr>
+
+<tr>
+<th align=left width=auto>9)With-Camel + LargeMulticast +Hysterix  </th>
+<th width=auto>   concurrency=800, netty worker=4, camel worker=2 </th>
+<th width=auto>BREAKDOWN  </th>
+<th width=auto> without hysterix:cpu=330, latency=381(connect=5ms) , with hysterix:cpu=400, latency=621(connect=200ms), hysetrix threads=40</th>
+<th width=auto>   CPU: >6.0X  </th>
+</tr>
+
+<tr>
+<th align=left width=auto>10)With-Camel + Pipeline +Hysterix  </th>
+<th width=auto>   concurrency=800 </th>
+<th width=auto> TODO </th>
+<th width=auto>TODO  </th>
+<th width=auto>  </th>
+</tr>
+
+<tr>
+<th align=left width=auto>11)With-Camel + LargeMulticas + rx-camel on Sync-tomcat </th>
+<th width=auto>  concurrency=300 </th>
+<th width=auto>Hybrid: cpu:500 LargeMultiCast:1500 concurrency=300  </th>
+<th width=auto>  </th>
+<th width=auto> CPU: 3.0X </th>
+</tr>
+</table>
+
 # Load  vs Performance Gap
 As load increases, the Gap between Async and Sync increases. Sync Collapses at load of 1200/sec for large multicast. Here load refers to number of concurrent request and number of endpoints in the camel multicast route. As the load increases the following thing happens for Async and Sync servers:
 
@@ -132,117 +243,6 @@ In summary, as load increases the efficiency of IPC and context switches decreas
 - Large Multicast as more performance gap between Async and Sync because of threads gap between them is more.
 - Small Multicast as less performance gap because threads gaps is small.
 - Number of threads directly proportional to performance Gap.
-
-# Summary of Tests :
-**Type of Tests**:
- - **Test Setup**:
-    - load generator -> Rest Server -> echo server. 
-    - "ab" is used for load generator.
-    -  Rest server can be Sync or Async server.
- - **Type of Tests**:
-    1. **Without Camel**:  Rest controller directly calls web client to send the rest requests to the backend without camel.
-    1. **With Camel + Large Multicast**: Multicast route having 7 endpoints.  Here there will be 7 camel worker threads and  one aggregator thread per request.
-    1. **With Camel + Small Multicast**: Multicast route having 2 endpoints. Here there will be 2 camel worker threads across the system and one aggregator thread per request.
-    1. **With Camel + Large Multicast + With Hysterix**: 
-
-
-<table border=1>
-<tr>
-<th>Test-Description</th>
-<th> parameters </th>
-<th>Sync: Tomcat</th>
-<th>Async: Netty</th>
-<th>Async Improvement over Sync </th>
-</tr>
-<tr>
-<th align=left width=auto>1)Without-Camel  </th>
-<th width=auto> concurrency= 1800 </th>
-<th width=auto>latency=191ms, cpu=840 </th>
-<th width=auto>latency=157ms, cpu=480 </th>
-<th width=auto>CPU: 1.75X  </th>
-</tr>
-
-<tr>
-<th align=left width=auto>2)With-Camel + LargeMulticast  </th>
-<th width=auto>   concurrency= 300 </th>
-<th width=auto>cpu: 1400   user: 17 sys: 16</th>
-<th width=auto>cpu: 360 user: 11% sys: 5%   latency: 196</th>
-<th width=auto>CPU: 3.8X  </th>
-</tr>
-
-<tr>
-<th align=left width=auto>3)With-Camel + LargeMulticast </th>
-<th width=auto>   concurrency= 800  </th>
-<th width=auto>cpu: 1900   user:21  sys:26 latency=750ms </th>
-<th width=auto>cpu: 350 user:10.5% sys:4.5%   latency: 523</th>
-<th width=auto> CPU: 5.4X </th>
-</tr>
-
-<tr>
-<th align=left width=auto>4)With-Camel + LargeMulticast </th>
-<th width=auto>   concurrency= 1200 </th>
-<th width=auto>Breakdown due to large number of threads </th>
-<th width=auto>cpu: 310 user:10.5% sys:4.5%   latency: 600</th>
-<th width=auto> CPU: >5.4X </th>
-</tr>
-
-<tr>
-<th align=left width=auto>5)With-Camel + SmallMulticast</th>
-<th width=auto>    concurrency= 300 </th>
-<th width=auto> cpu: 960 user: 15 sys:13.4 </th>
-<th width=auto>cpu: 400 user: user:10% sys:6% latency: 85 </th>
-<th width=auto>CPU:2.4X  </th>
-</tr> 
-
-<tr>
-<th align=left width=auto>6)With-Camel + SmallMulticast  </th>
-<th width=auto>   concurrency= 800 </th>
-<th width=auto> cpu:1400  user:21  sys:19 latency:165 </th>
-<th width=auto>cpu:450  user:11  sys:7% latency:220  </th>
-<th width=auto> CPU: 3.1X </th>
-</tr>
-
-<tr>
-<th align=left width=auto>6)With-Camel + LargeMulticast +Hysterix  </th>
-<th width=auto>   concurrency= 100, netty worker=4, camel worker=2 </th>
-<th width=auto>without hysterix:cpu:800 (threads:2088) latency:61 withhysetrix:   </th>
-<th width=auto> </th>
-<th width=auto>  CPU: >5.4X  </th>
-</tr>
-
-<tr>
-<th align=left width=auto>6)With-Camel + LargeMulticast +Hysterix  </th>
-<th width=auto>   concurrency= 300, netty worker=4, camel worker=2 </th>
-<th width=auto>without hysterix: cpu:1200 withhysetrix: BREAKDOWN (unable to create threads  > 3400)  </th>
-<th width=auto> without hysterix:cpu=330 , with hysterix: cpu=400  </th>
-<th width=auto>  CPU: >6.0X  </th>
-</tr>
-
-<tr>
-<th align=left width=auto>6)With-Camel + LargeMulticast +Hysterix  </th>
-<th width=auto>   concurrency=800, netty worker=4, camel worker=2 </th>
-<th width=auto>BREAKDOWN  </th>
-<th width=auto> without hysterix:cpu=330, latency=381(connect=5ms) , with hysterix:cpu=400, latency=621(connect=200ms), hysetrix threads=40</th>
-<th width=auto>   CPU: >6.0X  </th>
-</tr>
-
-<tr>
-<th align=left width=auto>6)With-Camel + Pipeline +Hysterix  </th>
-<th width=auto>   concurrency=800 </th>
-<th width=auto> TODO </th>
-<th width=auto>TODO  </th>
-<th width=auto>  </th>
-</tr>
-
-<tr>
-<th align=left width=auto>7)With-Camel + LargeMulticas + rx-camel on Sync-tomcat </th>
-<th width=auto>  concurrency=300 </th>
-<th width=auto>Hybrid: cpu:500 LargeMultiCast:1500 concurrency=300  </th>
-<th width=auto>  </th>
-<th width=auto> CPU: 3.0X </th>
-</tr>
-</table>
-
 
 
  

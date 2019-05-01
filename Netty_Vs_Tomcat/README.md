@@ -10,13 +10,18 @@ In this Perf Test, Comparison between  Asynchronous Rest Server(based on Netty) 
 There are Two types of threads:
  - **Async thread pool**: The number of threads created are proportional to the cpu cores, the computation needed for the request SHOULD be async , means non-blocking computation should be used , If there is any blocking computation then thread will be delayed in processing the subsequent requests in the queue this causes starvation of threads and huge latency will be experienced.  
  - **Sync thread pool**: In this thread  the computation in the request are assumbed to be blocking in nature, Here the thread will be attached to the request till the end of the request. The number of threads created in Sync  are propotional to max concurrent request at any point of time.
+ - Load = Number of Request(R) X number of endpoints per camel route(E)
+    - R = number of Concurrent requests.
+    - E = Number of endpoints in the camel route.
+ - Opensource componets used in the Perf Test:
+    - Camel and hysterix version used = 2.22
  - Following are different threads:
-    - RestController: IO  threads
-    - RestController: Exec threads
-    - Camel-Worker threads
-    - Camel Aggregator threads
-    - Hysterix Threads
-    - Hysterix Timer threads
+    - RestController: IO  threads: 
+    - RestController: Exec threads: This threads are present only in Tomcat, In Async these threads are removed.
+    - Camel-Worker threads: 
+    - Camel Aggregator threads:
+    - Hysterix Threads:
+    - Hysterix Timer threads:
 
 
 <table border=1>
@@ -69,7 +74,7 @@ There are Two types of threads:
 </tr>
 <tr>
 <th>Total threads needed with Hysterix  </th>
-<th>    (3+E)*R </th>
+<th>    (3+2*E)*R </th>
 <th> 10 to 10+2R</th>
 <th> </th>
 </tr>
@@ -138,7 +143,7 @@ In summary, as load increases the efficiency of IPC and context switches decreas
     1. **Without Camel**:  Rest controller directly calls web client to send the rest requests to the backend without camel.
     1. **With Camel + Large Multicast**: Multicast route having 7 endpoints.  Here there will be 7 camel worker threads and  one aggregator thread per request.
     1. **With Camel + Small Multicast**: Multicast route having 2 endpoints. Here there will be 2 camel worker threads across the system and one aggregator thread per request.
-    1. **With Camel + With Hysterix**: TODO
+    1. **With Camel + Large Multicast + With Hysterix**: 
 
 
 <table border=1>
@@ -210,7 +215,7 @@ In summary, as load increases the efficiency of IPC and context switches decreas
 <th width=auto>   concurrency= 300, netty worker=4, camel worker=2 </th>
 <th width=auto>without hysterix: cpu:1200 withhysetrix: BREAKDOWN (unable to create threads  > 3400)  </th>
 <th width=auto> without hysterix:cpu=330 , with hysterix: cpu=400  </th>
-<th width=auto>  CPU: >5.4X  </th>
+<th width=auto>  CPU: >6.0X  </th>
 </tr>
 
 <tr>
@@ -218,7 +223,7 @@ In summary, as load increases the efficiency of IPC and context switches decreas
 <th width=auto>   concurrency=800, netty worker=4, camel worker=2 </th>
 <th width=auto>BREAKDOWN  </th>
 <th width=auto> without hysterix:cpu=330, latency=381(connect=5ms) , with hysterix:cpu=400, latency=621(connect=200ms), hysetrix threads=40</th>
-<th width=auto>   CPU: >5.4X  </th>
+<th width=auto>   CPU: >6.0X  </th>
 </tr>
 
 <tr>
@@ -255,7 +260,7 @@ In summary, as load increases the efficiency of IPC and context switches decreas
     - **Root Cause**:  In synchronisation programming, there will be large number of concurrent threads proportional to number of requests and each thread handles one request before going to sleep. Due to this reason there will be lot of futex system calls and context switches leading to lot of cpu cycles consumption and increase in latency.
     - **Solution**: By making architecture Async using Non blocking IO(NIO) threads and creating threads based on number cores and not based requests will solve the above problems.
  - **The performance gap between Sync and Async**:  As load increases the gap between sync and async increases, the threads in Async becomes more efficient as load increases, on the other side for sync the threads becomes less efficient as load increases till it collapses.
- - **Advanced optimizations**: Advanced optimization improve further by tunning and changing some part of opensource camel library.
+ - **Advanced optimizations**: Advanced optimization improve further by tunning and changing some part of opensource  librarires.
 
 ## Papers related to Async performance:
  -   [syscall impact in high end NoSQL database](https://github.com/naredula-jana/Jiny-Kernel/blob/master/doc/HighThroughputDatabaseForBigData.pdf) .

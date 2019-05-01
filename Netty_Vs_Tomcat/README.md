@@ -36,7 +36,7 @@ There are Two types of threads:
 <th align=left>1.2)Rest Controller-Exec  <br>  Tomcat/Netty </th>
 <th> <ul align=left><li> Sync Threads</li><li> R threads </li></ul></th>
 <th> IO threads does both IO and exec </th>
-<th> These threads executes buiness logic of the rest controller. </th>
+<th> These threads executes business logic of the rest controller. </th>
 </tr>
 <tr> 
 <th align=left>2.1) Camel-Worker <br> Camel/Camel-Rx/Camel-Netty </th>
@@ -147,7 +147,7 @@ In summary, as load increases the efficiency of IPC and context switches decreas
 <th> parameters </th>
 <th>Sync: Tomcat</th>
 <th>Async: Netty</th>
-<th> Async Improvement over Sync </th>
+<th>Async Improvement over Sync </th>
 </tr>
 <tr>
 <th align=left width=auto>1)Without-Camel  </th>
@@ -200,9 +200,9 @@ In summary, as load increases the efficiency of IPC and context switches decreas
 <tr>
 <th align=left width=auto>6)With-Camel + LargeMulticast +Hysterix  </th>
 <th width=auto>   concurrency= 100, netty worker=4, camel worker=2 </th>
-<th width=auto>without hysterix:cpu:800 (threads:2088) latncy:61 withhysetrix:   </th>
+<th width=auto>without hysterix:cpu:800 (threads:2088) latency:61 withhysetrix:   </th>
 <th width=auto> </th>
-<th width=auto>  </th>
+<th width=auto>  CPU: >5.4X  </th>
 </tr>
 
 <tr>
@@ -210,15 +210,15 @@ In summary, as load increases the efficiency of IPC and context switches decreas
 <th width=auto>   concurrency= 300, netty worker=4, camel worker=2 </th>
 <th width=auto>without hysterix: cpu:1200 withhysetrix: BREAKDOWN (unable to create threads  > 3400)  </th>
 <th width=auto> without hysterix:cpu=330 , with hysterix: cpu=400  </th>
-<th width=auto>  </th>
+<th width=auto>  CPU: >5.4X  </th>
 </tr>
 
 <tr>
 <th align=left width=auto>6)With-Camel + LargeMulticast +Hysterix  </th>
 <th width=auto>   concurrency=800, netty worker=4, camel worker=2 </th>
 <th width=auto>BREAKDOWN  </th>
-<th width=auto> without hysterix:cpu=330, latency=381(connect=5ms) , with hysterix:cpu=400, latency=621(connect=200ms), hysetr threads=40</th>
-<th width=auto>  </th>
+<th width=auto> without hysterix:cpu=330, latency=381(connect=5ms) , with hysterix:cpu=400, latency=621(connect=200ms), hysetrix threads=40</th>
+<th width=auto>   CPU: >5.4X  </th>
 </tr>
 
 <tr>
@@ -243,8 +243,8 @@ In summary, as load increases the efficiency of IPC and context switches decreas
  
 # Advanced Optimizations in Async:
 
-1. ** Allocating Number of Async Threads**: Async threads should be created based on the load and computation need per each request. Throughput means number of requests can be served per unit of cpu core.  Throughput and latency are directly propotional, means as load increased the through and latency increases. As latency crosses particular limit the number threads should be increased or requests rate should be decreased, otherwise the latency may be high. This can be acheived by the load balancer like HaProxy. HaProxy can send periodic ping request to check the latency, accordingly it can route the requests. 
-1. **Pinning Thread to cpu **: pinning the cpu cores for camel worker threads and rest controller threads. these are highly io intensive, so by pinning the threads it improves the cpu efficiency further.
+1. **Allocating Number of Async Threads**: Async threads should be created based on the load and computation need per each request. Throughput means number of requests can be served per unit of cpu core.  Throughput and latency are directly propotional, means as load increased the through and latency increases. As latency crosses particular limit the number threads should be increased or requests rate should be decreased, otherwise the latency may be high. This can be acheived by the load balancer like HaProxy. HaProxy can send periodic ping request to check the latency, accordingly it can route the requests. 
+1. **Pinning Thread to cpu**: pinning the cpu cores for camel worker threads and rest controller threads. these are highly io intensive, so by pinning the threads it improves the cpu efficiency further.
 1. **Making zero context switches and zero futex calls by Spinning and pinning**: camel worker threads will be sleeping during the time of no request. Zero context switches and zero futex calls inside tomcat/camel can be acheived by the following means: a) Tomcat and  camel threads need to spin continously instead of sleeping inside the kernel. b) Using dedicated and pinned cores only for camel-worker and tomcat threads. remaining threads are assigned to left over cores.   by doing this it improves the latency and throughput. on other hand it waste the cpu cycles by spinning and may increase the power consumption, this optimization is well suited for high end machines with the dedicated cores.
 1. **Improving the efficiency of Hysterix Timer threads and Camel Aggregator threads**: Need to investigate further to decrease the number of threads.
 

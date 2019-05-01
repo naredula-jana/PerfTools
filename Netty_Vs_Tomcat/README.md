@@ -49,7 +49,7 @@ There are Two types of threads:
 </tr>
 <tr>
 <th align=left>2.2) Camel-Aggregator threads  <br> Camel/Camel-Rx/Camel-Netty </li></ul></th>
-<th> <ul align=left><li> Sync Threads</li><li> (0-R) threads</li></ul> </th>
+<th> <ul align=left><li> Sync Threads</li><li> R threads</li></ul> </th>
 <th> <ul align=left><li> (0-R) threads </li></ul> </th>
 <th> These threads are Not IO intensive and more like a control threads. These thread manages each route. </th>
 </tr>
@@ -96,7 +96,7 @@ There are Two types of threads:
 
 <table border=1>
 <tr>
-<th>Test-Description</th>
+<th><b>Test-Description</b></th>
 <th> parameters </th>
 <th>Sync Platform</th>
 <th>Async Platform</th>
@@ -153,9 +153,9 @@ There are Two types of threads:
 <tr>
 <th align=left width=auto>7)With-Camel + LargeMulticast +Hysterix  </th>
 <th width=auto>   concurrency= 100, netty worker=4, camel worker=2 </th>
-<th width=auto>without hysterix:cpu:800 (threads:2088) latency:61 withhysetrix:   </th>
-<th width=auto> </th>
-<th width=auto>  CPU: >5.4X  </th>
+<th width=auto>without hysterix:cpu:800 (threads:2088) latency:61 withhysetrix: cpu:1400 with some hysterix fallbacks  </th>
+<th width=auto> cpu = 200 </th>
+<th width=auto>  CPU: >7.0X  </th>
 </tr>
 
 <tr>

@@ -26,6 +26,7 @@ import org.asynchttpclient.extras.guava.ListenableFutureAdapter;
 public class CamelBeanEvent {
 	private WebClient client = WebClient.create("http://localhost:8081");
 	private static int count=0;
+	static int fallback_count=0;
 		
 	private io.netty.channel.nio.NioEventLoopGroup camelNettyEventLoopGroup ;
 	private DefaultAsyncHttpClientConfig clientBuilder;
@@ -162,7 +163,7 @@ public class CamelBeanEvent {
 	private static void handleResponseString(String s) {
        // System.out.println("handle response: "+s);		
         if (count%1000 ==0 ) {
-            System.out.println("handle response function: "+s+" count: "+count);
+            System.out.println("handle response function: "+s+" count: "+count+" fallback count: "+fallback_count);
   		}
   		count++;        //System.out.println(s);
     }
@@ -170,6 +171,10 @@ public class CamelBeanEvent {
 	
 	public String computeText(){
         return "test";
+    }
+	public String fallback(){
+		fallback_count++;
+        return "fallback function";
     }
 	
 	public void print_stack() {

@@ -95,7 +95,7 @@ public class Tomcat_Example {
 		} finally {
 			//camelContext.stop();
 		}
-		System.out.println("Starting TOMCAT v1.9  ");
+		System.out.println("Starting TOMCAT v2.0  ");
 		SpringApplication.run(Tomcat_Example.class, args);
 	
 	}

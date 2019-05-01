@@ -10,8 +10,7 @@
 	<camelContext
 		xmlns="http://camel.apache.org/schema/spring">
 
-		<!--  >routeBuilder ref="hysterixbuilder" /-->
-		<hystrixConfiguration id="sharedConfig" executionTimeoutInMilliseconds="5000" 
+		<hystrixConfiguration id="sharedConfig" corePoolSize="2" maxQueueSize="100" executionTimeoutInMilliseconds="5000" 
 			circuitBreakerSleepWindowInMilliseconds="10000" />
 
 		<route>
@@ -42,60 +41,47 @@
 
 			<multicast id="searchmulticasthyst" parallelProcessing="true"
 				stopOnException="true" executorServiceRef="sharedNIOPool">
-				<hystrix>
+				
+				<hystrix hystrixConfigurationRef="sharedConfig">
 					<to uri="bean:myBean?method=appendSomeText1" />
 					<onFallback>
-						<transform>
-							<constant>Fallback message</constant>
-						</transform>
+						<to uri="bean:myBean?method=fallback" />
 					</onFallback>
 				</hystrix>
-				<hystrix>
+				<hystrix hystrixConfigurationRef="sharedConfig">
 					<to uri="bean:myBean?method=appendSomeText2" />
 					<onFallback>
-						<transform>
-							<constant>Fallback message</constant>
-						</transform>
+						<to uri="bean:myBean?method=fallback" />
 					</onFallback>
 				</hystrix>
-								<hystrix>
+				<hystrix hystrixConfigurationRef="sharedConfig">
 					<to uri="bean:myBean?method=appendSomeText3" />
 					<onFallback>
-						<transform>
-							<constant>Fallback message</constant>
-						</transform>
+						<to uri="bean:myBean?method=fallback" />
 					</onFallback>
 				</hystrix>
-								<hystrix>
+				<hystrix hystrixConfigurationRef="sharedConfig">
 					<to uri="bean:myBean?method=appendSomeText4" />
 					<onFallback>
-						<transform>
-							<constant>Fallback message</constant>
-						</transform>
+						<to uri="bean:myBean?method=fallback" />
 					</onFallback>
 				</hystrix>
-								<hystrix>
+				<hystrix hystrixConfigurationRef="sharedConfig">
 					<to uri="bean:myBean?method=appendSomeText5" />
 					<onFallback>
-						<transform>
-							<constant>Fallback message</constant>
-						</transform>
+						<to uri="bean:myBean?method=fallback" />
 					</onFallback>
 				</hystrix>
-								<hystrix>
+				<hystrix hystrixConfigurationRef="sharedConfig">
 					<to uri="bean:myBean?method=appendSomeText6" />
 					<onFallback>
-						<transform>
-							<constant>Fallback message6666</constant>
-						</transform>
+						<to uri="bean:myBean?method=fallback" />
 					</onFallback>
 				</hystrix>
-								<hystrix>
+				<hystrix hystrixConfigurationRef="sharedConfig">
 					<to uri="bean:myBean?method=appendSomeText7" />
 					<onFallback>
-						<transform>
-							<constant>Fallback message7777</constant>
-						</transform>
+						<to uri="bean:myBean?method=fallback" />
 					</onFallback>
 				</hystrix>
 			</multicast>

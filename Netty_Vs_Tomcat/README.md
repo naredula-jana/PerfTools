@@ -1,162 +1,76 @@
-# Async vs Synchronised programming
-Reactive programming is also called Event based or Asynchronese programming model. A reactive system is an architectural style that allows multiple individual requests to be processed by a single NIO thread for each cpu core.  Synchronised is the alternate  programming model, where each request is handled by a individual thread.  Reactive programming is having advantage if number concurrent requests to the server is large and processing of each request need lot of IO or sleeps/waits during the processing. Reactive programming model is relative new in Java world, But in the linux kernel the epoll and AsyncIO is been introduced or supported more then decade back. Reactive programming is implemented on the foundations of epoll and asyncIO to reduce the system calls overhead. system call are expensive and can impact latency as-well throughput. During system call, cpu executes less number of instruction per second,[ more detail are here ](https://github.com/naredula-jana/Jiny-Kernel/blob/master/doc/Perf_IPC.pdf) 
+# Async vs Synchronous programming
+Reactive programming is also called Event based or Asynchronese programming model. A reactive system is an architectural style that allows multiple individual requests to be processed by a single NIO thread for each cpu core.  Synchronous is the alternate  programming model, where each request is handled by a individual thread.  Reactive programming is having advantage if number concurrent requests to the server is large and processing of each request need lot of IO or sleeps/waits during the processing. Reactive programming model is relative new in Java world, But in the linux kernel the epoll and AsyncIO is been introduced or supported more then decade back. Reactive programming is implemented on the foundations of epoll and asyncIO to reduce the system calls overhead. system call are expensive and can impact latency as-well throughput. During system call, cpu executes less number of instruction per second,[ more detail are here ](https://github.com/naredula-jana/Jiny-Kernel/blob/master/doc/Perf_IPC.pdf) 
 
 In this Perf Test, Comparison between  Asynchronous Rest Server(based on Netty) vs  Synchronous Server(Tomcat) is compared.  Async uses few number of threads proportional to the number of cpu cores  to process large number of requests. On the Other hand Sync uses separate thread for each request. Suppose if there are 2000 concurrent requests on 32 core machine  then Async uses around 32 active threads vs Sync uses atleast 4000 active threads to processes the requests. Due to this if the number  of request are large and each request need lot of waits during processing of thread like waiting for database response then Async Performs well in terms of latency as well as throughput. Sync spends lot of cpu cycles in context switches and futex system calls. Async(Netty) has its own memory allocator for buffers, it doesn't waste memory bandwidth by filling buffers with zeros, Netty implements a jemalloc variant of memory allocation by bypassing jvm GC. 
 
 
 ![Architecture Sys Vs Async](https://github.com/naredula-jana/PerfTools/blob/master/Netty_Vs_Tomcat/arch.jpg)
 
-# Summary of Tests :
-**Type of Tests**:
- - **Test Setup**:
-    - load generator -> Rest Server -> echo server. 
-    - "ab" is used for load generator.
-    -  Rest server can be Sync or Async server.
- - **Type of Tests**:
-    1. **Without Camel**:  Rest controller directly calls web client to send the rest requests to the backend without camel.
-    1. **With Camel + Large Multicast**: Multicast route having 7 endpoints.  Here there will be 7 camel worker threads and  one aggregator thread per request.
-    1. **With Camel + Small Multicast**: Multicast route having 2 endpoints. Here there will be 2 camel worker threads across the system and one aggregator thread per request.
-    1. **With Camel + With Hysterix**: TODO
+#  Threading Model in Sync Vs Async
+There are Two types of threads:
+ - **Async thread pool**: The number of threads created are proportional to the cpu cores, the computation needed for the request SHOULD be async , means non-blocking computation should be used , If there is any blocking computation then thread will be delayed in processing the subsequent requests in the queue this causes starvation of threads and huge latency will be experienced.  
+ - **Sync thread pool**: In this thread  the computation in the request are assumbed to be blocking in nature, Here the thread will be attached to the request till the end of the request. The number of threads created in Sync  are propotional to max concurrent request at any point of time.
+ - Following are different threads:
+    - RestController: IO  threads
+    - RestController: Exec threads
+    - Camel-Worker threads
+    - Camel Aggregator threads
+    - Hysterix Threads
+    - Hysterix Timer threads
 
 
 <table border=1>
 <tr>
-<th>Test-Description</th>
-<th> parameters </th>
-<th>Sync: Tomcat</th>
-<th>Async: Netty</th>
-<th> Async Improvement over Sync </th>
-</tr>
-<tr>
-<th align=left>1)Without-Camel  </th>
-<th> concurrency=1800 </th>
-<th>latency=191ms, cpu=840 </th>
-<th>latency=157ms, cpu=480 </th>
-<th>CPU: 1.75X  </th>
-</tr>
-
-<tr>
-<th align=left>2)With-Camel + LargeMulticast  </th>
-<th>   concurrency=300 </th>
-<th>cpu: 1400   user: 17 sys: 16</th>
-<th>cpu: 360 user: 11% sys: 5%   latency: 196</th>
-<th>CPU: 3.8X  </th>
-</tr>
-
-<tr>
-<th align=left>3)With-Camel + LargeMulticast </th>
-<th>   concurrency=800  </th>
-<th>cpu: 1900   user:21  sys:26 latency=750ms </th>
-<th>cpu: 350 user:10.5% sys:4.5%   latency: 523</th>
-<th> CPU: 5.4X </th>
-</tr>
-
-<tr>
-<th align=left>4)With-Camel + LargeMulticast </th>
-<th>   concurrency=1200 </th>
-<th>Breakdown due to large number of threads </th>
-<th>cpu: 310 user:10.5% sys:4.5%   latency: 600</th>
-<th> CPU: >5.4X </th>
-</tr>
-
-<tr>
-<th align=left>5)With-Camel + SmallMulticast</th>
-<th>    concurrency=300 </th>
-<th> cpu: 960 user: 15 sys:13.4 </th>
-<th>cpu: 400 user: user:10% sys:6% latency: 85 </th>
-<th>CPU:2.4X  </th>
-</tr> 
-
-<tr>
-<th align=left>6)With-Camel + SmallMulticast  </th>
-<th>   concurrency=800 </th>
-<th> cpu:1400  user:21  sys:19 latency:165 </th>
-<th>cpu:450  user:11  sys:7% latency:220  </th>
-<th> CPU: 3.1X </th>
-</tr>
-
-<tr>
-<th align=left>6)With-Camel + LargeMulticast +Hysterix  </th>
-<th>   concurrency=100, netty worker=4, camel worker=2 </th>
-<th>without hysterix:cpu:800(threads:2088) latncy:61 withhysetrix:   </th>
-<th> </th>
-<th>  </th>
-</tr>
-
-<tr>
-<th align=left>6)With-Camel + LargeMulticast +Hysterix  </th>
-<th>   concurrency=300, netty worker=4, camel worker=2 </th>
-<th>without hysterix: cpu:1200 withhysetrix: BREAKDOWN(unable to create threads  > 3400)  </th>
-<th> without hysterix:cpu=330 , with hysterix: cpu=400  </th>
-<th>  </th>
-</tr>
-
-<tr>
-<th align=left>6)With-Camel + LargeMulticast +Hysterix  </th>
-<th>   concurrency=800, netty worker=4, camel worker=2 </th>
-<th>TODO  </th>
-<th> without hysterix:cpu=330,latency=381(connect=5ms) , with hysterix:cpu=400,latency=621(connect=200ms),hysetr threads=40</th>
-<th>  </th>
-</tr>
-
-<tr>
-<th align=left>6)With-Camel + Pipeline +Hysterix  </th>
-<th>   concurrency=800 </th>
-<th> TODO </th>
-<th>TODO  </th>
-<th>  </th>
-</tr>
-
-<tr>
-<th align=left>7)With-Camel + LargeMulticas + rx-camel on Sync-tomcat </th>
-<th>  concurrency=300 </th>
-<th>Hybrid: cpu:500 LargeMultiCast:1500 concurrency=300  </th>
-<th>  </th>
-<th> CPU: 3.0X </th>
-</tr>
-</table>
-
-#  Thread analysis in Sync Vs Async
-- concurrent requests(R) = 300 or 800
-- number of endpoints per large-multicast route(E)  = 7
-- number of endpoints per small-multicast route(E)  = 2
-- number of cores = 8 
-
-<table border=1>
-<tr>
-<th>Description</th>
-<th>Sync: Tomcat</th>
-<th>Async: Netty</th>
+<th>Name</th>
+<th>Sync Model:  Type of Thread/Number of threads </th>
+<th>Async Model:  Type of Thread/Number of threads</th>
 <th> Description </th>
 </tr>
 <tr>
-<th align=left>1) Rest Controller</th>
-<th> R threads </th>
-<th>6</th>
-<th> These threads are more IO intensive. </th>
+<th align=left> 1.1)Rest Controller-IO <br> Tomcat/Netty </th>
+<th> <ul align=left><li> ASync Threads</li><li> 6 threads</li></ul> </th>
+<th><ul align=left><li> ASync Threads</li><li> 6 threads</li></ul></th>
+<th> These threads are per cpu and does socket io. These threads are more IO intensive. </th>
 </tr>
 <tr>
-<th align=left>2) Camel_worker</th>
-<th> (E*R) threads  </th>
-<th>2</th>
-<th> These threads are more IO intensive. </th>
+<th align=left>1.2)Rest Controller-Exec  <br>  Tomcat/Netty </th>
+<th> <ul align=left><li> Sync Threads</li><li> R threads </li></ul></th>
+<th> IO threads does both IO and exec </th>
+<th> These threads executes buiness logic of the rest controller. </th>
+</tr>
+<tr> 
+<th align=left>2.1) Camel-Worker <br> Camel/Camel-Rx/Camel-Netty </th>
+<th>  <ul align=left><li> Sync Threads</li><li> (E*R) threads </li></ul>  </th>
+<th><ul align=left><li> ASync Threads</li><li> 2 threads</li></ul></th>
+<th> These threads are more IO intensive when hysterix is not enabled. </th>
 </tr>
 <tr>
-<th align=left>3) Camel Aggregator threads</th>
-<th> (R) </th>
+<th align=left>2.2) Camel-Aggregator threads  <br> Camel/Camel-Rx/Camel-Netty </li></ul></th>
+<th> <ul align=left><li> Sync Threads</li><li> R threads </li></ul> </th>
 <th> 0 to R </th>
-<th> These threads are less IO intensive and more control threads. </th>
+<th> These threads are Not IO intensive and more like a control threads. These thread manages each route. </th>
 </tr>
 <tr>
-<th align=left>4) Hysterix threads</th>
+<th align=left>3.1) Hysterix threads</th>
+<th>  <ul align=left><li> Sync Threads</li><li> (E*R) threads </li></ul>  </th>
+<th> <ul align=left><li> ASync Threads</li><li> 2 threads</li></ul> </th>
+<th>  These threads are IO intensive. </th>
+</tr>
+<th align=left>3.2) Hysterix Timer threads</th>
 <th> R </th>
-<th> o to R </th>
-<th>  These threads are less IO intensive and more control threads. </th>
+<th> R </th>
+<th>  These threads are not  IO intensive. </th>
 </tr>
 <tr>
-<th>Total threads needed with camel and without hysterix </th>
-<th> R(tomcat)+ E*R(camel-worker) +R(camel-aggregator) = (2+E)*R  </th>
+<th>Total threads needed without Hysterix  </th>
+<th> (tomcat)+ E*R(camel-worker) +R(camel-aggregator) = (2+E)*R  </th>
 <th> 8 to 8+R</th>
+<th> </th>
+</tr>
+<tr>
+<th>Total threads needed with Hysterix  </th>
+<th>    (3+E)*R </th>
+<th> 10 to 10+2R</th>
 <th> </th>
 </tr>
 </table>
@@ -212,16 +126,128 @@ In summary, as load increases the efficiency of IPC and context switches decreas
 
 - Large Multicast as more performance gap between Async and Sync because of threads gap between them is more.
 - Small Multicast as less performance gap because threads gaps is small.
-- Number of thread directly proportional to performance Gap.
+- Number of threads directly proportional to performance Gap.
+
+# Summary of Tests :
+**Type of Tests**:
+ - **Test Setup**:
+    - load generator -> Rest Server -> echo server. 
+    - "ab" is used for load generator.
+    -  Rest server can be Sync or Async server.
+ - **Type of Tests**:
+    1. **Without Camel**:  Rest controller directly calls web client to send the rest requests to the backend without camel.
+    1. **With Camel + Large Multicast**: Multicast route having 7 endpoints.  Here there will be 7 camel worker threads and  one aggregator thread per request.
+    1. **With Camel + Small Multicast**: Multicast route having 2 endpoints. Here there will be 2 camel worker threads across the system and one aggregator thread per request.
+    1. **With Camel + With Hysterix**: TODO
+
+
+<table border=1>
+<tr>
+<th>Test-Description</th>
+<th> parameters </th>
+<th>Sync: Tomcat</th>
+<th>Async: Netty</th>
+<th> Async Improvement over Sync </th>
+</tr>
+<tr>
+<th align=left width=auto>1)Without-Camel  </th>
+<th width=auto> concurrency=1800 </th>
+<th width=auto>latency=191ms, cpu=840 </th>
+<th width=auto>latency=157ms, cpu=480 </th>
+<th width=auto>CPU: 1.75X  </th>
+</tr>
+
+<tr>
+<th align=left width=auto>2)With-Camel + LargeMulticast  </th>
+<th width=auto>   concurrency=300 </th>
+<th width=auto>cpu: 1400   user: 17 sys: 16</th>
+<th width=auto>cpu: 360 user: 11% sys: 5%   latency: 196</th>
+<th width=auto>CPU: 3.8X  </th>
+</tr>
+
+<tr>
+<th align=left width=auto>3)With-Camel + LargeMulticast </th>
+<th width=auto>   concurrency=800  </th>
+<th width=auto>cpu: 1900   user:21  sys:26 latency=750ms </th>
+<th width=auto>cpu: 350 user:10.5% sys:4.5%   latency: 523</th>
+<th width=auto> CPU: 5.4X </th>
+</tr>
+
+<tr>
+<th align=left width=auto>4)With-Camel + LargeMulticast </th>
+<th width=auto>   concurrency=1200 </th>
+<th width=auto>Breakdown due to large number of threads </th>
+<th width=auto>cpu: 310 user:10.5% sys:4.5%   latency: 600</th>
+<th width=auto> CPU: >5.4X </th>
+</tr>
+
+<tr>
+<th align=left width=auto>5)With-Camel + SmallMulticast</th>
+<th width=auto>    concurrency=300 </th>
+<th width=auto> cpu: 960 user: 15 sys:13.4 </th>
+<th width=auto>cpu: 400 user: user:10% sys:6% latency: 85 </th>
+<th width=auto>CPU:2.4X  </th>
+</tr> 
+
+<tr>
+<th align=left width=auto>6)With-Camel + SmallMulticast  </th>
+<th width=auto>   concurrency=800 </th>
+<th width=auto> cpu:1400  user:21  sys:19 latency:165 </th>
+<th width=auto>cpu:450  user:11  sys:7% latency:220  </th>
+<th width=auto> CPU: 3.1X </th>
+</tr>
+
+<tr>
+<th align=left width=auto>6)With-Camel + LargeMulticast +Hysterix  </th>
+<th width=auto>   concurrency=100, netty worker=4, camel worker=2 </th>
+<th width=auto>without hysterix:cpu:800(threads:2088) latncy:61 withhysetrix:   </th>
+<th width=auto> </th>
+<th width=auto>  </th>
+</tr>
+
+<tr>
+<th align=left width=auto>6)With-Camel + LargeMulticast +Hysterix  </th>
+<th width=auto>   concurrency=300, netty worker=4, camel worker=2 </th>
+<th width=auto>without hysterix: cpu:1200 withhysetrix: BREAKDOWN(unable to create threads  > 3400)  </th>
+<th width=auto> without hysterix:cpu=330 , with hysterix: cpu=400  </th>
+<th width=auto>  </th>
+</tr>
+
+<tr>
+<th align=left width=auto>6)With-Camel + LargeMulticast +Hysterix  </th>
+<th width=auto>   concurrency=800, netty worker=4, camel worker=2 </th>
+<th width=auto>BREAKDOWN  </th>
+<th width=auto> without hysterix:cpu=330,latency=381(connect=5ms) , with hysterix:cpu=400,latency=621(connect=200ms),hysetr threads=40</th>
+<th width=auto>  </th>
+</tr>
+
+<tr>
+<th align=left width=auto>6)With-Camel + Pipeline +Hysterix  </th>
+<th width=auto>   concurrency=800 </th>
+<th width=auto> TODO </th>
+<th width=auto>TODO  </th>
+<th width=auto>  </th>
+</tr>
+
+<tr>
+<th align=left width=auto>7)With-Camel + LargeMulticas + rx-camel on Sync-tomcat </th>
+<th width=auto>  concurrency=300 </th>
+<th width=auto>Hybrid: cpu:500 LargeMultiCast:1500 concurrency=300  </th>
+<th width=auto>  </th>
+<th width=auto> CPU: 3.0X </th>
+</tr>
+</table>
+
 
 
  
-# Advanced Optimizations:
+# Advanced Optimizations in Async:
 
-1. ** NUmber of Tomcat threads and Camel Threads**: Depending on the load the number of tomcat/camel threads will decide the cpu utilization and latency. over allocation of threads can bring down the throughput and latency. 
+1. ** Allocating Number of Async Threads**: Async threads should be created based on the load and computation need per each request. Throughput means number of requests can be served per unit of cpu core.  Throughput and latency are directly propotional, means as load increased the through and latency increases. As latency crosses particular limit the number threads should be increased or requests rate should be decreased, otherwise the latency may be high. This can be acheived by the load balancer like HaProxy. HaProxy can send periodic ping request to check the latency, accordingly it can route the requests. 
 1. **Pinning Thread to cpu **: pinning the cpu cores for camel worker threads and rest controller threads. these are highly io intensive, so by pinning the threads it improves the cpu efficiency further.
 1. **Making zero context switches and zero futex calls by Spinning and pinning**: camel worker threads will be sleeping during the time of no request. Zero context switches and zero futex calls inside tomcat/camel can be acheived by the following means: a) Tomcat and  camel threads need to spin continously instead of sleeping inside the kernel. b) Using dedicated and pinned cores only for camel-worker and tomcat threads. remaining threads are assigned to left over cores.   by doing this it improves the latency and throughput. on other hand it waste the cpu cycles by spinning and may increase the power consumption, this optimization is well suited for high end machines with the dedicated cores.
-1. **Improving the efficiency of Hysterix and Camel Aggregator threads**: Currently these threads are dynamic and created when there are requests in Async.
+1. **Improving the efficiency of Hysterix Timer threads and Camel Aggregator threads**: Need to investigate further to decrease the number of threads.
+
 
 # Summary :
 

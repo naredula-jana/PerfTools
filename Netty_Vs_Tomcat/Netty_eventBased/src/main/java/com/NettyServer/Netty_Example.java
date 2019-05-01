@@ -139,7 +139,7 @@ public class Netty_Example {
 			//camelContext.stop();
 		}
 		
-		System.out.println("Starting NETTY v1.7");
+		System.out.println("Starting NETTY v2.0");
 		SpringApplication.run(Netty_Example.class, args);
 	
 	}

@@ -10,6 +10,7 @@ public class CamelBean {
 	private WebClient client = WebClient.create("http://localhost:8081");
 	private WebClient client_sync = WebClient.create("http://localhost:8081");
 	static int count=0;
+	static int fallback_count=0;
 	/*private Mono<ClientResponse> result = client_sync.get()
 			.uri("/echo")
 			.accept(MediaType.ALL)
@@ -130,13 +131,16 @@ public class CamelBean {
 	private static String handleResponseString(String s) {
 
 		if (count%1000 ==0 ) {
-          System.out.println("handle response function: "+s+" count: "+count);
+          System.out.println("handle response function: "+s+" count: "+count+" fallback: "+fallback_count);
 		}
 		count++;
         return s+ " :test" ;
     }
 	public String computeText(){
-        return "test";
+		fallback_count++;
+		//System.out.println("Fallback function ");
+		String ret = "Fallback is called";
+        return ret;
     }
 
 }

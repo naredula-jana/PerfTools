@@ -8,7 +8,7 @@
        ">
 	<camelContext
 		xmlns="http://camel.apache.org/schema/spring">
-		<hystrixConfiguration id="sharedConfig" corePoolSize="400" executionTimeoutInMilliseconds="5000" circuitBreakerSleepWindowInMilliseconds="10000" />
+		<hystrixConfiguration id="sharedConfig" corePoolSize="5" maxQueueSize="10"  executionTimeoutInMilliseconds="15000" circuitBreakerSleepWindowInMilliseconds="10" />
 		<threadPoolProfile id="threadprofile"
 			poolSize="1800" maxPoolSize="1800" defaultProfile="true" />
 		
@@ -30,8 +30,7 @@
 				</pipeline>
 			</multicast>
 		</route>
-
-
+		
 		<route>
 			<from uri="direct:multicastlargehyst" />
 			<setExchangePattern pattern="InOut" />
@@ -39,65 +38,53 @@
 			<multicast id="testIdmulticasthyst"
 				parallelProcessing="true" stopOnException="true"
 				executorServiceRef="threadprofile">
-				<hystrix>
+				<hystrix hystrixConfigurationRef="sharedConfig">
 					<to uri="bean:myBean?method=appendSomeText1" />
 					<onFallback>
-						<transform>
-							<constant>Fallback message</constant>
-						</transform>
+						<to uri="bean:myBean?method=computeText" />
 					</onFallback>
 				</hystrix>
-				<hystrix>
+				<hystrix hystrixConfigurationRef="sharedConfig">
 					<to uri="bean:myBean?method=appendSomeText2" />
 					<onFallback>
-						<transform>
-							<constant>Fallback message</constant>
-						</transform>
+						<to uri="bean:myBean?method=computeText" />
 					</onFallback>
 				</hystrix>
-				<hystrix>
+				<hystrix hystrixConfigurationRef="sharedConfig">
 					<to uri="bean:myBean?method=appendSomeText3" />
 					<onFallback>
-						<transform>
-							<constant>Fallback message</constant>
-						</transform>
+						<to uri="bean:myBean?method=computeText" />
 					</onFallback>
 				</hystrix>
-				<hystrix>
+				<hystrix hystrixConfigurationRef="sharedConfig">
 					<to uri="bean:myBean?method=appendSomeText4" />
 					<onFallback>
-						<transform>
-							<constant>Fallback message</constant>
-						</transform>
+						<to uri="bean:myBean?method=computeText" />
 					</onFallback>
 				</hystrix>
-				<hystrix>
+				<hystrix hystrixConfigurationRef="sharedConfig">
 					<to uri="bean:myBean?method=appendSomeText5" />
 					<onFallback>
-						<transform>
-							<constant>Fallback message</constant>
-						</transform>
+						<to uri="bean:myBean?method=computeText" />
 					</onFallback>
 				</hystrix>
-				<hystrix>
+				<hystrix hystrixConfigurationRef="sharedConfig">
 					<to uri="bean:myBean?method=appendSomeText6" />
 					<onFallback>
-						<transform>
-							<constant>Fallback message</constant>
-						</transform>
+						<to uri="bean:myBean?method=computeText" />
 					</onFallback>
 				</hystrix>
-				<hystrix>
+				<hystrix hystrixConfigurationRef="sharedConfig">
 					<to uri="bean:myBean?method=appendSomeText7" />
 					<onFallback>
-						<transform>
-							<constant>Fallback message</constant>
-						</transform>
+						<to uri="bean:myBean?method=computeText" />
 					</onFallback>
 				</hystrix>
 			</multicast>
 		</route>
 
+		
+		
 		<route>
 			<from uri="direct:multicastlarge" />
 			<setExchangePattern pattern="InOut" />
@@ -126,9 +113,6 @@
 			</multicast>
 		</route>
 
-
-
-
 		<route>
 			<from uri="direct:sampleroute2" />
 			<setExchangePattern pattern="InOut" />
@@ -136,7 +120,7 @@
 		</route>
 
 
-		<route>
+<!-- 		<route>
 			<from uri="direct:hybrid" />
 			<setExchangePattern pattern="InOut" />
 			<to uri="bean:myBean?method=computeText" />
@@ -150,17 +134,15 @@
 				<to uri="bean:myBean?method=appendSomeText60" />
 				<to uri="bean:myBean?method=appendSomeText70" />
 			</multicast>
-		</route>
+		</route> -->
 	</camelContext>
     <bean id="myBean" class="CamelBean"/>
     
-    <bean id="poolBuilder" class="org.apache.camel.component.netty4.NettyWorkerPoolBuilder">
+<!--     <bean id="poolBuilder" class="org.apache.camel.component.netty4.NettyWorkerPoolBuilder">
                 <property name="workerCount" value="2"/>
-    </bean>
-              
-              
+    </bean>   
     <bean id="sharedNIOPool" class="io.netty.channel.EventLoopGroup"
                 factory-bean="poolBuilder" factory-method="build" destroy-method="shutdown">
-    </bean>
+    </bean> -->
  
 </beans>

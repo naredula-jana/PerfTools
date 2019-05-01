@@ -151,7 +151,7 @@ In summary, as load increases the efficiency of IPC and context switches decreas
 </tr>
 <tr>
 <th align=left width=auto>1)Without-Camel  </th>
-<th width=auto> concurrency=1800 </th>
+<th width=auto> concurrency= 1800 </th>
 <th width=auto>latency=191ms, cpu=840 </th>
 <th width=auto>latency=157ms, cpu=480 </th>
 <th width=auto>CPU: 1.75X  </th>
@@ -159,7 +159,7 @@ In summary, as load increases the efficiency of IPC and context switches decreas
 
 <tr>
 <th align=left width=auto>2)With-Camel + LargeMulticast  </th>
-<th width=auto>   concurrency=300 </th>
+<th width=auto>   concurrency= 300 </th>
 <th width=auto>cpu: 1400   user: 17 sys: 16</th>
 <th width=auto>cpu: 360 user: 11% sys: 5%   latency: 196</th>
 <th width=auto>CPU: 3.8X  </th>
@@ -167,7 +167,7 @@ In summary, as load increases the efficiency of IPC and context switches decreas
 
 <tr>
 <th align=left width=auto>3)With-Camel + LargeMulticast </th>
-<th width=auto>   concurrency=800  </th>
+<th width=auto>   concurrency= 800  </th>
 <th width=auto>cpu: 1900   user:21  sys:26 latency=750ms </th>
 <th width=auto>cpu: 350 user:10.5% sys:4.5%   latency: 523</th>
 <th width=auto> CPU: 5.4X </th>
@@ -175,7 +175,7 @@ In summary, as load increases the efficiency of IPC and context switches decreas
 
 <tr>
 <th align=left width=auto>4)With-Camel + LargeMulticast </th>
-<th width=auto>   concurrency=1200 </th>
+<th width=auto>   concurrency= 1200 </th>
 <th width=auto>Breakdown due to large number of threads </th>
 <th width=auto>cpu: 310 user:10.5% sys:4.5%   latency: 600</th>
 <th width=auto> CPU: >5.4X </th>
@@ -183,7 +183,7 @@ In summary, as load increases the efficiency of IPC and context switches decreas
 
 <tr>
 <th align=left width=auto>5)With-Camel + SmallMulticast</th>
-<th width=auto>    concurrency=300 </th>
+<th width=auto>    concurrency= 300 </th>
 <th width=auto> cpu: 960 user: 15 sys:13.4 </th>
 <th width=auto>cpu: 400 user: user:10% sys:6% latency: 85 </th>
 <th width=auto>CPU:2.4X  </th>
@@ -191,7 +191,7 @@ In summary, as load increases the efficiency of IPC and context switches decreas
 
 <tr>
 <th align=left width=auto>6)With-Camel + SmallMulticast  </th>
-<th width=auto>   concurrency=800 </th>
+<th width=auto>   concurrency= 800 </th>
 <th width=auto> cpu:1400  user:21  sys:19 latency:165 </th>
 <th width=auto>cpu:450  user:11  sys:7% latency:220  </th>
 <th width=auto> CPU: 3.1X </th>
@@ -199,16 +199,16 @@ In summary, as load increases the efficiency of IPC and context switches decreas
 
 <tr>
 <th align=left width=auto>6)With-Camel + LargeMulticast +Hysterix  </th>
-<th width=auto>   concurrency=100, netty worker=4, camel worker=2 </th>
-<th width=auto>without hysterix:cpu:800(threads:2088) latncy:61 withhysetrix:   </th>
+<th width=auto>   concurrency= 100, netty worker=4, camel worker=2 </th>
+<th width=auto>without hysterix:cpu:800 (threads:2088) latncy:61 withhysetrix:   </th>
 <th width=auto> </th>
 <th width=auto>  </th>
 </tr>
 
 <tr>
 <th align=left width=auto>6)With-Camel + LargeMulticast +Hysterix  </th>
-<th width=auto>   concurrency=300, netty worker=4, camel worker=2 </th>
-<th width=auto>without hysterix: cpu:1200 withhysetrix: BREAKDOWN(unable to create threads  > 3400)  </th>
+<th width=auto>   concurrency= 300, netty worker=4, camel worker=2 </th>
+<th width=auto>without hysterix: cpu:1200 withhysetrix: BREAKDOWN (unable to create threads  > 3400)  </th>
 <th width=auto> without hysterix:cpu=330 , with hysterix: cpu=400  </th>
 <th width=auto>  </th>
 </tr>

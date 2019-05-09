@@ -17,14 +17,14 @@ Test Setup :  Async Rest controller with varying number of threads.
 <th> Threads: 2/8/16 </th>
 <th>  Context switches: 13k/300k/400k </th>
 <th>  Latency:  120ms/135ms/145ms <br> cpu:  200/300/400  </th>
-<th> Threads 8,16: Threads are more then desired. <br> Threads-2: close to desired number. <br> Best performance for 2 threads. </th>
+<th> Threads 8,16: Threads are more then desired. <br> Threads-2: close to desired number. <br> Best latency for 2 threads. </th>
 </tr>
 <tr>
 <th> 3000 requests/sec </th>
 <th> Threads: 1/4/8/16 </th>
 <th>  Context switches: <br> 12k/157k/400k/400k </th>
 <th>  Latency:  400ms/219ms/260ms/300ms <br> cpu:  -  </th>
-<th> Threads-8,16: These threads are more then desired. <br> Threads -1: The threads are less then desired.<br> Threads-4: These threads are close to desired number.<br>  Best performance for 4 threads. </th>
+<th> Threads-8,16: These threads are more then desired. <br> Threads -1: The threads are less then desired.<br> Threads-4: These threads are close to desired number.<br>  Best latency for 4 threads. </th>
 </tr>
 </table>
 

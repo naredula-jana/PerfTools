@@ -154,7 +154,7 @@ There are Two types of threads:
 <th align=left width=auto>7)With-Camel + LargeMulticast +Hysterix  </th>
 <th width=auto>   concurrency= 100, netty worker=4, camel worker=2 </th>
 <th width=auto>without hysterix:cpu:800 (threads:2088) latency:61 withhysetrix: cpu:1400 with some hysterix fallbacks  </th>
-<th width=auto> cpu = 200 </th>
+<th width=auto> cpu = 200, As some issue with hysterix functionality. </th>
 <th width=auto>  CPU: >7.0X  </th>
 </tr>
 
@@ -162,7 +162,7 @@ There are Two types of threads:
 <th align=left width=auto>8)With-Camel + LargeMulticast +Hysterix  </th>
 <th width=auto>   concurrency= 300, netty worker=4, camel worker=2 </th>
 <th width=auto>without hysterix: cpu:1200 withhysetrix: BREAKDOWN (unable to create threads  > 3400)  </th>
-<th width=auto> without hysterix:cpu=330 , with hysterix: cpu=400  </th>
+<th width=auto> without hysterix:cpu=330 , with hysterix: cpu=400, As some issue with hysterix functionality.  </th>
 <th width=auto>  CPU: >6.0X  </th>
 </tr>
 
@@ -170,7 +170,7 @@ There are Two types of threads:
 <th align=left width=auto>9)With-Camel + LargeMulticast +Hysterix  </th>
 <th width=auto>   concurrency=800, netty worker=4, camel worker=2 </th>
 <th width=auto>BREAKDOWN  </th>
-<th width=auto> without hysterix:cpu=330, latency=381(connect=5ms) , with hysterix:cpu=400, latency=621(connect=200ms), hysetrix threads=40</th>
+<th width=auto> without hysterix:cpu=330, latency=381(connect=5ms) , with hysterix:cpu=400, latency=621(connect=200ms), hysetrix threads=40, As some issue with hysterix functionality.</th>
 <th width=auto>   CPU: >6.0X  </th>
 </tr>
 

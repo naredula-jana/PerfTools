@@ -181,7 +181,7 @@ In the case of Rest-camel applications, the communication between threads are as
 # 3) Hysterix Function issue in Async: 
  Hysterix  is calculating the time till the camel bean method completes, but in Async case, the http-request does not complete inside the camel bean method instead it does in lazy way, means it just write the http request and read in the rest controller context as mentioned in Async-1 and Async-2, so Hysterix thread stops the timer when the camel-bean returns the mono object, means Hysterix thread is not checking the output of http. this need to fixed accordingly or Hysterix is not suitable in async environment.
  
- **TODO: Solution for this issue need to be captured.**
+ **TODO: Solution for this issue need to be investigated.**
  
 # 4) Tomcat-RX vs Netty Rest Controller
 **TODO :  More detail need to be captured**.

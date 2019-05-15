@@ -10,8 +10,8 @@
 	<camelContext
 		xmlns="http://camel.apache.org/schema/spring">
 
-		<hystrixConfiguration id="sharedConfig" corePoolSize="2" maxQueueSize="100" executionTimeoutInMilliseconds="5000" 
-			circuitBreakerSleepWindowInMilliseconds="10000" />
+		<hystrixConfiguration id="sharedConfig" corePoolSize="1" maxQueueSize="100" executionTimeoutInMilliseconds="2000" 
+			circuitBreakerSleepWindowInMilliseconds="2000" />
 
 		<route>
 			<from uri="direct:sampleroute1" />
@@ -38,10 +38,8 @@
 			<from uri="direct:multicastlargehysterix" />
 			<setExchangePattern pattern="InOut" />
 			<to uri="bean:myBean?method=computeText" />
-
 			<multicast id="searchmulticasthyst" parallelProcessing="true"
 				stopOnException="true" executorServiceRef="sharedNIOPool">
-				
 				<hystrix hystrixConfigurationRef="sharedConfig">
 					<to uri="bean:myBean?method=appendSomeText1" />
 					<onFallback>
@@ -88,13 +86,62 @@
 		</route>
 		
 		<route>
+			<from uri="direct:multicastlargehysterix2" />
+			<setExchangePattern pattern="InOut" />
+			<to uri="bean:myBean?method=computeText" />
+			<multicast id="searchmulticasthyst2" parallelProcessing="true"
+				stopOnException="true" executorServiceRef="sharedNIOPool">
+				<hystrix hystrixConfigurationRef="sharedConfig">
+					<to uri="bean:myBean?method=appendSomeText1" />
+					<onFallback>
+						<to uri="bean:myBean?method=fallback" />
+					</onFallback>
+				</hystrix>
+				<hystrix hystrixConfigurationRef="sharedConfig">
+					<to uri="bean:myBean?method=appendSomeText2" />
+					<onFallback>
+						<to uri="bean:myBean?method=fallback" />
+					</onFallback>
+				</hystrix>
+				<hystrix hystrixConfigurationRef="sharedConfig">
+					<to uri="bean:myBean?method=appendSomeText3" />
+					<onFallback>
+						<to uri="bean:myBean?method=fallback" />
+					</onFallback>
+				</hystrix>
+				<hystrix hystrixConfigurationRef="sharedConfig">
+					<to uri="bean:myBean?method=appendSomeText4" />
+					<onFallback>
+						<to uri="bean:myBean?method=fallback" />
+					</onFallback>
+				</hystrix>
+				<hystrix hystrixConfigurationRef="sharedConfig">
+					<to uri="bean:myBean?method=appendSomeText5" />
+					<onFallback>
+						<to uri="bean:myBean?method=fallback" />
+					</onFallback>
+				</hystrix>
+				<hystrix hystrixConfigurationRef="sharedConfig">
+					<to uri="bean:myBean?method=appendSomeText6" />
+					<onFallback>
+						<to uri="bean:myBean?method=fallback" />
+					</onFallback>
+				</hystrix>
+				<hystrix hystrixConfigurationRef="sharedConfig">
+					<to uri="bean:myBean?method=appendSomeText71" />
+					<onFallback>
+						<to uri="bean:myBean?method=fallback" />
+					</onFallback>
+				</hystrix>
+			</multicast>
+		</route>
+		
+		<route>
 			<from uri="direct:multicastlarge" />
 			<setExchangePattern pattern="InOut" />
 			<to uri="bean:myBean?method=computeText" />
-
 			<multicast id="searchmulticast" parallelProcessing="true"
 				stopOnException="true" executorServiceRef="sharedNIOPool">
-
 				<to uri="bean:myBean?method=appendSomeText1" />
 				<to uri="bean:myBean?method=appendSomeText2" />
 				<to uri="bean:myBean?method=appendSomeText3" />
@@ -104,7 +151,7 @@
 				<to uri="bean:myBean?method=appendSomeText7" />
 			</multicast>
 		</route>
-		
+    
 		<route>
 			<from uri="direct:multicastsmall" />
 			<setExchangePattern pattern="InOut" />
@@ -112,10 +159,17 @@
 			<multicast id="searchmulticastsmall"
 				parallelProcessing="true" stopOnException="true"
 				executorServiceRef="sharedNIOPool">
-				<to uri="bean:myBean?method=appendSomeText1" />
-				<to uri="bean:myBean?method=appendSomeText2" />
+				<!-- <hystrix hystrixConfigurationRef="sharedConfig"> -->
+					<to uri="bean:myBean?method=appendSomeText1" />
+				<!-- 	<onFallback>
+						<to uri="bean:myBean?method=fallback" />
+					</onFallback>
+				</hystrix> -->
 			</multicast>
 		</route>
+		
+	
+			
 		<route>
 			<from uri="direct:multicastsmallAsyncWeb" />
 			<setExchangePattern pattern="InOut" />
@@ -127,28 +181,19 @@
 				<to uri="bean:myBean?method=appendSomeText200" />
 			</multicast>
 		</route>
-
-
-
-		<!-- <route> <from uri="direct:sampleroute3" /> <setExchangePattern pattern="InOut" 
-			/> <to uri="bean:myBean?method=appendSomeText2"/> <multicast id="searchAndBrowse2" 
-			parallelProcessing="true" stopOnException="true" executorServiceRef="sharedNIOPool"> 
-			<to uri="bean:myBean?method=appendSomeText3"/> <to uri="bean:myBean?method=appendSomeText4"/> 
-			<to uri="bean:myBean?method=appendSomeText1"/> <to uri="bean:myBean?method=appendSomeText2"/> 
-			</multicast> </route> -->
-
 	</camelContext>
     
     <bean id="myBean" class="com.NettyServer.CamelBeanEvent"/>
-     <bean id="hysterixbuilder" class="com.NettyServer.Hysterixbuilder"/>
+    
     
     <bean id="poolBuilder" class="org.apache.camel.component.netty4.NettyWorkerPoolBuilder">
-                <property name="workerCount" value="2"/>
+                <property name="workerCount" value="1"/>
     </bean>
               
               
     <bean id="sharedNIOPool" class="io.netty.channel.EventLoopGroup"
                 factory-bean="poolBuilder" factory-method="build" destroy-method="shutdown">
     </bean>
+    
  
 </beans>

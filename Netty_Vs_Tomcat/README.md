@@ -269,5 +269,7 @@ In summary, as load increases the efficiency of IPC and context switches decreas
   -  [Async-Netty Vs sync-Tomcat performance results](https://www.slideshare.net/brendangregg/rxnetty-vs-tomcat-performance-results).
   -  [Java Perf Tool Used to measure the metrics](https://github.com/naredula-jana/PerfTools/tree/master/java_perf)
   -  [Why systemcall make cpu slower](https://github.com/naredula-jana/Jiny-Kernel/blob/master/doc/Perf_IPC.pdf)
+  -  [Reactive Streams](https://github.com/reactive-streams/reactive-streams-jvm)
+  -  [Spring5](https://www.infoq.com/articles/Servlet-and-Reactive-Stacks-Spring-Framework-5)
 
  

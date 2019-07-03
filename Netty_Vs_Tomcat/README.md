@@ -99,7 +99,7 @@ There are Two types of threads:
 <th><b>Test-Description</b></th>
 <th> parameters </th>
 <th>Sync Platform</th>
-<th>Async Platform</th>
+<th>Async Platform (netty worker=4, camel worker=2)</th>
 <th>Async Improvement over Sync </th>
 </tr>
 <tr>
@@ -174,21 +174,7 @@ There are Two types of threads:
 <th width=auto>   CPU: >6.0X  </th>
 </tr>
 
-<tr>
-<th align=left width=auto>10)With-Camel + Pipeline +Hysterix  </th>
-<th width=auto>   concurrency=800 </th>
-<th width=auto> TODO </th>
-<th width=auto>TODO  </th>
-<th width=auto>  </th>
-</tr>
 
-<tr>
-<th align=left width=auto>11)With-Camel + LargeMulticas + rx-camel on Sync-tomcat </th>
-<th width=auto>  concurrency=300 </th>
-<th width=auto>Hybrid: cpu:500 LargeMultiCast:1500 concurrency=300  </th>
-<th width=auto>  </th>
-<th width=auto> CPU: 3.0X </th>
-</tr>
 </table>
 
 # Load  vs Performance Gap

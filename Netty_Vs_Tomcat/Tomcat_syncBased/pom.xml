@@ -9,7 +9,7 @@
 <properties>
         <!-- Spring boot main class -->
         <start-class>Tomcat_Example</start-class>
-        <camel.version>2.22.0</camel.version>
+        <camel.version>2.24.2</camel.version>
 </properties>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
